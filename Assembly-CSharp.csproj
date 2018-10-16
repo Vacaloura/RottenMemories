@@ -61,11 +61,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Scripts\canMouseLook.cs" />
     <Compile Include="Assets\_Scripts\CaracterControler.cs" />
-    <Compile Include="Assets\_Scripts\LoadSceneOnClick.cs" />
-    <Compile Include="Assets\_Scripts\QuitOnClick.cs" />
-    <Compile Include="Assets\_Scripts\SelectOnInput.cs" />
+    <Compile Include="Assets\_Scripts\Dialog\BringToFront.cs" />
+    <Compile Include="Assets\_Scripts\Dialog\DisplayManager.cs" />
+    <Compile Include="Assets\_Scripts\Dialog\ModalPanel.cs" />
+    <Compile Include="Assets\_Scripts\Dialog\TestModalWindow.cs" />
+    <Compile Include="Assets\_Scripts\Legacy\canMouseLook.cs" />
+    <Compile Include="Assets\_Scripts\Legacy\LoadSceneOnClick.cs" />
+    <Compile Include="Assets\_Scripts\Legacy\QuitOnClick.cs" />
+    <Compile Include="Assets\_Scripts\Legacy\SelectOnInput.cs" />
+    <Compile Include="Assets\_Scripts\Menu.cs" />
     <None Include="Assets\3rd Party\UI Samples\Fonts\Jupiter\LICENSE.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>E:/Workspace/unity/RottenMemories/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
