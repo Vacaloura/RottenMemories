@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TestModalWindow : MonoBehaviour {
 
-    private ModalPanel modalPanel;
+    private DialogManager modalPanel;
     private DisplayManager displayManager;
 
     private UnityAction myYesAction;
@@ -15,7 +15,7 @@ public class TestModalWindow : MonoBehaviour {
 
 
     private void Awake() {
-        modalPanel = ModalPanel.Instance();
+        modalPanel = DialogManager.Instance();
         displayManager = DisplayManager.Instance();
 
         myYesAction = new UnityAction(TestYesFunction);

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class CaracterControler : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
     public float speed = 10.0F;
-    private GameObject player_camera;
-    public string camera_name = "Camera";
+    private Camera player_camera;
 
     Vector2 mouseLook;
     Vector2 smoothV;
@@ -16,7 +16,7 @@ public class CaracterControler : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        player_camera = this.transform.Find(camera_name).gameObject;
+        player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
 
         Cursor.lockState = CursorLockMode.Locked;
 	}
@@ -25,8 +25,8 @@ public class CaracterControler : MonoBehaviour {
 	void Update () {
         Movement();
         Vision();
-
-	}
+        PlayerInteract();
+    }
 
     void Movement() {
 
@@ -51,5 +51,22 @@ public class CaracterControler : MonoBehaviour {
 
         player_camera.transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         this.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, this.transform.up);
+    }
+
+    void PlayerInteract() {
+        if (Input.GetMouseButtonDown(1)) {
+            Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(myRay, out hit, 100)) {
+                Debug.Log("We hitted..." + hit.collider.name);
+                Interactable myInteract;
+                try {
+                    myInteract = hit.collider.GetComponent<Interactable>();
+                    myInteract.Interact();
+                } catch (Exception e) {
+                    Debug.Log("Error: " + e.ToString());
+                }
+            }
+        }
     }
 }
