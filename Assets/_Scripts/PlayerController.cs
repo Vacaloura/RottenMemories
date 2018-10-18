@@ -12,12 +12,16 @@ public class PlayerController : MonoBehaviour {
     Vector2 smoothV;
     public float sensitivity = 5.0f;
     public float smoothing = 2.0f;
+    private GameObject inventoryPanel;
 
-
+    private void Awake()
+    {
+        inventoryPanel = GameObject.Find(Names.inventoryPanel);
+    }
     // Use this for initialization
     void Start () {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
-
+        InitializeInventory();
         Cursor.lockState = CursorLockMode.Locked;
 	}
 	
@@ -26,6 +30,22 @@ public class PlayerController : MonoBehaviour {
         Movement();
         Vision();
         PlayerInteract();
+        ToggleInventoryPanel();
+    }
+
+    void ToggleInventoryPanel()
+    {
+        if (Input.GetKeyDown("tab"))
+        {
+            bool inventoryState = inventoryPanel.activeSelf;
+            inventoryPanel.SetActive(!inventoryState);
+        }
+    }
+
+    void InitializeInventory()
+    {
+        Inventory.inventoryInstance.AddItem(new Harpoon());
+        Inventory.inventoryInstance.AddItem(new Diary());
     }
 
     void Movement() {
@@ -64,7 +84,7 @@ public class PlayerController : MonoBehaviour {
                     myInteract = hit.collider.GetComponent<Interactable>();
                     myInteract.Interact();
                 } catch (Exception e) {
-                    Debug.Log("Error: " + e.ToString());
+                    Debug.Log("Error: " + e.ToString()); //El objeto no tiene Interactable
                 }
             }
         }
