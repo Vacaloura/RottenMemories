@@ -7,6 +7,7 @@ public class Names : MonoBehaviour {
     public const string playerHead = "Head";
     public const string playerCamera = "PlayerCamera";
 
+    public const string managers = "Managers";
     public const string inventoryPanel = "InventoryPanel";
     public const string infoPanel = "InfoPanel";
     public const string itemText = "ItemText";

@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
                     myInteract = hit.collider.GetComponent<Interactable>();
                     myInteract.Interact();
                 } catch (Exception e) {
-                    Debug.Log("Error: " + e.ToString()); //El objeto no tiene Interactable
+                    Debug.Log("Error: El objeto no tiene Interactable --> " + e.ToString()); //El objeto no tiene Interactable
                 }
             }
         }

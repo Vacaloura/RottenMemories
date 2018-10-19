@@ -6,7 +6,7 @@ public class Interactable : MonoBehaviour {
 
     private float maxInteractionDistance = 3f;
     private Transform player;
-    private bool alreadyInteracted = false;
+    [HideInInspector] public bool alreadyInteracted = false;
 
     // Use this for initialization
     void Start () {
@@ -18,10 +18,11 @@ public class Interactable : MonoBehaviour {
         
     }
 
-    public void Interact() {
+    public virtual void Interact() {
         float distance = Vector3.Distance(player.position, this.transform.position);
-        if (distance < 3f && !alreadyInteracted) {
-
+        if (distance < maxInteractionDistance && !alreadyInteracted) {
+            Debug.Log("Suficientemente cerca");
+            alreadyInteracted = true;
         }
     }
 
