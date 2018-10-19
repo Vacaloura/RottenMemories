@@ -2,29 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using UnityEngine.EventSystems;
+
+
 
 public class Inventory : MonoBehaviour
 {
     //TODO añadir con qué empieza el personaje en PlayerController
 
-    #region SINGLETON INVENTORY
+    #region SINGLETON INVENTORY BEHAVIOUR
     public static Inventory inventoryInstance;
+
     public GameObject[] slots;
     private static int lastSlotIndex;
+
+    private GameObject inventoryPanel;
+    private bool inventoryState;
+
+    private GameObject infoPanel;
+
+    GraphicRaycaster raycaster;
+
+
+
     // Use this for initialization
     void Awake()
     {
         if (inventoryInstance == null)
             inventoryInstance = this;
         else Debug.LogError("Tried to create a second inventory");
-        slots = GameObject.FindGameObjectsWithTag("Slot");
+        slots = GameObject.FindGameObjectsWithTag("Slot").OrderBy(go => go.name).ToArray();
+        inventoryPanel = GameObject.Find(Names.inventoryPanel);
+        infoPanel = GameObject.Find(Names.infoPanel);
+
 
     }
 
     void Start()
     {
-        GameObject.Find(Names.inventoryPanel).SetActive(false);
+        inventoryPanel.SetActive(false);
+        infoPanel.SetActive(false);
+
         lastSlotIndex = 0;
+
+        this.raycaster = GameObject.Find(Names.canvas).GetComponent<GraphicRaycaster>();
+
+        InitializeInventory();
+
+    }
+
+    public void Update()
+    {
+        inventoryState = inventoryPanel.activeSelf;
+
+        ToggleInventoryPanel();
+        SelectItem();
     }
     #endregion
 
@@ -74,5 +107,58 @@ public class Inventory : MonoBehaviour
     {
         itemList.Remove(item);
         //OnItemChangedEvent();
+    }
+
+    void InitializeInventory()
+    {
+        Inventory.inventoryInstance.AddItem(new Harpoon());
+        Inventory.inventoryInstance.AddItem(new Diary());
+    }
+
+    void ToggleInventoryPanel()
+    { //Desactiviar movimiento de camera?
+
+        if (Input.GetKeyDown("tab"))
+        {
+            inventoryPanel.SetActive(!inventoryState);
+            if (!inventoryState)
+            {
+                Cursor.lockState = CursorLockMode.None; //Debería ser confined pero no funciona
+            }
+            else Cursor.lockState = CursorLockMode.Locked;
+
+            infoPanel.SetActive(false);
+
+        }
+
+    }
+
+    void SelectItem()
+    {
+        if (inventoryState)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                List<RaycastResult> results = new List<RaycastResult>();
+
+                //Raycast using the Graphics Raycaster and mouse click position
+                pointerData.position = Input.mousePosition;
+                raycaster.Raycast(pointerData, results);
+                foreach (RaycastResult result in results)
+                {
+                    if(result.gameObject.tag == Names.slotTag)
+                    {
+                        infoPanel.SetActive(true);
+                        //infoPanel.GetComponent<Text>() = result
+
+                    }
+                    Debug.Log("Hit " + result.gameObject.name);
+                }
+
+
+            }
+        }
+
     }
 }
