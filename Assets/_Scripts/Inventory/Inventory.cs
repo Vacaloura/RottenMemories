@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
-
-
+using System;
 
 public class Inventory : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class Inventory : MonoBehaviour
 
     public GameObject[] slots;
     private static int lastSlotIndex;
+    private static int actualSlot;
 
     private GameObject inventoryPanel;
     private bool inventoryState;
@@ -103,10 +103,14 @@ public class Inventory : MonoBehaviour
         //else Debug.Log("No method subscribed to the event");
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem()
     {
-        itemList.Remove(item);
-        //OnItemChangedEvent();
+        itemList.RemoveAt(actualSlot);
+
+        GameObject slot = slots[actualSlot];
+        slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
+        slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+        infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
     }
 
     void InitializeInventory()
@@ -150,10 +154,9 @@ public class Inventory : MonoBehaviour
                     if(result.gameObject.tag == Names.slotTag)
                     {
                         infoPanel.SetActive(true);
-                        //infoPanel.GetComponent<Text>() = result
-
+                        actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
+                        infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemDescription;
                     }
-                    Debug.Log("Hit " + result.gameObject.name);
                 }
 
 
