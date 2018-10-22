@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 
 
     void PlayerInteract() {
-        if (Input.GetMouseButtonDown(1)) {
+        if (Input.GetKeyDown(KeyCode.E)) {
             Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(myRay, out hit, 100)) {
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
                 Interactable myInteract;
                 try {
                     myInteract = hit.collider.GetComponent<Interactable>();
-                    myInteract.Interact();
+                    if(myInteract.alreadyInteracted)    myInteract.Interact();
                 } catch (Exception e) {
                     Debug.Log("Error: El objeto no tiene Interactable --> " + e.ToString()); //El objeto no tiene Interactable
                 }

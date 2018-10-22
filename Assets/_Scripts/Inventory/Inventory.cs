@@ -35,8 +35,6 @@ public class Inventory : MonoBehaviour
         slots = GameObject.FindGameObjectsWithTag("Slot").OrderBy(go => go.name).ToArray();
         inventoryPanel = GameObject.Find(Names.inventoryPanel);
         infoPanel = GameObject.Find(Names.infoPanel);
-
-
     }
 
     void Start()
@@ -79,8 +77,9 @@ public class Inventory : MonoBehaviour
             slot.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSprite;
             slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
             lastSlotIndex++;
-        }
-        else
+            itemList.Add(item);
+
+        } else
             foreach (Item it in itemList)
             {
                 if (item.itemType == it.itemType)
@@ -94,13 +93,14 @@ public class Inventory : MonoBehaviour
                     slot.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSprite;
                     slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
                     lastSlotIndex++;
+                    itemList.Add(item);
 
                     break;
                 }
             }
-        itemList.Add(item);
         //if (OnItemChangedEvent != null) OnItemChangedEvent();
         //else Debug.Log("No method subscribed to the event");
+        UpdateSlots();
     }
 
     public void RemoveItem()
@@ -111,6 +111,7 @@ public class Inventory : MonoBehaviour
         slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
         slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
         infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
+        UpdateSlots();
     }
 
     void InitializeInventory()
@@ -158,10 +159,21 @@ public class Inventory : MonoBehaviour
                         infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemDescription;
                     }
                 }
-
-
             }
         }
+    }
 
+    void UpdateSlots() {
+        int itemNum = 0;
+        foreach (GameObject slot in slots) {
+            if(itemNum < itemList.Count) {
+                slot.transform.GetChild(0).GetComponent<Image>().sprite = itemList[itemNum].itemSprite;
+                slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + itemList[itemNum].itemAmount + ")";
+            } else {
+                slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
+                slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+            }
+            itemNum++;
+        }
     }
 }
