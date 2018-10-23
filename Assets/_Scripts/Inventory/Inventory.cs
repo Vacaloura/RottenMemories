@@ -47,6 +47,7 @@ public class Inventory : MonoBehaviour
         this.raycaster = GameObject.Find(Names.canvas).GetComponent<GraphicRaycaster>();
 
         InitializeInventory();
+        CreateAvailableItems();
 
     }
 
@@ -175,5 +176,10 @@ public class Inventory : MonoBehaviour
             }
             itemNum++;
         }
+    }
+
+    void CreateAvailableItems()
+    {
+
     }
 }

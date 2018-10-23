@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour {
 
@@ -14,6 +16,11 @@ public class PlayerController : MonoBehaviour {
     public float sensitivity = 5.0f;
     private Transform playerHead;
 
+    private void Awake()
+    {
+        GameObject.DontDestroyOnLoad(gameObject);
+    }
+
     // Use this for initialization
     void Start () {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
@@ -25,9 +32,15 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         Movement();
         PlayerInteract();
+        ChangeScene();
     }
 
+    void ChangeScene()
+    {
+        if(Input.GetKeyDown(KeyCode.RightArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
 
+    }
 
     void PlayerInteract() {
         if (Input.GetKeyDown(KeyCode.E)) {
@@ -38,7 +51,7 @@ public class PlayerController : MonoBehaviour {
                 Interactable myInteract;
                 try {
                     myInteract = hit.collider.GetComponent<Interactable>();
-                    if(myInteract.alreadyInteracted)    myInteract.Interact();
+                    if(myInteract.onRange)    myInteract.Interact();
                 } catch (Exception e) {
                     Debug.Log("Error: El objeto no tiene Interactable --> " + e.ToString()); //El objeto no tiene Interactable
                 }

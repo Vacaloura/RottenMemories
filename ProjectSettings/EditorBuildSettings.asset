@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/outside.unity
     guid: 0806dbd4765219f4f8fb4332ad3fa893
+  - enabled: 1
+    path: Assets/APZ_Construcciones/SCENES/URBANIZACION.unity
+    guid: 23a4ff7d2c19647488806ad3a75d692c
   m_configObjects: {}

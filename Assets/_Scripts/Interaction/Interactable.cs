@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour {
 
-    private float maxInteractionDistance = 3f;
+    public float maxInteractionDistance = 3f;
     private Transform player;
-    [HideInInspector] public bool alreadyInteracted = false;
+    [HideInInspector] public bool onRange = false;
 
     public GameObject interactText;
 
@@ -30,12 +30,19 @@ public class Interactable : MonoBehaviour {
         if (distance < maxInteractionDistance) {
             Debug.Log("Suficientemente cerca");
             interactText.SetActive(true);
-            alreadyInteracted = true;
+            DisplayManager displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
+            displayManager.DisplayMessage("Debería apaerecer interactText");
+
+            onRange = true;
+        }
+        else
+        {
+            interactText.SetActive(false);
         }
     }
 
     private void OnMouseExit() {
         interactText.SetActive(false);
-        alreadyInteracted = false;
+        onRange = false;
     }
 }

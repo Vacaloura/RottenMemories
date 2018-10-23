@@ -29,6 +29,7 @@ public class DialogManager : MonoBehaviour {
     // Yes/No/Cancel: A string, a Yes event, a No event and Cancel event
     public void Choice(string question, UnityAction yesEvent, UnityAction noEvent, UnityAction cancelEvent) {
         modalPanelObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
         modalPanelObject.transform.SetAsLastSibling();
 
 
@@ -54,5 +55,7 @@ public class DialogManager : MonoBehaviour {
     
     void ClosePanel() {
         modalPanelObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 }
