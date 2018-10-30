@@ -6,7 +6,15 @@ public class InteractItem : Interactable {
 
     public override void Interact() {
         base.Interact();
-        Inventory.inventoryInstance.AddItem(new Item("Esfera", "Esfera de ejemplo", Item.ItemType.NotDefined));
-        gameObject.SetActive(false);
+        if (transform.tag == "Arrow")
+        {
+            ((Harpoon)Inventory.inventoryInstance.itemList[0]).arrows++;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Inventory.inventoryInstance.AddItem(new Item(transform.name, "TODO", Item.ItemType.NotDefined));
+            gameObject.SetActive(false);
+        }
     }
 }

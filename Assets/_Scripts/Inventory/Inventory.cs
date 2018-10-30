@@ -14,13 +14,12 @@ public class Inventory : MonoBehaviour
     public static Inventory inventoryInstance;
 
     public GameObject[] slots;
-    private static int lastSlotIndex;
-    private static int actualSlot;
+    public List<Item> itemList = new List<Item>();
 
-    private GameObject inventoryPanel;
     private bool inventoryState;
+    private static int lastSlotIndex, actualSlot;
 
-    private GameObject infoPanel;
+    private GameObject infoPanel, diaryPanel, inventoryPanel, player, body;
 
     GraphicRaycaster raycaster;
 
@@ -35,12 +34,17 @@ public class Inventory : MonoBehaviour
         slots = GameObject.FindGameObjectsWithTag("Slot").OrderBy(go => go.name).ToArray();
         inventoryPanel = GameObject.Find(Names.inventoryPanel);
         infoPanel = GameObject.Find(Names.infoPanel);
+        player = GameObject.Find(Names.player);
+        body = GameObject.Find(Names.playerBody);
+
+        //diaryPanel = GameObject.Find(Names.diaryPanel);
     }
 
     void Start()
     {
         inventoryPanel.SetActive(false);
         infoPanel.SetActive(false);
+        //diaryPanel.SetActive(false);
 
         lastSlotIndex = 0;
 
@@ -68,7 +72,6 @@ public class Inventory : MonoBehaviour
     //#endregion
 
 
-    public List<Item> itemList = new List<Item>();
 
     public void AddItem(Item item)
     {
@@ -118,6 +121,13 @@ public class Inventory : MonoBehaviour
     void InitializeInventory()
     {
         Inventory.inventoryInstance.AddItem(new Harpoon());
+        Vector3 harpoonPosition= body.transform.position;
+        harpoonPosition.z += 0.5f;
+        harpoonPosition.x += 0.3f;
+        harpoonPosition.y += 0.5f;
+        GameObject harpoon = (GameObject)Instantiate(Resources.Load(Names.harpoonPrefab), harpoonPosition, Quaternion.Euler(90, 0, 0));
+        harpoon.transform.parent = player.transform;
+
         Inventory.inventoryInstance.AddItem(new Diary());
     }
 

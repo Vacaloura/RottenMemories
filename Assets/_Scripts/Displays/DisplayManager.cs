@@ -5,11 +5,20 @@ using System.Collections;
 public class DisplayManager : MonoBehaviour {
 
     public Text displayText;
+    public GameObject interactText;
+
     public float displayTime;
     public float fadeTime;
 
     private IEnumerator fadeAlpha;
 
+    private void Awake()
+    {
+
+        interactText = GameObject.Find(Names.interactText);
+        interactText.SetActive(false);
+
+    }
     private static DisplayManager displayManager;
 
     public static DisplayManager Instance() {

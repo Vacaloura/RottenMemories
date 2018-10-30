@@ -8,6 +8,7 @@ public class Harpoon : Item {
 
     public Harpoon() : base("Arpón", null, "Arpón usado para cazar pequeños peces en expediciones de submarinismo.", ItemType.Harpoon)
     {
+        
     }
   
 

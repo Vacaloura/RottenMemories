@@ -9,11 +9,13 @@ public class Interactable : MonoBehaviour {
     private Transform player;
     [HideInInspector] public bool onRange = false;
 
-    public GameObject interactText;
+    private GameObject interactText;
 
     // Use this for initialization
     void Start () {
         player = GameObject.Find(Names.player).transform;
+        DisplayManager displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
+        interactText = displayManager.interactText;
     }
 	
 	// Update is called once per frame
@@ -30,9 +32,6 @@ public class Interactable : MonoBehaviour {
         if (distance < maxInteractionDistance) {
             Debug.Log("Suficientemente cerca");
             interactText.SetActive(true);
-            DisplayManager displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
-            displayManager.DisplayMessage("Debería apaerecer interactText");
-
             onRange = true;
         }
         else

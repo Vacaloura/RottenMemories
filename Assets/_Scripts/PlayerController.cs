@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour {
     public float sensitivity = 5.0f;
     private Transform playerHead;
 
+    public GameObject arrowSpawn;
+
     private void Awake()
     {
         GameObject.DontDestroyOnLoad(gameObject);
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour {
         Movement();
         PlayerInteract();
         ChangeScene();
+        Shoot();
     }
 
     void ChangeScene()
@@ -75,6 +78,24 @@ public class PlayerController : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
     }
 
+    void Shoot()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
+            if (harpoon.arrows > 0)
+            {
+                GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), arrowSpawn.transform.position, playerHead.transform.rotation);
+                arrow.GetComponent<Rigidbody>().velocity = arrow.transform.forward * 6;
+                harpoon.arrows--;
+            }
+            else
+            {
+                DisplayManager displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
+                displayManager.DisplayMessage("¡Te has quedado sin virotes!");
+            }
+        }
+    }
     /*void Vision()
     {
         var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
