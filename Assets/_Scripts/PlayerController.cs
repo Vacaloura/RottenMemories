@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
         weapon = GameObject.Find(Names.harpoon).transform;
+        weapon.Rotate(Vector3.left * 20);
+        weapon.Rotate(Vector3.up * 20);
         Cursor.lockState = CursorLockMode.Locked;
 	}
 	
@@ -83,12 +85,12 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Shoot() {
-        Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
+        /*Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         weapon.rotation = playerHead.rotation * Quaternion.Euler(90, 0, 0);
         if (Physics.Raycast(myRay, out hit)) {
-            weapon.Rotate(Vector3.right * Mathf.Atan(hit.distance / Vector3.Distance(playerHead.position, weapon.position)));
-        }
+            weapon.Rotate(Vector3.right * Mathf.Atan(Vector3.Distance(playerHead.position, weapon.position) / hit.distance));
+        }*/
         if (Input.GetMouseButtonDown(1)) {
                 Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
             if (harpoon.arrows > 0) {
