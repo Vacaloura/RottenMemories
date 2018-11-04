@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 136224274624135296}
   - component: {fileID: 54856310457647648}
   - component: {fileID: 114144589642816020}
+  - component: {fileID: 75000940801210694}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
@@ -96,11 +97,22 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!75 &75000940801210694
+ConstantForce:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1949389937102736}
+  m_Enabled: 1
+  m_Force: {x: 0, y: 2.4525, z: 0}
+  m_RelativeForce: {x: 0, y: 0, z: 0}
+  m_Torque: {x: 0, y: 0, z: 0}
+  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!114 &114144589642816020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c061de3ba02f404893039fb821cffd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInteractionDistance: 3
+  maxInteractionDistance: 7
   onRange: 0
 --- !u!136 &136224274624135296
 CapsuleCollider:

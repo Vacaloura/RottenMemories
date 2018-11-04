@@ -9,7 +9,7 @@ public class InteractItem : Interactable {
         if (transform.tag == "Arrow")
         {
             ((Harpoon)Inventory.inventoryInstance.itemList[0]).arrows++;
-            gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
         else
         {

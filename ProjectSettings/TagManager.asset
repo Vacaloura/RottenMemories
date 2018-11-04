@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Slot
   - Arrow
+  - Head
+  - Body
   layers:
   - Default
   - TransparentFX

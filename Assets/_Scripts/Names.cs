@@ -20,8 +20,5 @@ public class Names : MonoBehaviour {
     public const string arrowPrefab = "Arrow";
     public const string displayText = "DisplayText";
     public const string interactText = "InteractText";
-
-
-
-
+    public const string harpoon = "Harpoon";
 }

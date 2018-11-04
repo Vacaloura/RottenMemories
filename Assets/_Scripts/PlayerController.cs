@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     public float smoothing = 2.0f;*/
     public float sensitivity = 5.0f;
     private Transform playerHead;
+    private Transform weapon;
 
     public GameObject arrowSpawn;
 
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     void Start () {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
+        weapon = GameObject.Find(Names.harpoon).transform;
         Cursor.lockState = CursorLockMode.Locked;
 	}
 	
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log("We hitted..." + hit.collider.name);
                 Interactable myInteract;
                 try {
-                    myInteract = hit.collider.GetComponent<Interactable>();
+                    myInteract = hit.collider.transform.GetComponent<Interactable>();
                     if(myInteract.onRange)    myInteract.Interact();
                 } catch (Exception e) {
                     Debug.Log("Error: El objeto no tiene Interactable --> " + e.ToString()); //El objeto no tiene Interactable
@@ -73,24 +75,28 @@ public class PlayerController : MonoBehaviour {
 
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime);
         playerHead.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
+        weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
+
 
         if (Input.GetKeyDown("escape"))
             Cursor.lockState = CursorLockMode.None;
     }
 
-    void Shoot()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
-            if (harpoon.arrows > 0)
-            {
-                GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), arrowSpawn.transform.position, playerHead.transform.rotation);
-                arrow.GetComponent<Rigidbody>().velocity = arrow.transform.forward * 6;
+    void Shoot() {
+        Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        weapon.rotation = playerHead.rotation * Quaternion.Euler(90, 0, 0);
+        if (Physics.Raycast(myRay, out hit)) {
+            weapon.Rotate(Vector3.right * Mathf.Atan(hit.distance / Vector3.Distance(playerHead.position, weapon.position)));
+        }
+        if (Input.GetMouseButtonDown(1)) {
+                Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
+            if (harpoon.arrows > 0) {
+                GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation * Quaternion.Euler(-90, 0, 0));
+                arrow.GetComponent<Rigidbody>().velocity = arrow.transform.forward * 17;
                 harpoon.arrows--;
             }
-            else
-            {
+            else {
                 DisplayManager displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
                 displayManager.DisplayMessage("¡Te has quedado sin virotes!");
             }

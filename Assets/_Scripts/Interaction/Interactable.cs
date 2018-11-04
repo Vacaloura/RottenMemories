@@ -24,19 +24,19 @@ public class Interactable : MonoBehaviour {
     }
 
     public virtual void Interact() {
-        
+
     }
 
     private void OnMouseOver() {
         float distance = Vector3.Distance(player.position, this.transform.position);
         if (distance < maxInteractionDistance) {
-            Debug.Log("Suficientemente cerca");
             interactText.SetActive(true);
             onRange = true;
         }
         else
         {
             interactText.SetActive(false);
+            onRange = false;
         }
     }
 
