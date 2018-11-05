@@ -29,8 +29,7 @@ public class PlayerController : MonoBehaviour {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
         weapon = GameObject.Find(Names.harpoon).transform;
-        weapon.Rotate(Vector3.left * 20);
-        weapon.Rotate(Vector3.up * 20);
+        weapon.Rotate(Vector3.left * 10);
         Cursor.lockState = CursorLockMode.Locked;
 	}
 	

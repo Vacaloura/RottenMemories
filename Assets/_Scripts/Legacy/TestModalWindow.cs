@@ -24,7 +24,7 @@ public class TestModalWindow : MonoBehaviour {
     }
 
     public void TestYNC() {
-        modalPanel.Choice("Would you like a poke in the eye?\nHow about with a sharp stick?", myYesAction, myNoAction, myCancelAction);
+        modalPanel.Choice("Would you like a poke in the eye?\nHow about with a sharp stick?", myYesAction, myNoAction, myCancelAction, false);
     }
 
     //Send to the Modal Panel to set up the Buttons and Functions to call

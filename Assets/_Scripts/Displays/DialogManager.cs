@@ -13,8 +13,13 @@ public class DialogManager : MonoBehaviour {
     public Button noButton;
     public Button cancelButton;
     public GameObject modalPanelObject;
+    [HideInInspector] public static Dictionary<string, string> dialogueDB = new Dictionary<string, string>();
 
     private static DialogManager modalPanel;
+
+    private void Start() {
+        InitializeDialog();
+    }
 
     public static DialogManager Instance() {
         if (!modalPanel) {
@@ -27,7 +32,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     // Yes/No/Cancel: A string, a Yes event, a No event and Cancel event
-    public void Choice(string question, UnityAction yesEvent, UnityAction noEvent, UnityAction cancelEvent) {
+    public void Choice(string question, UnityAction yesEvent, UnityAction noEvent, UnityAction cancelEvent, bool lastDialogue) {
         modalPanelObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         modalPanelObject.transform.SetAsLastSibling();
@@ -48,14 +53,27 @@ public class DialogManager : MonoBehaviour {
         this.question.text = question;
 
         this.iconImage.gameObject.SetActive(false);
-        yesButton.gameObject.SetActive(true);
-        noButton.gameObject.SetActive(true);
-        cancelButton.gameObject.SetActive(true);
+        if (lastDialogue) {
+            yesButton.gameObject.SetActive(true);
+            noButton.gameObject.SetActive(true);
+            cancelButton.gameObject.SetActive(true);
+        } else {
+            yesButton.gameObject.SetActive(false);
+            noButton.gameObject.SetActive(false);
+            cancelButton.gameObject.SetActive(false);
+        }
     }
     
     void ClosePanel() {
         modalPanelObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+    }
 
+    public void InitializeDialog() {
+        dialogueDB.Add("NPC001_1", "Hi!");
+        dialogueDB.Add("NPC001_2", "Bye!");
+        dialogueDB.Add("NPC001_Yes", "Yes Selected");
+        dialogueDB.Add("NPC001_No", "No Selected");
+        dialogueDB.Add("NPC001_Cancel", "Cancel Selected");
     }
 }
