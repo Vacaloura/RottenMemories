@@ -70,10 +70,10 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void InitializeDialog() {
-        dialogueDB.Add("NPC001_1", "Hi!");
-        dialogueDB.Add("NPC001_2", "Bye!");
-        dialogueDB.Add("NPC001_Yes", "Yes Selected");
-        dialogueDB.Add("NPC001_No", "No Selected");
-        dialogueDB.Add("NPC001_Cancel", "Cancel Selected");
+        dialogueDB.Add("NPC001_1", "Carlos...Carlos!");
+        dialogueDB.Add("NPC001_2", "Carlos: Qué pasa? Tío, te encuentras bien?");
+        dialogueDB.Add("NPC001_Yes", "Si, como en mi vida");
+        dialogueDB.Add("NPC001_No", "La verdad es que…");
+        dialogueDB.Add("NPC001_Cancel", "Sinceramente no");
     }
 }

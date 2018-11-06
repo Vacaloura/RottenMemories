@@ -11,6 +11,11 @@ public class InteractItem : Interactable {
             ((Harpoon)Inventory.inventoryInstance.itemList[0]).arrows++;
             Destroy(this.gameObject);
         }
+        else if(transform.tag == "Food")
+        {
+            Inventory.inventoryInstance.AddItem(new Food(transform.name, "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.Roe)); //TODO tipo de comida dinámico
+            gameObject.SetActive(false);
+        }
         else
         {
             Inventory.inventoryInstance.AddItem(new Item(transform.name, "TODO", Item.ItemType.NotDefined));

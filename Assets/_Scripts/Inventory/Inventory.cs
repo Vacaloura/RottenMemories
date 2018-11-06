@@ -16,7 +16,9 @@ public class Inventory : MonoBehaviour
     public GameObject[] slots;
     public List<Item> itemList = new List<Item>();
 
-    private bool inventoryState;
+    private bool inventoryState, firstClick;
+    public float doubleClickDelta;
+    private float firstClickTime, secondClickTime;
     private static int lastSlotIndex, actualSlot;
 
     private GameObject infoPanel, diaryPanel, inventoryPanel, player;
@@ -46,6 +48,7 @@ public class Inventory : MonoBehaviour
         //diaryPanel.SetActive(false);
 
         lastSlotIndex = 0;
+        doubleClickDelta = 0.20f;
 
         this.raycaster = GameObject.Find(Names.canvas).GetComponent<GraphicRaycaster>();
 
@@ -60,6 +63,7 @@ public class Inventory : MonoBehaviour
 
         ToggleInventoryPanel();
         SelectItem();
+        UseItem();
     }
     #endregion
 
@@ -172,6 +176,52 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    void UseItem()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!firstClick)
+            {
+                firstClick = true;
+                firstClickTime = Time.time;
+            }
+            else
+            {
+                secondClickTime = Time.time; 
+                if ((secondClickTime - firstClickTime) < doubleClickDelta)
+                {
+                    PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                    List<RaycastResult> results = new List<RaycastResult>();
+
+                    //Raycast using the Graphics Raycaster and mouse click position
+                    pointerData.position = Input.mousePosition;
+                    raycaster.Raycast(pointerData, results);
+                    foreach (RaycastResult result in results)
+                    {
+                        if (result.gameObject.tag == Names.slotTag)
+                        {
+                            actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
+                            bool flag=itemList[actualSlot].Consume(player.GetComponent<PlayerController>());
+                            if (flag)
+                            {
+                                Debug.Log("Has consumido: " + itemList[actualSlot].itemName);
+                                RemoveItem();
+                            }
+                        }
+                    }
+                    firstClick = false;
+                }
+                else
+                {
+                    firstClickTime = secondClickTime;
+                }
+
+            }
+        }
+ 
+    }
+
 
     void UpdateSlots() {
         int itemNum = 0;

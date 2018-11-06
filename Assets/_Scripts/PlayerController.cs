@@ -10,6 +10,14 @@ public class PlayerController : MonoBehaviour {
     public float speed = 10.0F;
     private Camera player_camera;
 
+    private int madness;
+    public int timeIncreaseValue=5;
+    public int timeIncrease=20;
+    public int zombieAttackValue=10;
+    public int zombieAttackTime=3;
+
+    private int numberOfAtackingZombies=0;
+
     /*Vector2 mouseLook;
     Vector2 smoothV;
     public float smoothing = 2.0f;*/
@@ -31,10 +39,16 @@ public class PlayerController : MonoBehaviour {
         weapon = GameObject.Find(Names.harpoon).transform;
         weapon.Rotate(Vector3.left * 10);
         Cursor.lockState = CursorLockMode.Locked;
+        StartCoroutine("IncreaseByTime");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (madness >= 100)
+        {
+            Debug.Log("GAME OVER: Te has trasnformado en zombie");
+            Application.Quit();
+        }
         Movement();
         PlayerInteract();
         ChangeScene();
@@ -53,7 +67,6 @@ public class PlayerController : MonoBehaviour {
             Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(myRay, out hit, 100)) {
-                Debug.Log("We hitted..." + hit.collider.name);
                 Interactable myInteract;
                 try {
                     myInteract = hit.collider.transform.GetComponent<Interactable>();
@@ -115,5 +128,52 @@ public class PlayerController : MonoBehaviour {
         player_camera.transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         this.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, this.transform.up);
     }*/
+
+    public void Eat(int value)
+    {
+        madness -= value;
+        if (madness < 0) madness = 0;
+        Debug.Log("Player madness: " + madness);
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Zombie")
+        {
+            if (numberOfAtackingZombies == 0)   StartCoroutine("ZombieAttack");
+            numberOfAtackingZombies++;
+
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Zombie")
+        {
+            numberOfAtackingZombies--;
+            if(numberOfAtackingZombies==0)  StopCoroutine("ZombieAttack");
+        }
+    }
+
+    IEnumerator IncreaseByTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeIncrease);
+            madness += timeIncreaseValue;
+            Debug.Log("Player madness: " + madness);
+        }
+    }
+
+    IEnumerator ZombieAttack()
+    {
+        while (true)
+        {
+            madness += zombieAttackValue;
+            Debug.Log("Player madness: " + madness);
+            yield return new WaitForSeconds(zombieAttackTime);
+
+        }
+    }
 
 }

@@ -20,8 +20,7 @@ public class Collide : MonoBehaviour {
         displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
 
         if (col.gameObject.tag == "Arrow") {
-            displayManager.DisplayMessage("Collided with" + col.gameObject.name);
-            //col.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+            //displayManager.DisplayMessage("Collided with" + col.gameObject.name);
             col.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             Transform parent = this.transform.parent;
             col.gameObject.transform.parent = parent;

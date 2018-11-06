@@ -26,7 +26,7 @@ public class InteractPerson : Interactable {
         myCancelAction = new UnityAction(CancelFunction);
         int iterNumPlus1 = iterationNumber + 1;
 
-        if (!endDialogue) {
+        if (!endDialogue && DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterationNumber)) {
             string question = DialogManager.dialogueDB[this.transform.gameObject.name + "_" + iterationNumber];
             if (DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterNumPlus1)) {
                 GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, myYesAction, myNoAction, myCancelAction, lastDialogue);

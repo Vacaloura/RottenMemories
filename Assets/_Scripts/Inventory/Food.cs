@@ -15,11 +15,11 @@ public class Food : Item {
         NotDefined
     }
 
-    public int roeQuenchValue = 15;
+    public int roeQuenchValue = 20;
     public int rabbitQuenchValue = 10;
     public int catQuenchValue = 100;
-    public int wineQuenchValue = 0;
-    public int preeCookedQuenchValue = 5;
+    //public int wineQuenchValue = 0;
+    public int preCookedQuenchValue = 5;
 
     public Food(string name, Sprite icon, string desc, ItemType itype, FoodType ftype) : base(name, icon, desc, itype)
     {
@@ -30,28 +30,28 @@ public class Food : Item {
         this.foodType = ftype;
     }
 
-    public void Consume(PlayerController player)
+    public override bool Consume(PlayerController player)
     {
         switch (this.foodType)
         {
             case FoodType.Roe:
-                //player.eat(roeQuenchValue);
-                break;
+                player.Eat(roeQuenchValue);
+                return true;
             case FoodType.Rabbit:
-                //player.eat(rabbitQuenchValue);
-                break;
+                player.Eat(rabbitQuenchValue);
+                return true;
             case FoodType.Cat:
-                //player.eat(catQuenchValue);
-                break;
-            case FoodType.Wine:
-                //player.eat(wineQuenchValue);
-                break;
+                player.Eat(catQuenchValue);
+                return true;
+            /*case FoodType.Wine:
+                player.eat(wineQuenchValue);
+                break;*/
             case FoodType.PreCooked:
-                //player.eat(preCookedQuenchValue);
-                break;
+                player.Eat(preCookedQuenchValue);
+                return true;
             default:
                 Debug.Log("FoodType error: " + foodType);
-                break;
+                return false;
         }
     }
 }
