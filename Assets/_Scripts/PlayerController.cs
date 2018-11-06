@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
         weapon = GameObject.Find(Names.harpoon).transform;
-        weapon.Rotate(Vector3.left * 10);
+        weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
         StartCoroutine("IncreaseByTime");
     }
@@ -48,9 +48,9 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         if (madness >= 100)
         {
-            Debug.Log("GAME OVER: Te has trasnformado en zombie");
-            displayManager.DisplayMessage("GAME OVER: Te has trasnformado en zombie");
-            Application.Quit();
+            Debug.Log("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
+            displayManager.DisplayMessage("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
+            Destroy(playerHead.parent.parent.gameObject);
         }
         Movement();
         PlayerInteract();

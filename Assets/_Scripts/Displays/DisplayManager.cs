@@ -19,6 +19,13 @@ public class DisplayManager : MonoBehaviour {
         interactText.SetActive(false);
 
     }
+
+    private void Update() {
+        if (Input.GetKeyDown("escape")) {
+            Application.Quit();
+        }
+    }
+
     private static DisplayManager displayManager;
 
     public static DisplayManager Instance() {

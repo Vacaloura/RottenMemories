@@ -592,6 +592,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a2773f2ed452e4c4bba03945e5a2170d, type: 2}
+    - target: {fileID: 114807622615717898, guid: 7289241161af50941b2e74d195f65f23,
+        type: 2}
+      propertyPath: maxInteractionDistance
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7289241161af50941b2e74d195f65f23, type: 2}
   m_IsPrefabAsset: 0
@@ -639,6 +644,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4849ea77fe930834a816ddb91de5c489, type: 2}
+    - target: {fileID: 114388273445288622, guid: b7399d7fe7f31fd4facd5d67fbeb02e8,
+        type: 2}
+      propertyPath: maxInteractionDistance
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7399d7fe7f31fd4facd5d67fbeb02e8, type: 2}
   m_IsPrefabAsset: 0
@@ -1643,7 +1653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c061de3ba02f404893039fb821cffd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInteractionDistance: 3
+  maxInteractionDistance: 7
   onRange: 0
 --- !u!135 &768805227
 SphereCollider:
@@ -2638,6 +2648,48 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 977688277}
   m_CullTransparentMesh: 0
+--- !u!1001 &979423895
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 5.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 13.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 16.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.082895614
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.76616395
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.10093512
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.62923235
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616659451367722, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9aad0fbaedcd9848a4404fca2665368, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &1067450334
 Prefab:
   m_ObjectHideFlags: 0
@@ -3330,7 +3382,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1262041474}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 7.97, y: 1.55, z: 17.28}
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
@@ -3338,7 +3390,7 @@ Transform:
   - {fileID: 1925201851}
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1301627375
 GameObject:
   m_ObjectHideFlags: 0
@@ -4717,7 +4769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c061de3ba02f404893039fb821cffd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInteractionDistance: 5
+  maxInteractionDistance: 7
   onRange: 0
 --- !u!1 &1692080146
 GameObject:

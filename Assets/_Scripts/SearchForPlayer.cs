@@ -17,11 +17,13 @@ public class SearchForPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Vector3.Distance(GameObject.Find(Names.player).transform.position, this.transform.position) < maxInteractionDistance) {
-            myNavAgent.isStopped = false;
-            myNavAgent.destination = target.position;
-        } else {
-            myNavAgent.isStopped = true;
+        if (GameObject.Find(Names.player)) {
+            if (Vector3.Distance(GameObject.Find(Names.player).transform.position, this.transform.position) < maxInteractionDistance) {
+                myNavAgent.isStopped = false;
+                myNavAgent.destination = target.position;
+            } else {
+                myNavAgent.isStopped = true;
+            }
         }
 	}
 }
