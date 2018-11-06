@@ -9,9 +9,9 @@ public class DialogManager : MonoBehaviour {
 
     public Text question;
     public Image iconImage;
-    public Button yesButton;
-    public Button noButton;
-    public Button cancelButton;
+    public Button aButton;
+    public Button bButton;
+    public Button cButton;
     public GameObject modalPanelObject;
     [HideInInspector] public static Dictionary<string, string> dialogueDB = new Dictionary<string, string>();
 
@@ -32,35 +32,40 @@ public class DialogManager : MonoBehaviour {
     }
 
     // Yes/No/Cancel: A string, a Yes event, a No event and Cancel event
-    public void Choice(string question, UnityAction yesEvent, UnityAction noEvent, UnityAction cancelEvent, bool lastDialogue) {
+    public void Choice(string question, UnityAction DialogEventA, UnityAction DialogEventB, UnityAction DialogEventC, bool lastDialogue, string npcName) {
         modalPanelObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         modalPanelObject.transform.SetAsLastSibling();
 
 
-        yesButton.onClick.RemoveAllListeners();
-        yesButton.onClick.AddListener(yesEvent);
-        yesButton.onClick.AddListener(ClosePanel);
+        aButton.onClick.RemoveAllListeners();
+        aButton.onClick.AddListener(DialogEventA);
+        aButton.onClick.AddListener(ClosePanel);
 
-        noButton.onClick.RemoveAllListeners();
-        noButton.onClick.AddListener(noEvent);
-        noButton.onClick.AddListener(ClosePanel);
+        bButton.onClick.RemoveAllListeners();
+        bButton.onClick.AddListener(DialogEventB);
+        bButton.onClick.AddListener(ClosePanel);
 
-        cancelButton.onClick.RemoveAllListeners();
-        cancelButton.onClick.AddListener(cancelEvent);
-        cancelButton.onClick.AddListener(ClosePanel);
+        cButton.onClick.RemoveAllListeners();
+        cButton.onClick.AddListener(DialogEventC);
+        cButton.onClick.AddListener(ClosePanel);
+
 
         this.question.text = question;
 
         this.iconImage.gameObject.SetActive(false);
         if (lastDialogue) {
-            yesButton.gameObject.SetActive(true);
-            noButton.gameObject.SetActive(true);
-            cancelButton.gameObject.SetActive(true);
-        } else {
-            yesButton.gameObject.SetActive(false);
-            noButton.gameObject.SetActive(false);
-            cancelButton.gameObject.SetActive(false);
+            aButton.gameObject.SetActive(true);
+            aButton.GetComponentInChildren<Text>().text = dialogueDB[npcName + "_" + "A"];
+            bButton.gameObject.SetActive(true);
+            bButton.GetComponentInChildren<Text>().text = dialogueDB[npcName + "_" + "B"];
+            cButton.gameObject.SetActive(true);
+            cButton.GetComponentInChildren<Text>().text = dialogueDB[npcName + "_" + "C"];
+        }
+        else {
+            aButton.gameObject.SetActive(false);
+            bButton.gameObject.SetActive(false);
+            cButton.gameObject.SetActive(false);
         }
     }
     
@@ -72,8 +77,11 @@ public class DialogManager : MonoBehaviour {
     public void InitializeDialog() {
         dialogueDB.Add("NPC001_1", "Carlos...Carlos!");
         dialogueDB.Add("NPC001_2", "Carlos: Qué pasa? Tío, te encuentras bien?");
-        dialogueDB.Add("NPC001_Yes", "Si, como en mi vida");
-        dialogueDB.Add("NPC001_No", "La verdad es que…");
-        dialogueDB.Add("NPC001_Cancel", "Sinceramente no");
+        dialogueDB.Add("NPC001_A", "Si, como en mi vida");
+        dialogueDB.Add("NPC001_B", "La verdad es que…");
+        dialogueDB.Add("NPC001_C", "Sinceramente no");
+        dialogueDB.Add("NPC001_AR", "Carlos: Al final el zombie no te hizo nada? Me pareció ver...Da igual...");
+        dialogueDB.Add("NPC001_BR", "Carlos: Lo sabía, te mordió.");
+        dialogueDB.Add("NPC001_CR", "Carlos: Estás herido?");
     }
 }

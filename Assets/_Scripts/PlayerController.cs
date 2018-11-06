@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
         weapon.Rotate(Vector3.left * 10);
         Cursor.lockState = CursorLockMode.Locked;
         StartCoroutine("IncreaseByTime");
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
