@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     public int zombieAttackValue=10;
     public int zombieAttackTime=3;
 
+    private DisplayManager displayManager;
     private int numberOfAtackingZombies=0;
 
     /*Vector2 mouseLook;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
         weapon = GameObject.Find(Names.harpoon).transform;
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour {
         if (madness >= 100)
         {
             Debug.Log("GAME OVER: Te has trasnformado en zombie");
+            displayManager.DisplayMessage("GAME OVER: Te has trasnformado en zombie");
             Application.Quit();
         }
         Movement();
@@ -111,7 +114,6 @@ public class PlayerController : MonoBehaviour {
                 harpoon.arrows--;
             }
             else {
-                DisplayManager displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
                 displayManager.DisplayMessage("¡Te has quedado sin virotes!");
             }
         }
@@ -134,6 +136,7 @@ public class PlayerController : MonoBehaviour {
         madness -= value;
         if (madness < 0) madness = 0;
         Debug.Log("Player madness: " + madness);
+        displayManager.DisplayMessage("Player madness: " + madness);
     }
 
     void OnTriggerEnter(Collider col)
@@ -162,6 +165,7 @@ public class PlayerController : MonoBehaviour {
             yield return new WaitForSeconds(timeIncrease);
             madness += timeIncreaseValue;
             Debug.Log("Player madness: " + madness);
+            displayManager.DisplayMessage("Player madness: " + madness);
         }
     }
 
@@ -171,8 +175,8 @@ public class PlayerController : MonoBehaviour {
         {
             madness += zombieAttackValue;
             Debug.Log("Player madness: " + madness);
+            displayManager.DisplayMessage("Player madness: " + madness);
             yield return new WaitForSeconds(zombieAttackTime);
-
         }
     }
 

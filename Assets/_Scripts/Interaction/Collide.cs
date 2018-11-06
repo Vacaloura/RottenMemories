@@ -16,31 +16,34 @@ public class Collide : MonoBehaviour {
 		
 	}
 
-    void OnCollisionEnter(Collision col) {
+    void OnTriggerEnter(Collider col) {
         displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
 
-        if (col.gameObject.tag == "Arrow") {
-            //displayManager.DisplayMessage("Collided with" + col.gameObject.name);
-            col.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            Transform parent = this.transform.parent;
-            col.gameObject.transform.parent = parent;
-            if (transform.tag == "Head") {
-                parent.gameObject.GetComponent<InteractPerson>().life = 0;
-            } else {
-                parent.gameObject.GetComponent<InteractPerson>().life -= 25;
-            }
-            if (parent.gameObject.GetComponent<InteractPerson>().life == 0) {
-                foreach (Transform child in parent) {
-                    if (child.tag == "Head" || child.tag == "Body") {
-                        Destroy(child.gameObject);
-                    } else {
-                        child.GetComponent<Rigidbody>().isKinematic = false;
-                    }
+        if (transform.tag == "Head" || transform.tag == "Body") {
+            if (col.gameObject.tag == "Arrow") {
+                //displayManager.DisplayMessage("Collided with" + col.gameObject.name);
+                col.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                Transform parent = this.transform.parent;
+                col.gameObject.transform.parent = parent;
+                if (transform.tag == "Head") {
+                    parent.gameObject.GetComponent<InteractPerson>().life = 0;
+                } else {
+                    parent.gameObject.GetComponent<InteractPerson>().life -= 25;
                 }
-                parent.DetachChildren();
-                Destroy(parent.gameObject);
+                if (parent.gameObject.GetComponent<InteractPerson>().life == 0) {
+                    foreach (Transform child in parent) {
+                        if (child.tag == "Head" || child.tag == "Body") {
+                            Destroy(child.gameObject);
+                        } else {
+                            child.GetComponent<Rigidbody>().isKinematic = false;
+                        }
+                    }
+                    parent.DetachChildren();
+                    Destroy(parent.gameObject);
+                }
+                Debug.Log("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
+                displayManager.DisplayMessage("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
             }
-            Debug.Log("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
         }
     }
 }

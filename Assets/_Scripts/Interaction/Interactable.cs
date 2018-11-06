@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour {
 
-    public float maxInteractionDistance = 3f;
+    public float maxInteractionDistance = 5f;
     private Transform player;
     [HideInInspector] public bool onRange = false;
 
