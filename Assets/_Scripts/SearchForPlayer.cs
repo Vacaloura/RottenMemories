@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public class SearchForPlayer : MonoBehaviour {
 
     public Transform target;
-    public float maxInteractionDistance = 50f;
+    public float maxAttackDistance = 50f;
+    public float minAttackDistance = 1.5f;
 
     private NavMeshAgent myNavAgent;
 
@@ -18,9 +19,10 @@ public class SearchForPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (GameObject.Find(Names.player)) {
-            if (Vector3.Distance(GameObject.Find(Names.player).transform.position, this.transform.position) < maxInteractionDistance) {
+            if (Vector3.Distance(GameObject.Find(Names.player).transform.position, this.transform.position) < maxAttackDistance && Vector3.Distance(GameObject.Find(Names.player).transform.position, this.transform.position) > minAttackDistance) {
                 myNavAgent.isStopped = false;
                 myNavAgent.destination = target.position;
+
             } else {
                 myNavAgent.isStopped = true;
             }

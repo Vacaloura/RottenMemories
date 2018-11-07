@@ -21,5 +21,6 @@ public class InteractItem : Interactable {
             Inventory.inventoryInstance.AddItem(new Item(transform.name, "TODO", Item.ItemType.NotDefined));
             gameObject.SetActive(false);
         }
+        GameObject.Find(Names.managers).GetComponent<DisplayManager>().interactText.SetActive(false);
     }
 }

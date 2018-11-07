@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DisplayManager : MonoBehaviour {
 
@@ -24,6 +25,7 @@ public class DisplayManager : MonoBehaviour {
         if (Input.GetKeyDown("escape")) {
             Application.Quit();
         }
+        ChangeScene();
     }
 
     private static DisplayManager displayManager;
@@ -65,5 +67,10 @@ public class DisplayManager : MonoBehaviour {
             yield return null;
         }
         yield return null;
+    }
+
+    void ChangeScene() {
+        if (Input.GetKeyDown(KeyCode.RightArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

@@ -20,28 +20,30 @@ public class Interactable : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-    }
+        if (this.transform.tag == "Zombie") return;
+        }
 
     public virtual void Interact() {
 
     }
 
     private void OnMouseOver() {
-        float distance = Vector3.Distance(player.position, this.transform.position);
-        if (distance < maxInteractionDistance) {
-            interactText.SetActive(true);
-            onRange = true;
-        }
-        else
-        {
-            interactText.SetActive(false);
-            onRange = false;
+        if (this.transform.tag != "Zombie") {
+            float distance = Vector3.Distance(player.position, this.transform.position);
+            if (distance < maxInteractionDistance && !onRange) {
+                interactText.SetActive(true);
+                onRange = true;
+            } else if (distance > maxInteractionDistance && onRange) {
+                interactText.SetActive(false);
+                onRange = false;
+            }
         }
     }
 
     private void OnMouseExit() {
-        interactText.SetActive(false);
-        onRange = false;
+        if (onRange) {
+            interactText.SetActive(false);
+            onRange = false;
+        }
     }
 }

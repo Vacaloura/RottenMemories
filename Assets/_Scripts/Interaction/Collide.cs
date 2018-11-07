@@ -39,6 +39,7 @@ public class Collide : MonoBehaviour {
                         }
                     }
                     parent.DetachChildren();
+                    GameObject.Find(Names.managers).GetComponent<DisplayManager>().interactText.SetActive(false);
                     Destroy(parent.gameObject);
                 }
                 Debug.Log("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);

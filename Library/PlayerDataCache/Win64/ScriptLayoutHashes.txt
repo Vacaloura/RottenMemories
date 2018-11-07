@@ -1,6 +1,6 @@
 WindowsStandalone
 PlayerPath?
-C:/Users/David/Desktop/Windows_v1/RottenMemories.exe
+C:/Users/David/Desktop/Windows_v2/RottenMemories.exe
 SceneListBegin?
 Assets/_Scenes/outside.unity
 SceneListEnd?
@@ -22,7 +22,7 @@ c7dd12c15208b0447e101f80038706df UnityEngine.Timeline.dll:UnityEngine.Timeline.A
 f6637497451c9a030c421de4a1ad5cdb Unity.TextMeshPro.dll:TMPro.TMP_ScrollbarEventHandler
 5573df4e093d9cdc7df10ba85c4d5ddd Assembly-CSharp.dll:.SelectOnInput
 b14b4630cc47b6e9ea8a644551a6a8cc Unity.TextMeshPro.dll:TMPro.TMP_Text
-0e54de3d359deacc50a9379481a46771 Assembly-CSharp.dll:.PlayerController
+17c617acb8ec32e19993432d9f231414 Assembly-CSharp.dll:.PlayerController
 53cefe5d98cadefbab750835e70b89c0 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 486cd95c82d8305219c352c06b776e1f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 da2091a04d360891450faf16cdf621f1 UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -126,7 +126,7 @@ e1ea12ca952c81d81a9a21fdf34446ed UnityEngine.HoloLens.dll:UnityEngine.EventSyste
 98d69a140ec0084cde3b6a5e09aea295 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 96f3ea9f23b6f08e60710ebb4af49174 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
-1ba2e901c70ed9dcff1f51775ca3b083 Assembly-CSharp.dll:.SearchForPlayer
+4708168544b7af1a40da6dcd9f611876 Assembly-CSharp.dll:.SearchForPlayer
 f16835701e71dd5d6fb1fed4b7aff1d8 Unity.TextMeshPro.dll:TMPro.TMP_Asset
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.Names
 a6f9d51962489324989b58fe63233839 Assembly-CSharp.dll:.Interactable

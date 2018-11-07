@@ -7,6 +7,7 @@ public class Names : MonoBehaviour {
     public const string playerBody = "Body";
     public const string playerHead = "Head";
     public const string playerCamera = "PlayerCamera";
+    public const string harpoon = "Harpoon";
 
     public const string managers = "Managers";
     public const string inventoryPanel = "InventoryPanel";
@@ -19,6 +20,6 @@ public class Names : MonoBehaviour {
     public const string harpoonPrefab = "Harpoon";
     public const string arrowPrefab = "Arrow";
     public const string displayText = "DisplayText";
-    public const string interactText = "InteractText";
-    public const string harpoon = "Harpoon";
+    public const string interactText = "InteractTextPanel";
+    public const string endCamera = "EndCamera";
 }

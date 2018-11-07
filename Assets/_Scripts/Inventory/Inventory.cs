@@ -139,6 +139,8 @@ public class Inventory : MonoBehaviour
 
         if (Input.GetKeyDown("tab"))
         {
+            GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = inventoryState;
+
             inventoryPanel.SetActive(!inventoryState);
             if (!inventoryState)
             {

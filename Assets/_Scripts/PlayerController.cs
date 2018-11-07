@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.SceneManagement;
 
 
 public class PlayerController : MonoBehaviour {
@@ -15,6 +14,7 @@ public class PlayerController : MonoBehaviour {
     public int timeIncrease=20;
     public int zombieAttackValue=10;
     public int zombieAttackTime=3;
+    [HideInInspector] public bool playerControl = true;
 
     private DisplayManager displayManager;
     private int numberOfAtackingZombies=0;
@@ -25,8 +25,7 @@ public class PlayerController : MonoBehaviour {
     public float sensitivity = 5.0f;
     private Transform playerHead;
     private Transform weapon;
-
-    public GameObject arrowSpawn;
+    private GameObject endCamera;
 
     private void Awake()
     {
@@ -39,6 +38,8 @@ public class PlayerController : MonoBehaviour {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
         weapon = GameObject.Find(Names.harpoon).transform;
+        endCamera = GameObject.Find(Names.endCamera);
+        endCamera.SetActive(false);
         weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
         StartCoroutine("IncreaseByTime");
@@ -50,20 +51,20 @@ public class PlayerController : MonoBehaviour {
         {
             Debug.Log("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
             displayManager.DisplayMessage("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
+            endCamera.SetActive(true);
             Destroy(playerHead.parent.parent.gameObject);
         }
-        Movement();
+        if (playerControl) {
+            Movement();
+            Shoot();
+        }
         PlayerInteract();
-        ChangeScene();
-        Shoot();
+
+        if (Input.GetKeyDown("escape")) {
+            playerControl = false;
+        }
     }
 
-    void ChangeScene()
-    {
-        if(Input.GetKeyDown(KeyCode.RightArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-
-    }
 
     void PlayerInteract() {
         if (Input.GetKeyDown(KeyCode.E)) {
@@ -118,24 +119,12 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-    /*void Vision()
-    {
-        var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-
-        md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
-        smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
-        smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
-        mouseLook += smoothV;
-
-        player_camera.transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
-        this.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, this.transform.up);
-    }*/
 
     public void Eat(int value)
     {
         madness -= value;
         if (madness < 0) madness = 0;
-        Debug.Log("Player madness: " + madness);
+        Debug.Log("Player madness1: " + madness);
         displayManager.DisplayMessage("Player madness: " + madness);
     }
 
@@ -143,9 +132,10 @@ public class PlayerController : MonoBehaviour {
     {
         if (col.gameObject.tag == "Zombie")
         {
-            if (numberOfAtackingZombies == 0)   StartCoroutine("ZombieAttack");
-            numberOfAtackingZombies++;
-
+            if (numberOfAtackingZombies == 0) {
+                numberOfAtackingZombies++;
+                StartCoroutine("ZombieAttack");
+            } else   numberOfAtackingZombies++;
         }
     }
 
@@ -164,7 +154,7 @@ public class PlayerController : MonoBehaviour {
         {
             yield return new WaitForSeconds(timeIncrease);
             madness += timeIncreaseValue;
-            Debug.Log("Player madness: " + madness);
+            Debug.Log("Player madness2: " + madness);
             displayManager.DisplayMessage("Player madness: " + madness);
         }
     }
@@ -173,11 +163,10 @@ public class PlayerController : MonoBehaviour {
     {
         while (true)
         {
-            madness += zombieAttackValue;
-            Debug.Log("Player madness: " + madness);
+            madness += numberOfAtackingZombies * zombieAttackValue;
+            Debug.Log("Player madness3: " + madness);
             displayManager.DisplayMessage("Player madness: " + madness);
             yield return new WaitForSeconds(zombieAttackTime);
         }
     }
-
 }
