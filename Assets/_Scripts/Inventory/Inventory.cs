@@ -8,7 +8,8 @@ using System;
 
 public class Inventory : MonoBehaviour
 {
-    //TODO añadir con qué empieza el personaje en PlayerController
+    public AudioClip SelectedSound;
+    private AudioSource source = null;
 
     #region SINGLETON INVENTORY BEHAVIOUR
     public static Inventory inventoryInstance;
@@ -20,6 +21,7 @@ public class Inventory : MonoBehaviour
     public float doubleClickDelta;
     private float firstClickTime, secondClickTime;
     private static int lastSlotIndex, actualSlot;
+    private static int diaryPage = 0;
 
     private GameObject infoPanel, diaryPanel, inventoryPanel, player;
 
@@ -36,7 +38,13 @@ public class Inventory : MonoBehaviour
         slots = GameObject.FindGameObjectsWithTag("Slot").OrderBy(go => go.name).ToArray();
         inventoryPanel = GameObject.Find(Names.inventoryPanel);
         infoPanel = GameObject.Find(Names.infoPanel);
+        diaryPanel = GameObject.Find(Names.diaryPanel);
         player = GameObject.Find(Names.player);
+        try
+        {
+            source = player.GetComponent<AudioSource>();
+        }
+        catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
 
         //diaryPanel = GameObject.Find(Names.diaryPanel);
     }
@@ -45,7 +53,7 @@ public class Inventory : MonoBehaviour
     {
         inventoryPanel.SetActive(false);
         infoPanel.SetActive(false);
-        //diaryPanel.SetActive(false);
+        diaryPanel.SetActive(false);
 
         lastSlotIndex = 0;
         doubleClickDelta = 0.20f;
@@ -53,7 +61,6 @@ public class Inventory : MonoBehaviour
         this.raycaster = GameObject.Find(Names.canvas).GetComponent<GraphicRaycaster>();
 
         InitializeInventory();
-        CreateAvailableItems();
 
     }
 
@@ -110,16 +117,6 @@ public class Inventory : MonoBehaviour
         UpdateSlots();
     }
 
-    public void RemoveItem()
-    {
-        itemList.RemoveAt(actualSlot);
-
-        GameObject slot = slots[actualSlot];
-        slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
-        slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
-        infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
-        UpdateSlots();
-    }
 
     void InitializeInventory()
     {
@@ -149,6 +146,7 @@ public class Inventory : MonoBehaviour
             else Cursor.lockState = CursorLockMode.Locked;
 
             infoPanel.SetActive(false);
+            diaryPanel.SetActive(false);
 
         }
 
@@ -170,9 +168,20 @@ public class Inventory : MonoBehaviour
                 {
                     if(result.gameObject.tag == Names.slotTag)
                     {
-                        infoPanel.SetActive(true);
+                        source.PlayOneShot(SelectedSound);
                         actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
-                        infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemDescription;
+                        if (itemList[actualSlot].itemType == Item.ItemType.Diary)
+                        {
+                            infoPanel.SetActive(false);
+                            diaryPanel.SetActive(true);
+                            diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[actualSlot]).ReadPage(diaryPage);
+                        }
+                        else
+                        {
+                            diaryPanel.SetActive(false);
+                            infoPanel.SetActive(true);
+                            infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemDescription;
+                        }
                     }
                 }
             }
@@ -239,8 +248,24 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void CreateAvailableItems()
+    public void RemoveItem()
     {
+        itemList.RemoveAt(actualSlot);
 
+        GameObject slot = slots[actualSlot];
+        slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
+        slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+        infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
+        UpdateSlots();
+    }
+
+    public void ReadNextPage()
+    {
+        if(((Diary)itemList[1]).hasNext(diaryPage)) diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(++diaryPage);
+    }
+
+    public void ReadPreviousPage()
+    {
+        if (((Diary)itemList[1]).hasPrevious(diaryPage)) diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(--diaryPage);
     }
 }

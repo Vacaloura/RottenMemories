@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SearchForPlayer : MonoBehaviour {
+public class ZombieController : MonoBehaviour {
 
     public Transform target;
     public float maxAttackDistance = 50f;

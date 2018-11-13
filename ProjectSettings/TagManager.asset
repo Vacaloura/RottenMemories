@@ -10,6 +10,7 @@ TagManager:
   - Body
   - Food
   - Zombie
+  - DiaryPage
   layers:
   - Default
   - TransparentFX

@@ -15,6 +15,9 @@ public class Food : Item {
         NotDefined
     }
 
+    public AudioClip EatingSound;
+    private AudioSource source = null;
+
     public int roeQuenchValue = 20;
     public int rabbitQuenchValue = 10;
     public int catQuenchValue = 100;
@@ -32,22 +35,32 @@ public class Food : Item {
 
     public override bool Consume(PlayerController player)
     {
+        try
+        {
+            source = GameObject.Find(Names.player).GetComponent<AudioSource>();
+        }
+        catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
+
         switch (this.foodType)
         {
             case FoodType.Roe:
                 player.Eat(roeQuenchValue);
+                source.PlayOneShot(EatingSound);
                 return true;
             case FoodType.Rabbit:
                 player.Eat(rabbitQuenchValue);
+                source.PlayOneShot(EatingSound);
                 return true;
             case FoodType.Cat:
                 player.Eat(catQuenchValue);
+                source.PlayOneShot(EatingSound);
                 return true;
             /*case FoodType.Wine:
                 player.eat(wineQuenchValue);
                 break;*/
             case FoodType.PreCooked:
                 player.Eat(preCookedQuenchValue);
+                source.PlayOneShot(EatingSound);
                 return true;
             default:
                 Debug.Log("FoodType error: " + foodType);

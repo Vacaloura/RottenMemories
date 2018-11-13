@@ -87,7 +87,7 @@ AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Music
+  m_Name: Ambient
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 7e263b87c6f4d4e4ea7736d6ce2fb252
   m_Children: []

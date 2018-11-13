@@ -19,6 +19,14 @@ public class PlayerController : MonoBehaviour {
     private DisplayManager displayManager;
     private int numberOfAtackingZombies=0;
 
+    public AudioClip ShootSound;
+    public AudioClip DamageDealt;
+    public AudioClip MovingSound;
+    public AudioClip AmbientSound;
+
+    private AudioSource source = null;
+    bool moving = false;
+
     /*Vector2 mouseLook;
     Vector2 smoothV;
     public float smoothing = 2.0f;*/
@@ -43,6 +51,12 @@ public class PlayerController : MonoBehaviour {
         weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
         StartCoroutine("IncreaseByTime");
+        playerHead.GetComponent<AudioSource>().PlayOneShot(AmbientSound);
+        try
+        {
+            source = GetComponent<AudioSource>();
+        }
+        catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
     }
 	
 	// Update is called once per frame
@@ -83,11 +97,25 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Movement() {
-
         float translation = Input.GetAxis("Vertical") * speed;
         float straffe = Input.GetAxis("Horizontal") * speed;
         translation *= Time.deltaTime;
         straffe *= Time.deltaTime;
+
+        if (translation != 0 || straffe != 0)
+        {
+            if (!moving)
+            {
+                moving = true;
+                source.PlayOneShot(MovingSound);
+            }
+        }
+        else
+        {
+            moving = false;
+            source.Stop();
+
+        }
 
         transform.Translate(straffe, 0, translation);
 
@@ -112,6 +140,7 @@ public class PlayerController : MonoBehaviour {
             if (harpoon.arrows > 0) {
                 GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation * Quaternion.Euler(-90, 0, 0));
                 arrow.GetComponent<Rigidbody>().velocity = arrow.transform.forward * 17;
+                source.PlayOneShot(ShootSound);
                 harpoon.arrows--;
             }
             else {
@@ -164,6 +193,7 @@ public class PlayerController : MonoBehaviour {
         while (true)
         {
             madness += numberOfAtackingZombies * zombieAttackValue;
+            source.PlayOneShot(DamageDealt);
             Debug.Log("Player madness3: " + madness);
             displayManager.DisplayMessage("Player madness: " + madness);
             yield return new WaitForSeconds(zombieAttackTime);
