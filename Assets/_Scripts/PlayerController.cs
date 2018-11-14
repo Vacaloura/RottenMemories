@@ -102,6 +102,11 @@ public class PlayerController : MonoBehaviour {
         translation *= Time.deltaTime;
         straffe *= Time.deltaTime;
 
+        Vector3 temp;
+        temp = this.transform.GetChild(0).position;
+        this.transform.position = this.transform.GetChild(0).position;
+        this.transform.GetChild(0).position = temp;
+
         if (translation != 0 || straffe != 0)
         {
             if (!moving)
@@ -114,7 +119,6 @@ public class PlayerController : MonoBehaviour {
         {
             moving = false;
             source.Stop();
-
         }
 
         transform.Translate(straffe, 0, translation);
