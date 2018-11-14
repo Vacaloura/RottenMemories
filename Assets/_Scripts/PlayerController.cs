@@ -6,7 +6,8 @@ using System;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed = 10.0F;
+    public float speed = 10.0f;
+    public float thrust = 20.0f;
     private Camera player_camera;
 
     private int madness;
@@ -142,8 +143,9 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
                 Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
             if (harpoon.arrows > 0) {
-                GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation * Quaternion.Euler(-90, 0, 0));
-                arrow.GetComponent<Rigidbody>().velocity = arrow.transform.forward * 17;
+                GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation);
+                //arrow.GetComponent<Rigidbody>().velocity = arrow.transform.up * 17;
+                arrow.GetComponent<Rigidbody>().AddForce(arrow.transform.up*thrust);
                 source.PlayOneShot(ShootSound);
                 harpoon.arrows--;
             }

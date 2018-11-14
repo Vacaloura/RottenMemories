@@ -20,8 +20,11 @@ public class InteractItem : Interactable {
         if (transform.tag == "Arrow")
         {
             ((Harpoon)Inventory.inventoryInstance.itemList[0]).arrows++;
-            source.PlayOneShot(InteractSound);
-            Destroy(this.gameObject);
+            Debug.Log(InteractSound.name);
+            //source.clip = InteractSound;
+            //source.Play();
+            source.PlayOneShot(InteractSound, 1.0f);
+            StartCoroutine("DestroyObject");
         }
         else if(transform.tag == "Food")
         {
@@ -62,5 +65,12 @@ public class InteractItem : Interactable {
             default:
                 break;
         }
+    }
+
+    IEnumerator DestroyObject()
+    {
+       
+        yield return new WaitForSeconds(2);
+        Destroy(this.gameObject);
     }
 }
