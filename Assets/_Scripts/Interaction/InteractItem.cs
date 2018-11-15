@@ -24,19 +24,25 @@ public class InteractItem : Interactable {
             //source.clip = InteractSound;
             //source.Play();
             source.PlayOneShot(InteractSound, 1.0f);
+            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             StartCoroutine("DestroyObject");
         }
         else if(transform.tag == "Food")
         {
             Inventory.inventoryInstance.AddItem(new Food(transform.name, "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.Roe)); //TODO tipo de comida dinámico
             source.PlayOneShot(InteractSound);
-            gameObject.SetActive(false);
+            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            StartCoroutine("DestroyObject");
         }
         else if (transform.tag == "DiaryPage")
         {
             ((Diary)Inventory.inventoryInstance.itemList[1]).AddPage((int)System.Char.GetNumericValue(this.transform.name[this.transform.name.Length-1]));
             source.PlayOneShot(InteractSound);
-            gameObject.SetActive(false);
+            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            StartCoroutine("DestroyObject");
         }
         else if (transform.tag == "Furniture")
         {
