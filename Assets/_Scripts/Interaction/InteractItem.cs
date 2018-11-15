@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class InteractItem : Interactable {
 
-    public AudioClip ArrowNail;
     public AudioClip InteractSound;
-    public AudioClip OpenDoor;
 
     private AudioSource source = null;
 
@@ -20,9 +18,6 @@ public class InteractItem : Interactable {
         if (transform.tag == "Arrow")
         {
             ((Harpoon)Inventory.inventoryInstance.itemList[0]).arrows++;
-            Debug.Log(InteractSound.name);
-            //source.clip = InteractSound;
-            //source.Play();
             source.PlayOneShot(InteractSound, 1.0f);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
@@ -46,7 +41,7 @@ public class InteractItem : Interactable {
         }
         else if (transform.tag == "Furniture")
         {
-            source.PlayOneShot(OpenDoor);
+            source.PlayOneShot(InteractSound);
         }
         else
         {
@@ -55,22 +50,6 @@ public class InteractItem : Interactable {
             gameObject.SetActive(false);
         }
         GameObject.Find(Names.managers).GetComponent<DisplayManager>().interactText.SetActive(false);
-    }
-
-    public void OnCollisionEnter(Collision collision)
-    {
-        try
-        {
-            source = GetComponent<AudioSource>();
-        }   catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
-        switch (this.tag)
-        {
-            case Names.arrowtag:
-                source.PlayOneShot(ArrowNail);
-                break;
-            default:
-                break;
-        }
     }
 
     IEnumerator DestroyObject()

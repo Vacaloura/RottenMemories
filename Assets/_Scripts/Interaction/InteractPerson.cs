@@ -20,14 +20,14 @@ public class InteractPerson : Interactable {
 
     public override void Interact() {
         base.Interact();
-        displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
         DialogActionA = new UnityAction(DialogFunctionA);
         DialogActionB = new UnityAction(DialogFunctionB);
         DialogActionC = new UnityAction(DialogFunctionC);
         int iterNumPlus1 = iterationNumber + 1;
 
         if (!endDialogue && DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterationNumber)) {
-            GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
+            PlayerController.playerControllerInstance.isTalking = true;
+            PlayerController.playerControllerInstance.playerControl = false;
             string question = DialogManager.dialogueDB[this.transform.gameObject.name + "_" + iterationNumber];
             if (DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterNumPlus1)) {
                 GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, DialogActionA, DialogActionB, DialogActionC, lastDialogue, this.transform.gameObject.name);
@@ -42,20 +42,25 @@ public class InteractPerson : Interactable {
 
     void DialogFunctionA()
     {
-        displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "AR"]);
-        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
+        DisplayManager.displayManagerInstance.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "AR"]);
+        PlayerController.playerControllerInstance.playerControl = true;
+        PlayerController.playerControllerInstance.isTalking = false;
+
     }
 
     void DialogFunctionB()
     {
-        displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "BR"]);
-        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
+        DisplayManager.displayManagerInstance.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "BR"]);
+        PlayerController.playerControllerInstance.playerControl = true;
+        PlayerController.playerControllerInstance.isTalking = false;
     }
 
     void DialogFunctionC()
     {
-        displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "CR"]);
-        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
+        DisplayManager.displayManagerInstance.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "CR"]);
+        PlayerController.playerControllerInstance.playerControl = true;
+        PlayerController.playerControllerInstance.isTalking = false;
+
     }
 
 

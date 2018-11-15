@@ -14,8 +14,7 @@ public class Interactable : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player = GameObject.Find(Names.player).transform;
-        DisplayManager displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
-        interactText = displayManager.interactText;
+        interactText = DisplayManager.displayManagerInstance.interactText;
     }
 	
 	// Update is called once per frame
@@ -30,7 +29,7 @@ public class Interactable : MonoBehaviour {
     private void OnMouseOver() {
         if (this.transform.tag != "Zombie") {
             float distance = Vector3.Distance(player.position, this.transform.position);
-            if (distance < maxInteractionDistance && !onRange) {
+            if (distance < maxInteractionDistance && !onRange && !Inventory.inventoryInstance.inventoryPreviousState) {
                 interactText.SetActive(true);
                 onRange = true;
             } else if (distance > maxInteractionDistance && onRange) {

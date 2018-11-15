@@ -12,12 +12,13 @@ public class Inventory : MonoBehaviour
     private AudioSource source = null;
 
     #region SINGLETON INVENTORY BEHAVIOUR
-    public static Inventory inventoryInstance;
+    [HideInInspector] public static Inventory inventoryInstance;
 
     public GameObject[] slots;
     public List<Item> itemList = new List<Item>();
 
-    private bool inventoryState, firstClick;
+    [HideInInspector] public bool inventoryPreviousState;
+    private bool firstClick;
     public float doubleClickDelta;
     private float firstClickTime, secondClickTime;
     private static int lastSlotIndex, actualSlot;
@@ -66,7 +67,7 @@ public class Inventory : MonoBehaviour
 
     public void Update()
     {
-        inventoryState = inventoryPanel.activeSelf;
+        inventoryPreviousState = inventoryPanel.activeSelf;
 
         ToggleInventoryPanel();
         SelectItem();
@@ -134,13 +135,14 @@ public class Inventory : MonoBehaviour
     void ToggleInventoryPanel()
     { //Desactiviar movimiento de camera?
 
-        if (Input.GetKeyDown("tab"))
+        if (Input.GetKeyDown("tab") && !PlayerController.playerControllerInstance.isTalking)
         {
-            GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = inventoryState;
-
-            inventoryPanel.SetActive(!inventoryState);
-            if (!inventoryState)
+            PlayerController.playerControllerInstance.playerControl = PlayerController.playerControllerInstance.allowInteract = inventoryPreviousState;
+; 
+            inventoryPanel.SetActive(!inventoryPreviousState);
+            if (!inventoryPreviousState)
             {
+                DisplayManager.displayManagerInstance.interactText.SetActive(false);
                 Cursor.lockState = CursorLockMode.None; //Debería ser confined pero no funciona
             }
             else Cursor.lockState = CursorLockMode.Locked;
@@ -154,7 +156,7 @@ public class Inventory : MonoBehaviour
 
     void SelectItem()
     {
-        if (inventoryState)
+        if (inventoryPreviousState)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -213,11 +215,12 @@ public class Inventory : MonoBehaviour
                         if (result.gameObject.tag == Names.slotTag)
                         {
                             actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
-                            bool flag=itemList[actualSlot].Consume(player.GetComponent<PlayerController>());
+                            bool flag=itemList[actualSlot].Consume();
                             if (flag)
                             {
                                 Debug.Log("Has consumido: " + itemList[actualSlot].itemName);
                                 RemoveItem();
+                                infoPanel.SetActive(false);
                             }
                         }
                     }

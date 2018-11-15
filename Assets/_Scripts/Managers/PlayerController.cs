@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+
 
 
 public class PlayerController : MonoBehaviour {
 
+    [HideInInspector] public static PlayerController playerControllerInstance;
+
+    
     public float speed = 10.0f;
     public float thrust = 20.0f;
     private Camera player_camera;
@@ -15,7 +20,7 @@ public class PlayerController : MonoBehaviour {
     public int timeIncrease=20;
     public int zombieAttackValue=10;
     public int zombieAttackTime=3;
-    [HideInInspector] public bool playerControl = true;
+    [HideInInspector] public bool playerControl = true, allowInteract=true, isTalking=false;
 
     private DisplayManager displayManager;
     private int numberOfAtackingZombies=0;
@@ -28,6 +33,8 @@ public class PlayerController : MonoBehaviour {
     private AudioSource source = null;
     bool moving = false;
 
+    private Image madnessBar;
+
     /*Vector2 mouseLook;
     Vector2 smoothV;
     public float smoothing = 2.0f;*/
@@ -38,7 +45,11 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
-        GameObject.DontDestroyOnLoad(gameObject);
+        if (playerControllerInstance == null)
+            playerControllerInstance = this;
+        else Debug.LogError("Tried to create a second PlayerController");
+
+        //GameObject.DontDestroyOnLoad(gameObject);
     }
 
     // Use this for initialization
@@ -58,10 +69,14 @@ public class PlayerController : MonoBehaviour {
             source = GetComponent<AudioSource>();
         }
         catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
+
+        madnessBar = GameObject.FindGameObjectWithTag("MadnessBar").GetComponent<Image>();
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
+        madnessBar.fillAmount = madness/100f;
         if (madness >= 100)
         {
             Debug.Log("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
@@ -73,7 +88,10 @@ public class PlayerController : MonoBehaviour {
             Movement();
             Shoot();
         }
-        PlayerInteract();
+        if (allowInteract)
+        {
+            PlayerInteract();
+        }
 
         if (Input.GetKeyDown("escape")) {
             playerControl = false;
@@ -114,12 +132,13 @@ public class PlayerController : MonoBehaviour {
             {
                 moving = true;
                 source.PlayOneShot(MovingSound);
+
             }
         }
         else
         {
             moving = false;
-            source.Stop();
+            //source.Stop();
         }
 
         transform.Translate(straffe, 0, translation);
@@ -144,9 +163,9 @@ public class PlayerController : MonoBehaviour {
                 Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
             if (harpoon.arrows > 0) {
                 GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation);
-                //arrow.GetComponent<Rigidbody>().velocity = arrow.transform.up * 17;
                 arrow.GetComponent<Rigidbody>().AddForce(arrow.transform.up*thrust);
                 source.PlayOneShot(ShootSound);
+                Debug.Log(ShootSound.name + source.name);
                 harpoon.arrows--;
             }
             else {
@@ -154,6 +173,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
 
     public void Eat(int value)
     {

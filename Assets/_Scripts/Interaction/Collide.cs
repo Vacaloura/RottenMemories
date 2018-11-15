@@ -6,22 +6,22 @@ public class Collide : MonoBehaviour {
 
     private DisplayManager displayManager;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public AudioClip ArrowNail;
+    private AudioSource source = null;
+
 
     void OnTriggerEnter(Collider col) {
-        displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
-
         if (transform.tag == "Head" || transform.tag == "Body") {
             if (col.gameObject.tag == "Arrow") {
-                //displayManager.DisplayMessage("Collided with" + col.gameObject.name);
+                displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
+
+                try
+                {
+                    source = col.gameObject.GetComponent<AudioSource>();
+                }
+                catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
+                source.PlayOneShot(ArrowNail);
+
                 col.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 Transform parent = this.transform.parent;
                 col.gameObject.transform.parent = parent;
@@ -47,4 +47,6 @@ public class Collide : MonoBehaviour {
             }
         }
     }
+
+
 }

@@ -33,7 +33,7 @@ public class Food : Item {
         this.foodType = ftype;
     }
 
-    public override bool Consume(PlayerController player)
+    public override bool Consume()
     {
         try
         {
@@ -44,22 +44,22 @@ public class Food : Item {
         switch (this.foodType)
         {
             case FoodType.Roe:
-                player.Eat(roeQuenchValue);
+                PlayerController.playerControllerInstance.Eat(roeQuenchValue);
                 source.PlayOneShot(EatingSound);
                 return true;
             case FoodType.Rabbit:
-                player.Eat(rabbitQuenchValue);
+                PlayerController.playerControllerInstance.Eat(rabbitQuenchValue);
                 source.PlayOneShot(EatingSound);
                 return true;
             case FoodType.Cat:
-                player.Eat(catQuenchValue);
+                PlayerController.playerControllerInstance.Eat(catQuenchValue);
                 source.PlayOneShot(EatingSound);
                 return true;
             /*case FoodType.Wine:
                 player.eat(wineQuenchValue);
                 break;*/
             case FoodType.PreCooked:
-                player.Eat(preCookedQuenchValue);
+                PlayerController.playerControllerInstance.Eat(preCookedQuenchValue);
                 source.PlayOneShot(EatingSound);
                 return true;
             default:

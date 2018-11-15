@@ -13,12 +13,16 @@ public class DisplayManager : MonoBehaviour {
 
     private IEnumerator fadeAlpha;
 
+    [HideInInspector] public static DisplayManager displayManagerInstance;
+
     private void Awake()
     {
 
         interactText = GameObject.Find(Names.interactText);
         interactText.SetActive(false);
-
+        if (displayManagerInstance == null)
+            displayManagerInstance = this;
+        else Debug.LogError("Tried to create a second DisplayManager");
     }
 
     private void Update() {
@@ -28,16 +32,16 @@ public class DisplayManager : MonoBehaviour {
         ChangeScene();
     }
 
-    private static DisplayManager displayManager;
 
     public static DisplayManager Instance() {
-        if (!displayManager) {
-            displayManager = FindObjectOfType(typeof(DisplayManager)) as DisplayManager;
-            if (!displayManager)
+        Debug.Log("Se le llama aquí");
+        if (!displayManagerInstance) {
+            displayManagerInstance = FindObjectOfType(typeof(DisplayManager)) as DisplayManager;
+            if (!displayManagerInstance)
                 Debug.LogError("There needs to be one active DisplayManager script on a GameObject in your scene.");
         }
 
-        return displayManager;
+        return displayManagerInstance;
     }
 
     public void DisplayMessage(string message) {

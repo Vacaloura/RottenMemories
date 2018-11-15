@@ -42,6 +42,6 @@ public class Item
         itemAmount++;
     }
 
-    public virtual bool Consume(PlayerController player) { return false; }
+    public virtual bool Consume() { return false; }
 
 }
