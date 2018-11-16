@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInteractionDistance: 7
   onRange: 0
-  InteractSound: {fileID: 0}
+  InteractSound: {fileID: 8300000, guid: 2671838b377e2264b9051e23d2c9e3b4, type: 3}
 --- !u!136 &136887311063290604
 CapsuleCollider:
   m_ObjectHideFlags: 1

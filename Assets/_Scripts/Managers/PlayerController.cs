@@ -131,14 +131,15 @@ public class PlayerController : MonoBehaviour {
             if (!moving)
             {
                 moving = true;
-                source.PlayOneShot(MovingSound);
-
+                source.loop = true;
+                source.clip = MovingSound;
+                source.Play();
             }
         }
         else
         {
             moving = false;
-            //source.Stop();
+            source.loop = false;
         }
 
         transform.Translate(straffe, 0, translation);

@@ -20,8 +20,12 @@ public class Collide : MonoBehaviour {
                     source = col.gameObject.GetComponent<AudioSource>();
                 }
                 catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
-                source.PlayOneShot(ArrowNail);
-
+                //Lo que puse aquí es para que no suene varias veces lo mismo al dispararle varias veces, pero como
+                //cada flecha es una fuente de sonido esta condición no hace nada. Tendría que estar en cada personaje
+                //el audio source. No lo cambié por si lo habías puesto así por algún motivo
+                if (!source.isPlaying) {
+                    source.PlayOneShot(ArrowNail);
+                }
                 col.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 Transform parent = this.transform.parent;
                 col.gameObject.transform.parent = parent;

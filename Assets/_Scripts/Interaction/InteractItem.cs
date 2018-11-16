@@ -28,7 +28,7 @@ public class InteractItem : Interactable {
             Inventory.inventoryInstance.AddItem(new Food(transform.name, "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.Roe)); //TODO tipo de comida dinámico
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
-            this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
             StartCoroutine("DestroyObject");
         }
         else if (transform.tag == "DiaryPage")
@@ -36,7 +36,7 @@ public class InteractItem : Interactable {
             ((Diary)Inventory.inventoryInstance.itemList[1]).AddPage((int)System.Char.GetNumericValue(this.transform.name[this.transform.name.Length-1]));
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
-            this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
             StartCoroutine("DestroyObject");
         }
         else if (transform.tag == "Furniture")
