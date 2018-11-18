@@ -83,7 +83,22 @@
     <Compile Include="Assets\_Scripts\Managers\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\Managers\ZombieController.cs" />
     <Compile Include="Assets\_Scripts\Names.cs" />
+    <Compile Include="Assets\ResonanceAudio\Demos\Scripts\DemoPlayerController.cs" />
+    <Compile Include="Assets\ResonanceAudio\Demos\Scripts\ResonanceAudioDemo\ResonanceAudioDemoCubeController.cs" />
+    <Compile Include="Assets\ResonanceAudio\Demos\Scripts\ResonanceAudioDemo\ResonanceAudioDemoManager.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudio.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioAcousticMesh.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioListener.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioMaterialMap.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioMaterialMapper.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioMaterialMapperUpdater.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioReverbProbe.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioRoom.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioRoomManager.cs" />
+    <Compile Include="Assets\ResonanceAudio\Scripts\ResonanceAudioSource.cs" />
     <None Include="Assets\3rd Party\UI Samples\Fonts\Jupiter\LICENSE.txt" />
+    <None Include="Assets\ResonanceAudio\Demos\Environment\ResonanceAudioDemo\CubeRoomUnlitGrayscale.shader" />
+    <None Include="Assets\ResonanceAudio\Shaders\ResonanceAudioSurfaceMaterial.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/David/Documents/RottenMemories/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
