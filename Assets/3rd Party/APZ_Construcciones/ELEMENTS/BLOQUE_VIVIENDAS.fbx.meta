@@ -10,11 +10,21 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: BLOQUE_VIVIENDAS
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_BOURDEAUXSG1
+    second: {fileID: 2100000, guid: ae7a3806e5ab45343a9245b7f6fb04ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_GRAYSG1
+    second: {fileID: 2100000, guid: e430618d805aa8942bf85c0990db0d60, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 1
+    materialSearch: 2
     materialLocation: 0
   animations:
     legacyGenerateAnimations: 4

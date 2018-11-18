@@ -10,7 +10,18 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: CENTRO_COMERCIAL
-  externalObjects: {}
+    6400000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_CYANSG1
+    second: {fileID: 2100000, guid: 012e694ddd6b8d54f88a6d68ce3dd36c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_GRAYSG1
+    second: {fileID: 2100000, guid: 26aad5aa34b49a44e8768613f22e5e4e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -43,7 +54,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -68,7 +79,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

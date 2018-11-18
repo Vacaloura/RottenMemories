@@ -10,11 +10,21 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Casa_EXTERIOR_ARBOL_LowPoly
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_BROWNSG1
+    second: {fileID: 2100000, guid: 83269547b07eaeb428ed99bb42d4eb48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_GREENLSG1
+    second: {fileID: 2100000, guid: 7658d4878dfe2634c945d803610991d9, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
+    materialSearch: 2
     materialLocation: 0
   animations:
     legacyGenerateAnimations: 4

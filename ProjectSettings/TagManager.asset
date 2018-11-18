@@ -12,6 +12,8 @@ TagManager:
   - Zombie
   - DiaryPage
   - MadnessBar
+  - Cat
+  - Goal
   layers:
   - Default
   - TransparentFX

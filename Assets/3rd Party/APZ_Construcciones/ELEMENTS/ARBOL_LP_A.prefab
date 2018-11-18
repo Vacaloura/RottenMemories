@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4106820962395042}
   - component: {fileID: 33839737848034142}
   - component: {fileID: 23474873734786454}
+  - component: {fileID: 65622343521483990}
   m_Layer: 0
   m_Name: ARBOL_LP_A
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1668134601498648}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 152.89424, y: 0, z: 154.0459}
+  m_LocalPosition: {x: -478.4976, y: 479.00317, z: 798.57886}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,3 +85,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1668134601498648}
   m_Mesh: {fileID: 4300000, guid: 67f4787eec529984fa3ffef2810825ef, type: 3}
+--- !u!65 &65622343521483990
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1668134601498648}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7453308, y: 2.9798179, z: 0.64575195}
+  m_Center: {x: -8.263748, y: 1.423116, z: 2.6815796}

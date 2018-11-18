@@ -9,11 +9,16 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Casa_EXTERIOR_Muro_Anterior_Alto
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_GRAYSG1
+    second: {fileID: 2100000, guid: f59c0958117b20e4fa76780119b1760f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
+    materialSearch: 2
     materialLocation: 0
   animations:
     legacyGenerateAnimations: 4

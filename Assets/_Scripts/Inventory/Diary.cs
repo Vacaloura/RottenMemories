@@ -56,7 +56,9 @@ public class Diary : Item {
         diaryPages.Add("Estamos rodeados, a quien se le ocurre llevar el móvil con sonido a una expedición. Modo avión, modo avión!\n" +
             "Está oscuro, parece que cuando pasan estas cosas la noche se cierne con más velocidad.Escucho las voces de mis compañeros.\n" +
             "Carlos se ha derrumbado, Jaime ha huido y Ramos no da apagado el teléfono.\n" +
-            "uelo la carne pútrida, cada vez están más cerca, debemos reagruparmos.\n" +
+            "Huelo la carne pútrida, cada vez están más cerca, debemos reagruparmos.\n" +
             "Ramos ha caído.Le mordieron en el cuello.Cuánta sangre.Tuvimos que tomar una decisión.Yo no quería.Pobre señora Ramos.\n");
+
+        diaryPages.Add("Voy a salir a explorar el bosque con Lúculo. Espero que se porte bien. \n");
     }
 }

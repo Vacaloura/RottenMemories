@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4401090543822440}
   - component: {fileID: 33064897302038600}
   - component: {fileID: 23701572386547864}
+  - component: {fileID: 65332258449755382}
   m_Layer: 0
   m_Name: CHALET_EXTERIOR_PRINCIPAL_CASA
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1236924116005228}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.4, y: 0, z: 4.2}
+  m_LocalPosition: {x: -472.05856, y: 472.56357, z: 798.57886}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,3 +86,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1236924116005228}
   m_Mesh: {fileID: 4300000, guid: 37eae05255ae53441a518c94929ccafd, type: 3}
+--- !u!65 &65332258449755382
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1236924116005228}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.377457, y: 8.210292, z: 12.971834}
+  m_Center: {x: -5.1887274, y: 3.5753045, z: -6.485917}

@@ -31,6 +31,15 @@ public class InteractItem : Interactable {
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
             StartCoroutine("DestroyObject");
         }
+        else if (transform.tag == "Cat")
+        {   
+            Inventory.inventoryInstance.AddItem(new Food(transform.name, "Tu única compañía desde que murió tu esposa.", Item.ItemType.Food, Food.FoodType.Cat));
+            PlayerController.playerControllerInstance.hasCat = true;
+            source.PlayOneShot(InteractSound);
+            this.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().enabled = false;
+            this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            StartCoroutine("DestroyObject");
+        }
         else if (transform.tag == "DiaryPage")
         {
             ((Diary)Inventory.inventoryInstance.itemList[1]).AddPage((int)System.Char.GetNumericValue(this.transform.name[this.transform.name.Length-1]));

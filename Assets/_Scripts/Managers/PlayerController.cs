@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
     public int timeIncrease=20;
     public int zombieAttackValue=10;
     public int zombieAttackTime=3;
-    [HideInInspector] public bool playerControl = true, allowInteract=true, isTalking=false;
+    [HideInInspector] public bool playerControl = true, allowInteract = true, isTalking = false, hasCat = false;
 
     private DisplayManager displayManager;
     private int numberOfAtackingZombies=0;
@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
             displayManager.DisplayMessage("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
             endCamera.SetActive(true);
+            source.Stop();
             Destroy(playerHead.parent.parent.gameObject);
         }
         if (playerControl) {
@@ -183,26 +184,53 @@ public class PlayerController : MonoBehaviour {
         Debug.Log("Player madness1: " + madness);
         displayManager.DisplayMessage("Player madness: " + madness);
     }
+    float triggerTime;
+    bool triggerFlag = false;
 
     void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Zombie")
+     {
+        /*if (col.gameObject.tag == "Zombie")
         {
             if (numberOfAtackingZombies == 0) {
                 numberOfAtackingZombies++;
                 StartCoroutine("ZombieAttack");
             } else   numberOfAtackingZombies++;
+        }*/
+        Debug.Log("TriggerEnter: " + hasCat + ":" + col.gameObject.name);
+        if (col.gameObject.tag == "Goal" && hasCat)
+        {
+
+            Debug.Log("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir");
+            displayManager.DisplayMessage("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir");
+            player_camera.gameObject.SetActive(false);
+            playerControl = false; allowInteract = false; source.Stop();
+
+            endCamera.SetActive(true);
         }
     }
 
-    void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject.tag == "Zombie")
-        {
-            numberOfAtackingZombies--;
-            if(numberOfAtackingZombies==0)  StopCoroutine("ZombieAttack");
-        }
-    }
+     /*void OnTriggerExit(Collider col)
+     {
+         if (col.gameObject.tag == "Zombie")
+         {
+             numberOfAtackingZombies--;
+             if(numberOfAtackingZombies==0)  StopCoroutine("ZombieAttack");
+         }
+     }
+
+
+
+     IEnumerator ZombieAttack()
+     {
+         while (true)
+         {
+             yield return new WaitForSeconds(zombieAttackTime);
+             madness += numberOfAtackingZombies * zombieAttackValue;
+             source.PlayOneShot(DamageDealt);
+             Debug.Log("Player madness3: " + madness);
+             displayManager.DisplayMessage("Player madness: " + madness);
+         }
+     }*/
 
     IEnumerator IncreaseByTime()
     {
@@ -215,15 +243,37 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    IEnumerator ZombieAttack()
+  
+
+    private void OnTriggerStay(Collider other)
     {
-        while (true)
+        if (other.gameObject.tag == "Zombie")
         {
-            madness += numberOfAtackingZombies * zombieAttackValue;
-            source.PlayOneShot(DamageDealt);
-            Debug.Log("Player madness3: " + madness);
-            displayManager.DisplayMessage("Player madness: " + madness);
-            yield return new WaitForSeconds(zombieAttackTime);
+            Debug.Log("Coll with: " + other.name);
+            if (!triggerFlag)
+            {
+                Debug.Log("First damage" + other.name);
+                triggerTime = Time.deltaTime;
+                madness += zombieAttackValue;
+                source.PlayOneShot(DamageDealt);
+                Debug.Log("Player madness3: " + madness);
+                displayManager.DisplayMessage("Player madness: " + madness);
+                triggerFlag = true;
+            }
+            else
+            {
+                float auxTime = Time.deltaTime - triggerTime;
+                Debug.Log(auxTime);
+                if (auxTime >= zombieAttackTime)
+                {
+                    Debug.Log("Next damage");
+                    triggerTime = Time.deltaTime;
+                    madness += zombieAttackValue;
+                    source.PlayOneShot(DamageDealt);
+                    Debug.Log("Player madness3: " + madness);
+                    displayManager.DisplayMessage("Player madness: " + madness);
+                }
+            }
         }
     }
 }

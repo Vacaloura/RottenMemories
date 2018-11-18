@@ -12,11 +12,31 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: FABRICA
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa_SG_Grid_WHITE1
+    second: {fileID: 2100000, guid: 102edb7fde77c3a478023b1ff7928074, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_BOURDEAUXSG1
+    second: {fileID: 2100000, guid: 20f5daeecc69e2143b955a006fc3b906, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_CYANSG1
+    second: {fileID: 2100000, guid: 00c73db09f815e448a06e6b5270e19af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_ORANGESG1
+    second: {fileID: 2100000, guid: ad66fd543a4303f498ba602b9484c4fd, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 1
+    materialSearch: 2
     materialLocation: 0
   animations:
     legacyGenerateAnimations: 4

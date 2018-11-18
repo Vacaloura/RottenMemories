@@ -10,7 +10,18 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: CHABOLA
-  externalObjects: {}
+    6400000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa_SG_Grid_WHITE1
+    second: {fileID: 2100000, guid: c8299450ed801814498b74e2ab45e873, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_REDSG1
+    second: {fileID: 2100000, guid: 63c4fbc2bcd58e24b8ac3361780b477f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -43,7 +54,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1

@@ -10,7 +10,18 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: FACTORIA
-  externalObjects: {}
+    6400000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_BOURDEAUXSG1
+    second: {fileID: 2100000, guid: 1df6d103275e86745911fd1aced18ec7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa__Grid_GRAYSG1
+    second: {fileID: 2100000, guid: 26aad5aa34b49a44e8768613f22e5e4e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -43,7 +54,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1

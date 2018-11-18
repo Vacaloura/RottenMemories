@@ -4,12 +4,32 @@ ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
+    100002: ACERA_esquina
+    100004: ACERA_esquina_CM
     400000: //RootNode
+    400002: ACERA_esquina
+    400004: ACERA_esquina_CM
     2100000: casa_completa_SG_Grid_WHITE1
     2300000: //RootNode
+    2300002: ACERA_esquina
+    2300004: ACERA_esquina_CM
     3300000: //RootNode
+    3300002: ACERA_esquina
+    3300004: ACERA_esquina_CM
     4300000: ACERA_esquina
-  externalObjects: {}
+    4300002: ACERA_esquina_CM
+    6400000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SG_Grid_COLLIDER1
+    second: {fileID: 2100000, guid: ef2763767442d7b47a8127362b80b089, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: casa_completa_SG_Grid_WHITE1
+    second: {fileID: 2100000, guid: c8299450ed801814498b74e2ab45e873, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -42,7 +62,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
