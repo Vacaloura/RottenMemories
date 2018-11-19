@@ -19,9 +19,11 @@ public class InteractItem : Interactable {
         {
             ((Harpoon)Inventory.inventoryInstance.itemList[0]).arrows++;
             source.PlayOneShot(InteractSound, 1.0f);
-            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            /*this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
-            StartCoroutine("DestroyObject");
+            StartCoroutine("DestroyObject");*/
+            transform.parent = GameObject.Find(Names.quiverObject).transform;
+            transform.gameObject.SetActive(false);
         }
         else if(transform.tag == "Food")
         {

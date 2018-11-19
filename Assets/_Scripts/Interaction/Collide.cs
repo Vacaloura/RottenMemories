@@ -13,8 +13,6 @@ public class Collide : MonoBehaviour {
     void OnTriggerEnter(Collider col) {
         if (transform.tag == "Head" || transform.tag == "Body") {
             if (col.gameObject.tag == "Arrow") {
-                displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
-
                 try
                 {
                     source = col.gameObject.GetComponent<AudioSource>();
@@ -43,11 +41,11 @@ public class Collide : MonoBehaviour {
                         }
                     }
                     parent.DetachChildren();
-                    GameObject.Find(Names.managers).GetComponent<DisplayManager>().interactText.SetActive(false);
+                    DisplayManager.displayManagerInstance.interactText.SetActive(false);
                     Destroy(parent.gameObject);
                 }
                 Debug.Log("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
-                displayManager.DisplayMessage("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
+                DisplayManager.displayManagerInstance.DisplayMessage("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
             }
         }
     }

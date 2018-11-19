@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     
     public float speed = 10.0f;
     public float thrust = 20.0f;
+    public float jumpForce = 50.0f;
     private Camera player_camera;
 
     private int madness;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour {
     public float sensitivity = 5.0f;
     private Transform playerHead;
     private Transform weapon;
+    private Transform quiver;
     private GameObject endCamera;
 
     private void Awake()
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour {
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
         weapon = GameObject.Find(Names.harpoon).transform;
+        quiver = GameObject.Find(Names.quiverObject).transform;
         endCamera = GameObject.Find(Names.endCamera);
         endCamera.SetActive(false);
         weapon.Rotate(Vector3.left * 15);
@@ -85,6 +88,7 @@ public class PlayerController : MonoBehaviour {
             source.Stop();
             Destroy(playerHead.parent.parent.gameObject);
         }
+
         if (playerControl) {
             Movement();
             Shoot();
@@ -93,6 +97,12 @@ public class PlayerController : MonoBehaviour {
         {
             PlayerInteract();
         }
+
+        //Para evitar problemas con el collider de player
+        Vector3 temp;
+        temp = this.transform.GetChild(0).position;
+        this.transform.position = this.transform.GetChild(0).position;
+        this.transform.GetChild(0).position = temp;
 
         if (Input.GetKeyDown("escape")) {
             playerControl = false;
@@ -122,10 +132,7 @@ public class PlayerController : MonoBehaviour {
         translation *= Time.deltaTime;
         straffe *= Time.deltaTime;
 
-        Vector3 temp;
-        temp = this.transform.GetChild(0).position;
-        this.transform.position = this.transform.GetChild(0).position;
-        this.transform.GetChild(0).position = temp;
+        
 
         if (translation != 0 || straffe != 0)
         {
@@ -149,9 +156,12 @@ public class PlayerController : MonoBehaviour {
         playerHead.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
         weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
 
+        if (Input.GetKeyDown("space"))
+        {
+            Debug.Log("jump");
+            gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1f, 0) * jumpForce, ForceMode.Impulse);
+        }
 
-        if (Input.GetKeyDown("escape"))
-            Cursor.lockState = CursorLockMode.None;
     }
 
     void Shoot() {
@@ -164,11 +174,14 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
                 Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
             if (harpoon.arrows > 0) {
-                GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation);
-                arrow.GetComponent<Rigidbody>().AddForce(arrow.transform.up*thrust);
+                //GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation);
+                Transform arrow = quiver.GetChild(0);   arrow.gameObject.SetActive(true);
+                arrow.position = weapon.position;   arrow.rotation = weapon.rotation;
+                arrow.gameObject.GetComponent<Rigidbody>().AddForce(arrow.up*thrust);
                 source.PlayOneShot(ShootSound);
                 Debug.Log(ShootSound.name + source.name);
                 harpoon.arrows--;
+                arrow.parent = null;
             }
             else {
                 displayManager.DisplayMessage("¡Te has quedado sin virotes!");
@@ -219,6 +232,7 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log(other.name);
         if (other.gameObject.tag == "Zombie")
         {
             if (!other.gameObject.GetComponent<ZombieController>().firstAttackFlag)
