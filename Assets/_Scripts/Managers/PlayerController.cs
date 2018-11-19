@@ -189,14 +189,7 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
      {
-        /*if (col.gameObject.tag == "Zombie")
-        {
-            if (numberOfAtackingZombies == 0) {
-                numberOfAtackingZombies++;
-                StartCoroutine("ZombieAttack");
-            } else   numberOfAtackingZombies++;
-        }*/
-        Debug.Log("TriggerEnter: " + hasCat + ":" + col.gameObject.name);
+
         if (col.gameObject.tag == "Goal" && hasCat)
         {
 
@@ -209,30 +202,9 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-     /*void OnTriggerExit(Collider col)
-     {
-         if (col.gameObject.tag == "Zombie")
-         {
-             numberOfAtackingZombies--;
-             if(numberOfAtackingZombies==0)  StopCoroutine("ZombieAttack");
-         }
-     }
 
 
-
-     IEnumerator ZombieAttack()
-     {
-         while (true)
-         {
-             yield return new WaitForSeconds(zombieAttackTime);
-             madness += numberOfAtackingZombies * zombieAttackValue;
-             source.PlayOneShot(DamageDealt);
-             Debug.Log("Player madness3: " + madness);
-             displayManager.DisplayMessage("Player madness: " + madness);
-         }
-     }*/
-
-    IEnumerator IncreaseByTime()
+        IEnumerator IncreaseByTime()
     {
         while (true)
         {
@@ -249,25 +221,21 @@ public class PlayerController : MonoBehaviour {
     {
         if (other.gameObject.tag == "Zombie")
         {
-            Debug.Log("Coll with: " + other.name);
-            if (!triggerFlag)
+            if (!other.gameObject.GetComponent<ZombieController>().firstAttackFlag)
             {
-                Debug.Log("First damage" + other.name);
-                triggerTime = Time.deltaTime;
+                triggerTime = 0;
                 madness += zombieAttackValue;
                 source.PlayOneShot(DamageDealt);
                 Debug.Log("Player madness3: " + madness);
                 displayManager.DisplayMessage("Player madness: " + madness);
-                triggerFlag = true;
+                other.gameObject.GetComponent<ZombieController>().firstAttackFlag = true;
             }
             else
             {
-                float auxTime = Time.deltaTime - triggerTime;
-                Debug.Log(auxTime);
-                if (auxTime >= zombieAttackTime)
+                triggerTime += Time.deltaTime;
+                if (triggerTime >= zombieAttackTime)
                 {
-                    Debug.Log("Next damage");
-                    triggerTime = Time.deltaTime;
+                    triggerTime = 0;
                     madness += zombieAttackValue;
                     source.PlayOneShot(DamageDealt);
                     Debug.Log("Player madness3: " + madness);
