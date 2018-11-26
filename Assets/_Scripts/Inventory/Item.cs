@@ -42,6 +42,13 @@ public class Item
         itemAmount++;
     }
 
-    public virtual bool Consume() { return false; }
+    public virtual bool Consume() {
+        if (itemType == ItemType.MakeUp)
+        {
+            PlayerController.playerControllerInstance.isMadeUp = true;
+            DisplayManager.displayManagerInstance.DisplayMessage("Ya estoy guapo, al lío.");
+            return true;
+        }
+        return false; }
 
 }

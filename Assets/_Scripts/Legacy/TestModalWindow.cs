@@ -15,8 +15,8 @@ public class TestModalWindow : MonoBehaviour {
 
 
     private void Awake() {
-        modalPanel = DialogManager.Instance();
-        displayManager = DisplayManager.Instance();
+        //modalPanel = DialogManager.Instance();
+        //displayManager = DisplayManager.Instance();
 
         myYesAction = new UnityAction(TestYesFunction);
         myNoAction = new UnityAction(TestNoFunction);
@@ -24,7 +24,7 @@ public class TestModalWindow : MonoBehaviour {
     }
 
     public void TestYNC() {
-        modalPanel.Choice("Would you like a poke in the eye?\nHow about with a sharp stick?", myYesAction, myNoAction, myCancelAction, false, "falta una string");
+        modalPanel.Choice("Would you like a poke in the eye?\nHow about with a sharp stick?", myYesAction, myNoAction, myCancelAction, false, "falta una string", 3);
     }
 
     //Send to the Modal Panel to set up the Buttons and Functions to call

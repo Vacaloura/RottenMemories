@@ -19,12 +19,9 @@ public class PlayerController : MonoBehaviour {
     private int madness;
     public int timeIncreaseValue=5;
     public int timeIncrease=20;
-    public int zombieAttackValue=10;
-    public int zombieAttackTime=3;
-    [HideInInspector] public bool playerControl = true, allowInteract = true, isTalking = false, hasCat = false;
+    [HideInInspector] public bool playerControl = true, allowInteract = true, isTalking = false, isMadeUp = false, hasWine = false, hasLadder = false, hasCat = false, playerBeingAttacked = false;
 
     private DisplayManager displayManager;
-    private int numberOfAtackingZombies=0;
 
     public AudioClip ShootSound;
     public AudioClip DamageDealt;
@@ -32,7 +29,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip AmbientSound;
 
     private AudioSource source = null;
-    bool moving = false;
+    [HideInInspector] public bool moving = false;
 
     private Image madnessBar;
 
@@ -77,21 +74,27 @@ public class PlayerController : MonoBehaviour {
         
     }
 	
+    public void PlayerDeath(String message)
+    {
+        Debug.Log("GAME OVER:\n" + message + "\nPulse ESC para salir");
+        displayManager.DisplayMessage("GAME OVER:\n" + message + "\nPulse ESC para salir");
+        endCamera.SetActive(true);
+        source.Stop();
+        Destroy(playerHead.parent.parent.gameObject);
+    }
 	// Update is called once per frame
 	void Update () {
         madnessBar.fillAmount = madness/100f;
         if (madness >= 100)
         {
-            Debug.Log("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
-            displayManager.DisplayMessage("GAME OVER: Te has transformado en zombie. Pulse ESC para salir");
-            endCamera.SetActive(true);
-            source.Stop();
-            Destroy(playerHead.parent.parent.gameObject);
+            PlayerDeath("Tu locura ha aumentado demasiado. Te has transformado en zombie.");
         }
 
         if (playerControl) {
             Movement();
             Shoot();
+        } else {
+            source.loop = false;
         }
         if (allowInteract)
         {
@@ -99,10 +102,10 @@ public class PlayerController : MonoBehaviour {
         }
 
         //Para evitar problemas con el collider de player
-        Vector3 temp;
+        /*Vector3 temp;
         temp = this.transform.GetChild(0).position;
         this.transform.position = this.transform.GetChild(0).position;
-        this.transform.GetChild(0).position = temp;
+        this.transform.GetChild(0).position = temp;*/
 
         if (Input.GetKeyDown("escape")) {
             playerControl = false;
@@ -197,8 +200,6 @@ public class PlayerController : MonoBehaviour {
         Debug.Log("Player madness1: " + madness);
         displayManager.DisplayMessage("Player madness: " + madness);
     }
-    float triggerTime;
-    bool triggerFlag = false;
 
     void OnTriggerEnter(Collider col)
      {
@@ -228,34 +229,35 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-  
+    float triggerTime;
+
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(other.name);
         if (other.gameObject.tag == "Zombie")
         {
-            if (!other.gameObject.GetComponent<ZombieController>().firstAttackFlag)
-            {
-                triggerTime = 0;
-                madness += zombieAttackValue;
-                source.PlayOneShot(DamageDealt);
-                Debug.Log("Player madness3: " + madness);
-                displayManager.DisplayMessage("Player madness: " + madness);
-                other.gameObject.GetComponent<ZombieController>().firstAttackFlag = true;
-            }
-            else
-            {
-                triggerTime += Time.deltaTime;
-                if (triggerTime >= zombieAttackTime)
-                {
-                    triggerTime = 0;
-                    madness += zombieAttackValue;
-                    source.PlayOneShot(DamageDealt);
-                    Debug.Log("Player madness3: " + madness);
-                    displayManager.DisplayMessage("Player madness: " + madness);
-                }
-            }
+            playerBeingAttacked = true;
+            //if (!other.gameObject.GetComponent<ZombieHordeAgent>().firstAttackFlag)
+            //{
+            //    triggerTime = 0;
+            //    madness += other.gameObject.GetComponent<ZombieControllerIA>().zombieAttackValue;
+            //    source.PlayOneShot(DamageDealt);
+            //    Debug.Log("Player madness3: " + madness);
+            //    displayManager.DisplayMessage("Player madness: " + madness);
+            //    other.gameObject.GetComponent<ZombieControllerIA>().firstAttackFlag = true;
+            //}
+            //else
+            //{
+            //    triggerTime += Time.deltaTime;
+            //    if (triggerTime >= other.gameObject.GetComponent<ZombieControllerIA>().zombieAttackTime)
+            //    {
+            //        triggerTime = 0;
+            //        madness += other.gameObject.GetComponent<ZombieControllerIA>().zombieAttackValue;
+            //        source.PlayOneShot(DamageDealt);
+            //        Debug.Log("Player madness3: " + madness);
+            //        displayManager.DisplayMessage("Player madness: " + madness);
+            //    }
+            //}
         }
     }
 }

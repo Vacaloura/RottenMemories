@@ -27,20 +27,50 @@ public class InteractItem : Interactable {
         }
         else if(transform.tag == "Food")
         {
-            Inventory.inventoryInstance.AddItem(new Food(transform.name, "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.Roe)); //TODO tipo de comida dinámico
+            Inventory.inventoryInstance.AddItem(new Food(transform.name, "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.PreCooked)); //TODO tipo de comida dinámico
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
             StartCoroutine("DestroyObject");
         }
-        else if (transform.tag == "Cat")
-        {   
-            Inventory.inventoryInstance.AddItem(new Food(transform.name, "Tu única compañía desde que murió tu esposa.", Item.ItemType.Food, Food.FoodType.Cat));
-            PlayerController.playerControllerInstance.hasCat = true;
+        else if (transform.tag == "MakeUp")
+        {
+            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Maquillaje que algún vecino dejó abandonado en la huída.", Item.ItemType.MakeUp)); 
             source.PlayOneShot(InteractSound);
-            this.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().enabled = false;
-            this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
             StartCoroutine("DestroyObject");
+        }
+        else if (transform.tag == "Wine")
+        {
+            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Botella de vino que alguien perdió mientras escapaba. CASUALMENTE es un Ribeira.", Item.ItemType.WineBottle)); 
+            source.PlayOneShot(InteractSound);
+            PlayerController.playerControllerInstance.hasWine = true;
+            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
+            StartCoroutine("DestroyObject");
+        }
+        else if (transform.tag == "Ladder")
+        {
+            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Una escalera. Es útil para alcanzar sitios elevados.", Item.ItemType.Ladder)); 
+            source.PlayOneShot(InteractSound);
+            PlayerController.playerControllerInstance.hasLadder = true;
+            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
+            StartCoroutine("DestroyObject");
+        }
+        else if (transform.tag == "Cat")
+        {
+            if (PlayerController.playerControllerInstance.hasLadder) {
+                Inventory.inventoryInstance.AddItem(new Food(transform.name, "Tu única compañía desde que murió tu esposa.", Item.ItemType.Food, Food.FoodType.Cat));
+                PlayerController.playerControllerInstance.hasCat = true;
+                source.PlayOneShot(InteractSound);
+                this.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().enabled = false;
+                this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                StartCoroutine("DestroyObject");
+            } else {
+                DisplayManager.displayManagerInstance.DisplayMessage("Tengo que ver como llego hasta ahí arriba.");
+            }
         }
         else if (transform.tag == "DiaryPage")
         {
@@ -68,5 +98,10 @@ public class InteractItem : Interactable {
        
         yield return new WaitForSeconds(2);
         Destroy(this.gameObject);
+    }
+
+    public void OnCollisionEnter(Collision col)
+    {
+        Debug.Log(col.collider.gameObject.name);
     }
 }

@@ -13,6 +13,7 @@ public class Collide : MonoBehaviour {
     void OnTriggerEnter(Collider col) {
         if (transform.tag == "Head" || transform.tag == "Body") {
             if (col.gameObject.tag == "Arrow") {
+                //this.transform.parent.GetComponent<ZombieHordeAgent>().zombieBeingAttacked = true; TODO
                 try
                 {
                     source = col.gameObject.GetComponent<AudioSource>();
@@ -34,9 +35,10 @@ public class Collide : MonoBehaviour {
                 }
                 if (parent.gameObject.GetComponent<InteractPerson>().life == 0) {
                     foreach (Transform child in parent) {
-                        if (child.tag == "Head" || child.tag == "Body") {
+                        if (child.tag == "Head" || child.tag == "Body" || child.tag == "Avatar") {
                             Destroy(child.gameObject);
                         } else {
+                            Debug.Log(child.name);
                             child.GetComponent<Rigidbody>().isKinematic = false;
                         }
                     }

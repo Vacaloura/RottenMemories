@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
     private static int diaryPage = 0;
 
     private GameObject infoPanel, diaryPanel, inventoryPanel, player;
-
+    private Button delete;
     GraphicRaycaster raycaster;
 
 
@@ -39,6 +39,7 @@ public class Inventory : MonoBehaviour
         slots = GameObject.FindGameObjectsWithTag("Slot").OrderBy(go => go.name).ToArray();
         inventoryPanel = GameObject.Find(Names.inventoryPanel);
         infoPanel = GameObject.Find(Names.infoPanel);
+        delete = infoPanel.transform.GetChild(1).GetComponent<Button>();
         diaryPanel = GameObject.Find(Names.diaryPanel);
         player = GameObject.Find(Names.player);
         try
@@ -52,6 +53,7 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        delete.onClick.AddListener(delegate { RemoveItem(actualSlot); });
         inventoryPanel.SetActive(false);
         infoPanel.SetActive(false);
         diaryPanel.SetActive(false);
@@ -86,7 +88,8 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        if(itemList.Count == 0)
+        bool alreadyInvented=false;
+        if (itemList.Count == 0)
         {
             GameObject slot = slots[lastSlotIndex];
             slot.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSprite;
@@ -94,23 +97,24 @@ public class Inventory : MonoBehaviour
             lastSlotIndex++;
             itemList.Add(item);
 
-        } else
+        }
+        else {
             foreach (Item it in itemList)
             {
                 if (item.itemType == it.itemType)
                 {
                     it.Increase();
+                    alreadyInvented = true;
                     break;
                 }
-                else
+            }
+            if(!alreadyInvented)
                 {
                     GameObject slot = slots[lastSlotIndex];
                     slot.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSprite;
                     slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
                     lastSlotIndex++;
                     itemList.Add(item);
-
-                    break;
                 }
             }
         //if (OnItemChangedEvent != null) OnItemChangedEvent();
@@ -214,12 +218,13 @@ public class Inventory : MonoBehaviour
                     {
                         if (result.gameObject.tag == Names.slotTag)
                         {
+                            Debug.Log("No debería");
                             actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
                             bool flag=itemList[actualSlot].Consume();
                             if (flag)
                             {
                                 Debug.Log("Has consumido: " + itemList[actualSlot].itemName);
-                                RemoveItem();
+                                RemoveItem(actualSlot);
                                 infoPanel.SetActive(false);
                             }
                         }
@@ -251,15 +256,25 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void RemoveItem()
+    public void RemoveItem(int number)
     {
-        itemList.RemoveAt(actualSlot);
+        Debug.Log("Number: " + number);
+        Debug.Log("ActualSlot: " + actualSlot);
+        Debug.Log("Name: " + itemList[number].itemName);
 
-        GameObject slot = slots[actualSlot];
-        slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
-        slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
-        infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
-        UpdateSlots();
+        if (itemList[number].itemType != Item.ItemType.Harpoon)
+        {
+            itemList.RemoveAt(number);
+
+            GameObject slot = slots[number];
+            slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
+            slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+            infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
+            UpdateSlots();
+        }
+        else DisplayManager.displayManagerInstance.DisplayMessage("Creo que no debería tirar esto.");
+
+
     }
 
     public void ReadNextPage()

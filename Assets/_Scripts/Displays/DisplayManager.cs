@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class DisplayManager : MonoBehaviour {
 
     public Text displayText;
-    public GameObject interactText;
+    [HideInInspector] public GameObject interactText;
+    public GameObject DisplayTextPanel;
+
 
     public float displayTime;
     public float fadeTime;
@@ -33,8 +35,7 @@ public class DisplayManager : MonoBehaviour {
     }
 
 
-    public static DisplayManager Instance() {
-        Debug.Log("Se le llama aquí");
+    /*public static DisplayManager Instance() {
         if (!displayManagerInstance) {
             displayManagerInstance = FindObjectOfType(typeof(DisplayManager)) as DisplayManager;
             if (!displayManagerInstance)
@@ -42,9 +43,10 @@ public class DisplayManager : MonoBehaviour {
         }
 
         return displayManagerInstance;
-    }
+    }*/
 
     public void DisplayMessage(string message) {
+        DisplayTextPanel.SetActive(true);
         displayText.text = message;
         SetAlpha();
     }
@@ -63,6 +65,7 @@ public class DisplayManager : MonoBehaviour {
         displayText.color = resetColor;
 
         yield return new WaitForSeconds(displayTime);
+        DisplayTextPanel.SetActive(false);
 
         while (displayText.color.a > 0) {
             Color displayColor = displayText.color;

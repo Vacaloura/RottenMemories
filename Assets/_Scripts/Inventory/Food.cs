@@ -10,7 +10,6 @@ public class Food : Item {
         Roe,
         Rabbit,
         Cat,
-        Wine,
         PreCooked,
         NotDefined
     }

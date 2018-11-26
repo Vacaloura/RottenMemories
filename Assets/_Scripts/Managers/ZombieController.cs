@@ -10,6 +10,8 @@ public class ZombieController : MonoBehaviour {
     public float minAttackDistance = 1.5f;
 
     [HideInInspector] public bool firstAttackFlag=false;
+    public int zombieAttackValue = 10;
+    public int zombieAttackTime = 3;
 
     private NavMeshAgent myNavAgent;
 
