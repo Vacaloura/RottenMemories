@@ -28,6 +28,7 @@ public class Inventory : MonoBehaviour
     private Button delete;
     GraphicRaycaster raycaster;
 
+    public int indice;
 
 
     // Use this for initialization
@@ -74,6 +75,7 @@ public class Inventory : MonoBehaviour
         ToggleInventoryPanel();
         SelectItem();
         UseItem();
+        indice = lastSlotIndex;
     }
     #endregion
 
@@ -218,9 +220,8 @@ public class Inventory : MonoBehaviour
                     {
                         if (result.gameObject.tag == Names.slotTag)
                         {
-                            Debug.Log("No debería");
                             actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
-                            bool flag=itemList[actualSlot].Consume();
+                            bool flag = itemList[actualSlot].Consume();
                             if (flag)
                             {
                                 Debug.Log("Has consumido: " + itemList[actualSlot].itemName);
@@ -235,12 +236,9 @@ public class Inventory : MonoBehaviour
                 {
                     firstClickTime = secondClickTime;
                 }
-
             }
         }
- 
     }
-
 
     void UpdateSlots() {
         int itemNum = 0;
@@ -264,15 +262,20 @@ public class Inventory : MonoBehaviour
 
         if (itemList[number].itemType != Item.ItemType.Harpoon)
         {
-            itemList.RemoveAt(number);
-
             GameObject slot = slots[number];
-            slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
-            slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
-            infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
+            if (itemList[number].itemAmount <= 1) {
+                itemList.RemoveAt(number);
+                lastSlotIndex--;
+                slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
+                slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+                infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
+            } else {
+                itemList[number].itemAmount--;
+            }
+
             UpdateSlots();
         }
-        else DisplayManager.displayManagerInstance.DisplayMessage("Creo que no debería tirar esto.");
+        else DisplayManager.displayManagerInstance.DisplayMessage("Creo que no debería tirar esto.", 2.0f);
 
 
     }

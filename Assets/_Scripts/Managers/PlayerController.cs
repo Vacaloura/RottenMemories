@@ -10,16 +10,16 @@ public class PlayerController : MonoBehaviour {
 
     [HideInInspector] public static PlayerController playerControllerInstance;
 
-    
-    public float speed = 10.0f;
     public float thrust = 20.0f;
-    public float jumpForce = 50.0f;
-    private Camera player_camera;
 
-    private int madness;
+    private Camera player_camera;
+    private CharacterController movementController;
+
+    [HideInInspector] public int madness;
     public int timeIncreaseValue=5;
     public int timeIncrease=20;
-    [HideInInspector] public bool playerControl = true, allowInteract = true, isTalking = false, isMadeUp = false, hasWine = false, hasLadder = false, hasCat = false, playerBeingAttacked = false;
+    /*[HideInInspector]*/
+    public bool playerControl = true, allowInteract = true, isTalking = false, isMadeUp = false, hasWine = false, hasLadder = false, hasCat = false, hasFood = false;
 
     private DisplayManager displayManager;
 
@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour {
     /*Vector2 mouseLook;
     Vector2 smoothV;
     public float smoothing = 2.0f;*/
-    public float sensitivity = 5.0f;
     private Transform playerHead;
     private Transform weapon;
     private Transform quiver;
@@ -60,6 +59,7 @@ public class PlayerController : MonoBehaviour {
         quiver = GameObject.Find(Names.quiverObject).transform;
         endCamera = GameObject.Find(Names.endCamera);
         endCamera.SetActive(false);
+        movementController = gameObject.GetComponent<CharacterController>();
         weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
         StartCoroutine("IncreaseByTime");
@@ -71,13 +71,13 @@ public class PlayerController : MonoBehaviour {
         catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
 
         madnessBar = GameObject.FindGameObjectWithTag("MadnessBar").GetComponent<Image>();
-        
+        GameController.gameControllerInstance.LoadPlayerData();
     }
 	
     public void PlayerDeath(String message)
     {
-        Debug.Log("GAME OVER:\n" + message + "\nPulse ESC para salir");
-        displayManager.DisplayMessage("GAME OVER:\n" + message + "\nPulse ESC para salir");
+        Debug.Log("GAME OVER:\n" + message + "\nPulse ESC para salir o R para reintentar");
+        displayManager.DisplayMessage("GAME OVER:\n" + message + "\nPulse ESC para salir o R para reintentar", 7.0f);
         endCamera.SetActive(true);
         source.Stop();
         Destroy(playerHead.parent.parent.gameObject);
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour {
         madnessBar.fillAmount = madness/100f;
         if (madness >= 100)
         {
-            PlayerDeath("Tu locura ha aumentado demasiado. Te has transformado en zombie.");
+            PlayerDeath("Tu locura ha aumentado demasiado. Te has transformado en zombie");
         }
 
         if (playerControl) {
@@ -107,14 +107,11 @@ public class PlayerController : MonoBehaviour {
         this.transform.position = this.transform.GetChild(0).position;
         this.transform.GetChild(0).position = temp;*/
 
-        if (Input.GetKeyDown("escape")) {
-            playerControl = false;
-        }
     }
 
 
     void PlayerInteract() {
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.E) && !isTalking) {
             Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(myRay, out hit, 100)) {
@@ -129,42 +126,48 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private Vector3 moveDirection = Vector3.zero;
+    private float gravity = 20.0f;
+    private float speed = 10.0f;
+    public float walkSpeed = 7.0f;
+    public float runSpeed = 14.0f;
+    public float jumpForce = 6.0f;
+    public float sensitivity = 30.0f;
     void Movement() {
-        float translation = Input.GetAxis("Vertical") * speed;
-        float straffe = Input.GetAxis("Horizontal") * speed;
-        translation *= Time.deltaTime;
-        straffe *= Time.deltaTime;
-
-        
-
-        if (translation != 0 || straffe != 0)
-        {
-            if (!moving)
-            {
-                moving = true;
-                source.loop = true;
-                source.clip = MovingSound;
-                source.Play();
+        if (movementController.isGrounded) {
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection = moveDirection * speed;
+            if (Input.GetKeyDown("space")) {
+                moveDirection.y = jumpForce;
+            }
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                speed = runSpeed;
+            } else {
+                speed = walkSpeed;
+            }
+            if ((moveDirection.x != 0 || moveDirection.z != 0) && movementController.isGrounded) {
+                if (!moving) {
+                    moving = true;
+                    source.loop = true;
+                    source.clip = MovingSound;
+                    source.Play();
+                }
+            } else {
+                moving = false;
+                source.loop = false;
             }
         }
-        else
-        {
-            moving = false;
-            source.loop = false;
-        }
 
-        transform.Translate(straffe, 0, translation);
+        //// Apply gravity
+        moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
+
+        ////Move the controller
+        movementController.Move(moveDirection * Time.deltaTime);
 
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime);
         playerHead.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
         weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
-
-        if (Input.GetKeyDown("space"))
-        {
-            Debug.Log("jump");
-            gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1f, 0) * jumpForce, ForceMode.Impulse);
-        }
-
     }
 
     void Shoot() {
@@ -178,8 +181,11 @@ public class PlayerController : MonoBehaviour {
                 Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
             if (harpoon.arrows > 0) {
                 //GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation);
-                Transform arrow = quiver.GetChild(0);   arrow.gameObject.SetActive(true);
-                arrow.position = weapon.position;   arrow.rotation = weapon.rotation;
+                Transform arrow = quiver.GetChild(0);
+                arrow.gameObject.SetActive(true);
+                arrow.position = weapon.position;
+                arrow.rotation = weapon.rotation;
+                arrow.GetComponent<Rigidbody>().isKinematic = false;
                 arrow.gameObject.GetComponent<Rigidbody>().AddForce(arrow.up*thrust);
                 source.PlayOneShot(ShootSound);
                 Debug.Log(ShootSound.name + source.name);
@@ -187,7 +193,7 @@ public class PlayerController : MonoBehaviour {
                 arrow.parent = null;
             }
             else {
-                displayManager.DisplayMessage("¡Te has quedado sin virotes!");
+                displayManager.DisplayMessage("¡Te has quedado sin virotes!", 2.0f);
             }
         }
     }
@@ -198,17 +204,18 @@ public class PlayerController : MonoBehaviour {
         madness -= value;
         if (madness < 0) madness = 0;
         Debug.Log("Player madness1: " + madness);
-        displayManager.DisplayMessage("Player madness: " + madness);
+        //displayManager.DisplayMessage("Player madness: " + madness);
     }
 
     void OnTriggerEnter(Collider col)
      {
-
+        if (col.transform.tag == "Closed") {
+            DisplayManager.displayManagerInstance.DisplayMessage("La curiosidad mató al gato... Debo encontrar a Lúculo", 2.0f);
+        }
         if (col.gameObject.tag == "Goal" && hasCat)
         {
-
-            Debug.Log("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir");
-            displayManager.DisplayMessage("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir");
+            Debug.Log("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir o R para volver a empezar");
+            displayManager.DisplayMessage("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir o R para volver a empezar", 7.0f);
             player_camera.gameObject.SetActive(false);
             playerControl = false; allowInteract = false; source.Stop();
 
@@ -225,7 +232,7 @@ public class PlayerController : MonoBehaviour {
             yield return new WaitForSeconds(timeIncrease);
             madness += timeIncreaseValue;
             Debug.Log("Player madness2: " + madness);
-            displayManager.DisplayMessage("Player madness: " + madness);
+            //displayManager.DisplayMessage("Player madness: " + madness);
         }
     }
 
@@ -236,28 +243,29 @@ public class PlayerController : MonoBehaviour {
     {
         if (other.gameObject.tag == "Zombie")
         {
-            playerBeingAttacked = true;
-            //if (!other.gameObject.GetComponent<ZombieHordeAgent>().firstAttackFlag)
-            //{
-            //    triggerTime = 0;
-            //    madness += other.gameObject.GetComponent<ZombieControllerIA>().zombieAttackValue;
-            //    source.PlayOneShot(DamageDealt);
-            //    Debug.Log("Player madness3: " + madness);
-            //    displayManager.DisplayMessage("Player madness: " + madness);
-            //    other.gameObject.GetComponent<ZombieControllerIA>().firstAttackFlag = true;
-            //}
-            //else
-            //{
-            //    triggerTime += Time.deltaTime;
-            //    if (triggerTime >= other.gameObject.GetComponent<ZombieControllerIA>().zombieAttackTime)
-            //    {
-            //        triggerTime = 0;
-            //        madness += other.gameObject.GetComponent<ZombieControllerIA>().zombieAttackValue;
-            //        source.PlayOneShot(DamageDealt);
-            //        Debug.Log("Player madness3: " + madness);
-            //        displayManager.DisplayMessage("Player madness: " + madness);
-            //    }
-            //}
+            if (!other.gameObject.GetComponent<ZombieController>().firstAttackFlag)
+            {
+                Debug.Log("firstAttackFlag: " + other.gameObject.GetComponent<ZombieController>().firstAttackFlag);
+                triggerTime = 0;
+                madness += other.gameObject.GetComponent<ZombieController>().zombieAttackValue;
+                source.PlayOneShot(DamageDealt);
+                Debug.Log("Player madness3: " + madness);
+                //displayManager.DisplayMessage("Player madness: " + madness);
+                other.gameObject.GetComponent<ZombieController>().firstAttackFlag = true;
+            }
+            else
+           {
+                triggerTime += Time.deltaTime;
+                Debug.Log("triggerTime: " + triggerTime);
+                if (triggerTime >= other.gameObject.GetComponent<ZombieController>().zombieAttackTime)
+                {
+                    triggerTime = 0;
+                    madness += other.gameObject.GetComponent<ZombieController>().zombieAttackValue;
+                    source.PlayOneShot(DamageDealt);
+                    Debug.Log("Player madness3: " + madness);
+                    //displayManager.DisplayMessage("Player madness: " + madness);
+                }
+            }
         }
     }
 }

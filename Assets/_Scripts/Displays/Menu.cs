@@ -39,8 +39,13 @@ public class Menu : MonoBehaviour {
 #endif
     }
 
-    public void LoadByIndex(int sceneIndex) {
-        SceneManager.LoadScene(sceneIndex);
+    public void LoadNewByIndex() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
+    public void LoadOldByIndex(string fileName)
+    {
+        GameController.gameControllerInstance.LoadPlayerDataFromDisk(fileName);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 }

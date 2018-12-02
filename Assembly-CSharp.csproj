@@ -60,12 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Scripts\Animations\NPCAnimation.cs" />
-    <Compile Include="Assets\_Scripts\Animations\PlayerAnimation.cs" />
-    <Compile Include="Assets\_Scripts\Animations\ZombieAnimation.cs" />
     <Compile Include="Assets\_Scripts\Displays\DialogManager.cs" />
     <Compile Include="Assets\_Scripts\Displays\DisplayManager.cs" />
     <Compile Include="Assets\_Scripts\Displays\Menu.cs" />
+    <Compile Include="Assets\_Scripts\GameData.cs" />
     <Compile Include="Assets\_Scripts\Interaction\Collide.cs" />
     <Compile Include="Assets\_Scripts\Interaction\Interactable.cs" />
     <Compile Include="Assets\_Scripts\Interaction\InteractItem.cs" />
@@ -81,12 +79,14 @@
     <Compile Include="Assets\_Scripts\Legacy\QuitOnClick.cs" />
     <Compile Include="Assets\_Scripts\Legacy\SelectOnInput.cs" />
     <Compile Include="Assets\_Scripts\Legacy\TestModalWindow.cs" />
+    <Compile Include="Assets\_Scripts\Managers\Animations\NPCAnimation.cs" />
+    <Compile Include="Assets\_Scripts\Managers\Animations\PlayerAnimation.cs" />
+    <Compile Include="Assets\_Scripts\Managers\Animations\ZombieAnimation.cs" />
     <Compile Include="Assets\_Scripts\Managers\CameraController.cs" />
+    <Compile Include="Assets\_Scripts\Managers\GameController.cs" />
     <Compile Include="Assets\_Scripts\Managers\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\Managers\ZombieController.cs" />
     <Compile Include="Assets\_Scripts\Names.cs" />
-    <Compile Include="Assets\_Scripts\ZombieHorde\Scripts\EscapingHuman.cs" />
-    <Compile Include="Assets\_Scripts\ZombieHorde\Scripts\surface.cs" />
     <Compile Include="Assets\_Scripts\ZombieHorde\Scripts\ZombieHordeAcademy.cs" />
     <Compile Include="Assets\_Scripts\ZombieHorde\Scripts\ZombieHordeAgent.cs" />
     <Compile Include="Assets\3rd Party\ML-Agents\Scripts\Academy.cs" />
@@ -352,14 +352,8 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/mport/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>C:/Users/mport/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Protobuf">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+    <Reference Include="System.Numerics">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/System.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="System.ValueTuple">
       <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/System.ValueTuple.dll</HintPath>
@@ -367,14 +361,20 @@
     <Reference Include="TensorFlowSharp">
       <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/Computer/TensorFlowSharp.dll</HintPath>
     </Reference>
-    <Reference Include="System.Numerics">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/System.Numerics.dll</HintPath>
+    <Reference Include="Google.Protobuf">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Interactive.Async">
       <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
     </Reference>
-    <Reference Include="Grpc.Core">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/Users/mport/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents">
+      <HintPath>C:/Users/mport/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

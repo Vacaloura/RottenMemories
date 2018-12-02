@@ -1,12 +1,12 @@
 WindowsStandalone
 PlayerPath?
-C:/Users/David/Desktop/PreAlphaWindows/RottenMemories.exe
+E:/UVigo/TMCG-TecnoloxiaMultimedia&ComputerGraphics/Builds/RottenMemories.exe
 SceneListBegin?
+Assets/_Scenes/MainMenus.unity
 Assets/_Scenes/outside.unity
 SceneListEnd?
-48a97602b2d558bdefc314c153d3c2de Assembly-CSharp.dll:.Inventory
+25e46339687a8bb84784b310dc0178c8 Assembly-CSharp.dll:.Inventory
 c422dd62785a6d0afa870fbd111886ce Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
-e38942357309889043000be94a9145c8 Assembly-CSharp.dll:.ZombieControllerIA
 7b803eb2910e9b4cd5e521ae07b9f7d6 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
 486cd95c82d8305219c352c06b776e1f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 9e61f3535f3c55760a1cedfbd114f4af UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -24,7 +24,7 @@ f6637497451c9a030c421de4a1ad5cdb Unity.TextMeshPro.dll:TMPro.TMP_ScrollbarEventH
 5573df4e093d9cdc7df10ba85c4d5ddd Assembly-CSharp.dll:.SelectOnInput
 b14b4630cc47b6e9ea8a644551a6a8cc Unity.TextMeshPro.dll:TMPro.TMP_Text
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:MLAgents.Monitor
-6bba7920ecd15894d3264720f474b88e Assembly-CSharp.dll:.PlayerController
+586bf00464164999e925ca8e0ae61180 Assembly-CSharp.dll:.PlayerController
 53cefe5d98cadefbab750835e70b89c0 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 486cd95c82d8305219c352c06b776e1f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 da2091a04d360891450faf16cdf621f1 UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -132,21 +132,22 @@ e1ea12ca952c81d81a9a21fdf34446ed UnityEngine.HoloLens.dll:UnityEngine.EventSyste
 98d69a140ec0084cde3b6a5e09aea295 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 96f3ea9f23b6f08e60710ebb4af49174 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
+e4209592a29779963eb4c9fe6b216d8f Assembly-CSharp.dll:.GameController
 0eaa6611a2fe3f9bafc8639126b2e1a8 Assembly-CSharp.dll:.PlayerAnimation
 6c9f30a675ee22b53c5bfb2b62daebbf Assembly-CSharp.dll:.ResonanceAudioDemoManager
-0519e04f7455fc66aefb31d5439836ce Assembly-CSharp.dll:.ZombieController
+6df4fee0cf57b0b13b2a34aa13476ba4 Assembly-CSharp.dll:.ZombieController
 f16835701e71dd5d6fb1fed4b7aff1d8 Unity.TextMeshPro.dll:TMPro.TMP_Asset
+d3f90dfafa1302e9412d6322ccff243d Assembly-CSharp.dll:.ZombieHordeAgent
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.Names
 a6f9d51962489324989b58fe63233839 Assembly-CSharp.dll:.Interactable
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.ResonanceAudioDemoCubeController
 9b877dad452ac6d9e925a2582b59c101 Assembly-CSharp.dll:.ResonanceAudioMaterialMapper
 486cd95c82d8305219c352c06b776e1f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
 e0a6132f5c2de006930bf4c301be6917 Assembly-CSharp.dll:.ResonanceAudioMaterialMap
-8a3777cda43ac0e84c70c5a881d3e099 Assembly-CSharp.dll:.MovingHuman
 eaf0bcdb10d442a4029d615f41d09957 Unity.TextMeshPro.dll:TMPro.TextContainer
 2bf040be56ef1a2d8392bd9f249d8093 Assembly-CSharp.dll:MLAgents.CoreBrainPlayer
 5573df4e093d9cdc7df10ba85c4d5ddd Assembly-CSharp.dll:.Menu
-256759e189bb9d922e83dbd3e410bbeb Assembly-CSharp.dll:.InteractPerson
+a6f9d51962489324989b58fe63233839 Assembly-CSharp.dll:.InteractPerson
 9bee927d896429b3a37b1f9c927d6d72 Assembly-CSharp.dll:.ResonanceAudioSource
 201273fb4f889724fb090164b7d6c657 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 486cd95c82d8305219c352c06b776e1f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -162,7 +163,6 @@ da21fc3f8056b1f91c3dd09c7bf4f90a UnityEngine.Networking.dll:UnityEngine.Networki
 529a95e9e8e7686c4816e08fbb37183f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 fc061f3ae8a876c0687e86378d4a447c UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 7ca56e063bd071986fff4f513cc4f477 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
-41bac8c6aae68b3c7a3a23b14fa9a475 Assembly-CSharp.dll:.ZombieAcademySwarmMovingHuman
 72a8523b432c0a5317826b7a9e0a0e79 Unity.TextMeshPro.dll:TMPro.PackageResourceImporterWindow
 e53cc67d84060d628c7f03fc725766d8 Unity.TextMeshPro.dll:TMPro.TMP_FontAsset
 392c5b921098bd4c139d9146d0efa6d7 Unity.TextMeshPro.dll:TMPro.TMP_Settings
@@ -202,7 +202,6 @@ aa7064169cdd4be2569926f79ec93b42 Assembly-CSharp.dll:.ResonanceAudioReverbProbe
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.TestModalWindow
 93307bd34e39d73fd24e00ec39c25a91 Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.LoadSceneOnClick
-2a3d6f1dca52ad296e267ad61d71139a Assembly-CSharp.dll:.DisplayManager
+66a8080495b793b6776ed5115603ad1c Assembly-CSharp.dll:.DisplayManager
+02923581fefff3b9f617a0b46688adba Assembly-CSharp.dll:.ZombieHordeAcademy
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.BringToFront
-ddcae71b3f91386237efd012a9eef2be UnityEngine.TestRunner.dll:UnityEngine.TestTools.EnumerableSetUpTearDownCommandState
-486cd95c82d8305219c352c06b776e1f UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.TestResultRendererCallback

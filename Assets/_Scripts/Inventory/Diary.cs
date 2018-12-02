@@ -53,7 +53,7 @@ public class Diary : Item {
         diaryPages.Add("Necesitamos víveres, estoy de comer judías con tomate hasta el gorro. Un grupo de vecinos armados y yo nos hemos adentrado al bosque para cazar algunas piezas.\n" +
             "Lo siento por los pobres animalitos... pero quiero carne.\n");
 
-        diaryPages.Add("Estamos rodeados ¿A quién se le ocurre llevar el móvil con sonido a una expedición?¡ Modo avión, modo avión!\n" +
+        diaryPages.Add("Estamos rodeados ¿A quién se le ocurre llevar el móvil con sonido a una expedición? ¡Modo avión, modo avión!\n" +
             "Está oscuro. Parece que cuando pasan estas cosas la noche se cierne con más velocidad. Escucho las voces de mis compañeros.\n" +
             "Carlos se ha derrumbado, Jaime ha huido y Ramos no da apagado el teléfono.\n" +
             "Huelo la carne pútrida, cada vez están más cerca. Debemos reagruparmos.\n" +

@@ -325,6 +325,24 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>D:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/System.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="TensorFlowSharp">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/Computer/TensorFlowSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/mport/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -342,24 +360,6 @@
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Protobuf">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="TensorFlowSharp">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/Computer/TensorFlowSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/System.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Interactive.Async">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
-    </Reference>
-    <Reference Include="Grpc.Core">
-      <HintPath>E:/Workspace/unity/RottenMemories/Assets/3rd Party/ML-Agents/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

@@ -3,243 +3,239 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 
-public class InteractPerson : Interactable {
-
-    private DisplayManager displayManager;
+public class InteractPerson : Interactable
+{
 
     private UnityAction DialogActionA;
     private UnityAction DialogActionB;
     private UnityAction DialogActionC;
-    private int iterationNumber = 1;
-    private bool lastDialogue = false;
-    private bool endDialogue = false;
-    private string selectedAnswer;
+    private Dictionary<string, string> dictionary;
+    private List<string> options = new List<string>();
+    private int index = 0, nOptions=0;
+    private bool wait = false, button=false, pacoFlag=true;
+    private bool alreadyInteracted = false, alreadyAnswered = false, firstR = true, SRFirstTime = true;
+    private char res = 'A';
 
-    [HideInInspector] public int PacoIteration = 1;
-
-    public int life = 100;
-
-    public override void Interact() {
+    public override void Start()
+    {
+        base.Start();
+        
+        try
+        {
+            dictionary = (Dictionary<string, string>)DialogManager.modalPanel.GetType().GetField(gameObject.name).GetValue(this);
+        }catch(Exception e) { Debug.Log(e.ToString()); }
+    }
+    public override void Interact()
+    {
         base.Interact();
-        displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
+        if (gameObject.name == "Paco" && PlayerController.playerControllerInstance.hasWine && pacoFlag)
+        {
+            int slot = 0;
+            foreach (Item item in Inventory.inventoryInstance.itemList) {
+                if (item.itemType == Item.ItemType.WineBottle) {
+                    Inventory.inventoryInstance.RemoveItem(slot);
+                    break;
+                }
+                slot++;
+            }
+            Animator anim = this.GetComponentInChildren<Animator>();
+            //Debug.Log("Anim: " + anim.name);
+            anim.SetTrigger("DrinkWine");
+            anim.ResetTrigger("IsGreeting");
+
+            dictionary = (Dictionary<string, string>)DialogManager.modalPanel.GetType().GetField("Paco_2").GetValue(this);
+            alreadyInteracted = false; index = 0; pacoFlag = false;
+        }
+
+        if (!PlayerController.playerControllerInstance.isMadeUp)
+        {
+            StartCoroutine("Discovered");
+            return;
+        }
+        if (alreadyInteracted)
+        {
+            if (gameObject.name != "SeñoraRamos")
+                DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_1"], 2.0f);
+            else {
+                if (PlayerController.playerControllerInstance.hasFood)
+                    if (SRFirstTime) {
+                        this.transform.Translate(1.5f, 0, 0);
+                        DisplayManager.displayManagerInstance.DisplayMessage("Sin comida hay quien se vuelve loco...", 2.0f);
+                        SRFirstTime = false;
+                    } else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_2"], 2.0f);
+                else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_1"], 2.0f);
+            }
+        }
+        else {
+
+        PlayerController.playerControllerInstance.isTalking = true;
         DialogActionA = new UnityAction(DialogFunctionA);
         DialogActionB = new UnityAction(DialogFunctionB);
         DialogActionC = new UnityAction(DialogFunctionC);
-        int iterNumPlus1 = iterationNumber + 1;
-        Debug.Log("Interact");
-        if(gameObject.name == "Paco")
-        {
-            Debug.Log("Entra " + PacoIteration);
-            switch (PacoIteration)
-            {
-                case 1:
-                    if (DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterationNumber))
-                    {
-                        if (PlayerController.playerControllerInstance.isMadeUp)
-                        {
-                            GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
-
-                            string question = DialogManager.dialogueDB[this.transform.gameObject.name + "_" + iterationNumber];
-                            if (!endDialogue && DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterNumPlus1))
-                            {
-                                GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, DialogActionA, DialogActionB, DialogActionC, lastDialogue, this.transform.gameObject.name, 3);
-                                iterationNumber++;
-                            }
-                            else if (endDialogue)
-                            {
-                                switch (selectedAnswer)
-                                {
-                                    case "A":
-                                        DialogFunctionA();
-                                        break;
-                                    case "B":
-                                        DialogFunctionB();
-                                        break;
-                                    case "C":
-                                        DialogFunctionC();
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                lastDialogue = true;
-                                GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, DialogActionA, DialogActionB, DialogActionC, lastDialogue, this.transform.gameObject.name, 2);
-                                endDialogue = true;
-                            }
-                        }
-                        else
-                        {
-                            PlayerController.playerControllerInstance.PlayerDeath("Te han descubierto! \nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.");
-                        }
-                    }
-                    break;
-
-                case 2:
-                    if (DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "__" + iterationNumber))
-                    {
-                        if (PlayerController.playerControllerInstance.isMadeUp)
-                        {
-                            GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
-
-                            string question = DialogManager.dialogueDB[this.transform.gameObject.name + "__" + iterationNumber];
-                            if (!endDialogue && DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "__" + iterNumPlus1))
-                            {
-                                GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, DialogActionA, DialogActionB, DialogActionC, lastDialogue, this.transform.gameObject.name, 3);
-                                iterationNumber++;
-                            }
-                            else
-                            {
-                                DialogManager.modalPanel.ClosePanel();
-                                displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "__" + iterationNumber]);
-                                Debug.Log("Sí");
-                                GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
-                                PacoIteration++;
-                                iterationNumber = 1;
-                            }
-                        }
-                        else
-                        {
-                            PlayerController.playerControllerInstance.PlayerDeath("Te han descubierto! \nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.");
-
-                        }
-                    }
-                    break;
-
-                case 3:
-                    if (PlayerController.playerControllerInstance.hasWine)
-                    {
-                        if (DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "___" + iterationNumber))
-                        {
-                            if (PlayerController.playerControllerInstance.isMadeUp)
-                            {
-                                GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
-
-                                string question = DialogManager.dialogueDB[this.transform.gameObject.name + "___" + iterationNumber];
-                                if (!endDialogue && DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "___" + iterNumPlus1))
-                                {
-                                    GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, DialogActionA, DialogActionB, DialogActionC, lastDialogue, this.transform.gameObject.name, 3);
-                                    iterationNumber++;
-                                }
-                                else
-                                {
-                                    displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "___" + iterationNumber]);
-                                    GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
-                                    DialogManager.modalPanel.ClosePanel();
-                                    PacoIteration = 0;
-                                    int slot = 0, aux = 0;
-                                    foreach (Item item in Inventory.inventoryInstance.itemList) {
-                                        if (item.itemType == Item.ItemType.WineBottle) slot = aux;
-                                        aux++;
-                                    }
-                                    Inventory.inventoryInstance.RemoveItem(slot);
-                                    Debug.Log("Llega a eliminar");
-                                    Animator anim = this.GetComponentInChildren<Animator>();
-                                    Debug.Log("Anim: " + anim.name);
-                                    anim.SetTrigger("DrinkWine");
-                                    anim.ResetTrigger("IsGreeting");
-                                }
-                                
-                            }
-                            else
-                            {
-                                PlayerController.playerControllerInstance.PlayerDeath("Te han descubierto! \nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.");
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        displayManager.DisplayMessage("No veo aquí mi vino.");
-
-                    }
-                    break;
-                case 0:
-                    displayManager.DisplayMessage("Qué buena cosecha!");
-                    break;
-
-
-            }
+        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
+        StartCoroutine("DialogCor");
         }
-        else 
-        if (DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterationNumber))
+        
+        
+    }
+    private IEnumerator Discovered()
+    {
+        DisplayManager.displayManagerInstance.DisplayMessage("Tienes muy mal aspecto... a ti te han mordido!\nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.", 3.0f);
+        yield return new WaitForSeconds(5);
+        PlayerController.playerControllerInstance.PlayerDeath("Te han descubierto!");
+    }
+
+    private IEnumerator DialogCor()
+    {
+        while (index < dictionary.Count)
         {
-            if (PlayerController.playerControllerInstance.isMadeUp)
+            //Debug.Log("Iteracion: " + index);
+            switch (dictionary.ElementAt(index).Key[0])
             {
-                GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
 
-                string question = DialogManager.dialogueDB[this.transform.gameObject.name + "_" + iterationNumber];
-                if (!endDialogue && DialogManager.dialogueDB.ContainsKey(this.transform.gameObject.name + "_" + iterNumPlus1))
-                {
-                    GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, DialogActionA, DialogActionB, DialogActionC, lastDialogue, this.transform.gameObject.name, 3);
-                    iterationNumber++;
-                }
-                else if (endDialogue)
-                {
-                    switch (selectedAnswer)
+                case 'B':
+                    //Debug.Log("B");
+                    options.Clear();
+                    nOptions = 0;
+                    do
                     {
-                        case "A":
-                            DialogFunctionA();
-                            break;
-                        case "B":
-                            DialogFunctionB();
-                            break;
-                        case "C":
-                            DialogFunctionC();
-                            break;
+                        options.Add(dictionary.ElementAt(index).Value);
+                        //Debug.Log(dictionary.ElementAt(index).Key);
+                        index++; nOptions++;
+                    } while (dictionary.ElementAt(index).Key[0] == 'B');
+                    DialogManager.modalPanel.DisplayButtons(nOptions, DialogActionA, DialogActionB, DialogActionC, options.ToArray());
+                    wait = true; button = true;
+                    break;
+
+                case 'P':
+                    //Debug.Log("P: " + dictionary.ElementAt(index).Value);
+                    DialogManager.modalPanel.DisplayPhrase(dictionary.ElementAt(index).Value);
+                    index++;
+                    wait = true; button = false;
+                    if (dictionary.ElementAt(index).Key[0] == 'B') wait = false;
+                    break;
+
+                case 'A':
+                    //Debug.Log("A");
+                    wait = false; button = false;
+                    if (!alreadyAnswered) {
+                        alreadyAnswered = true; wait = true;
+                        if (dictionary.ContainsKey("A_" + res))
+                        {
+                            DialogManager.modalPanel.DisplayPhrase(dictionary["A_" + res]);
+                        }
+                        else wait = false;
                     }
-                }
-                else
-                {
-                    lastDialogue = true;
-                    GameObject.Find(Names.managers).GetComponent<DialogManager>().Choice(question, DialogActionA, DialogActionB, DialogActionC, lastDialogue, this.transform.gameObject.name, 3);
-                    endDialogue = true;
-                }
+                    index++;
+                    break;
+
+                case 'R':
+                    //Debug.Log("R");
+                    wait = false; button = false;
+                    if (firstR)
+                    {
+                        wait = true;
+                        firstR = false;
+                    }
+                    index++;
+                    break;
+
+                default:
+                    //Debug.Log("Default");
+                    index++;
+                    wait = false; button = false;
+                    break;
+
+
             }
-            else
+            //Debug.Log("Empieza");
+            yield return new WaitForSeconds(0.5f);
+            //Debug.Log("Acaba");
+            while (wait)
             {
-                PlayerController.playerControllerInstance.PlayerDeath("Te han descubierto! \nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.");
-
+                yield return null;
+                if (!button) wait = !Input.GetKeyDown(KeyCode.E);
+                //Debug.Log("Esperando " + index);
             }
+            //Debug.Log("Continua " + index);
+
         }
+        DialogManager.modalPanel.ClosePanel();
+        alreadyInteracted = true; PlayerController.playerControllerInstance.isTalking = false;
+        //Debug.Log("Fin de la conversación");
+        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
     }
 
-    void DialogFunctionA() {
-        displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "AR"]);
-        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
-        PacoIteration++;
-        Debug.Log(PacoIteration);
-        iterationNumber = 1;
-        lastDialogue = false;
-        if (gameObject.name == "Paco")
-            endDialogue = false;
-        selectedAnswer = "A";
+    bool jaimeA=false, jaimeB=false, jaimeC=false;
+    void DialogFunctionA()
+    {
+        DialogManager.modalPanel.DisplayPhrase(dictionary["R_A"]);
+        if(gameObject.name == "Jaime")
+        {
+            index -= 4;
+            jaimeA = true;
+            if (gameObject.name == "Jaime" && jaimeA && jaimeB && jaimeC) index += 4;
+
+        }
+        index++; wait = false; res = 'A'; //alreadyAnswered=true;
     }
 
-    void DialogFunctionB() {
-        displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "BR"]);
-        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
-        PacoIteration++;
-        Debug.Log(PacoIteration);
-        iterationNumber = 1;
-        lastDialogue = false;
-        if (gameObject.name == "Paco")
-            endDialogue = false;
-        selectedAnswer = "B";
+    void DialogFunctionB()
+    {
+        //Debug.Log("Button B");
+        DialogManager.modalPanel.DisplayPhrase(dictionary["R_B"]);
+        if (gameObject.name == "Jaime")
+        {
+            index -= 4;
+            jaimeB = true;
+            if (gameObject.name == "Jaime" && jaimeA && jaimeB && jaimeC) index += 4;
+
+        }
+        index++; wait = false; res = 'B';
+
     }
 
-    void DialogFunctionC() {
-        displayManager.DisplayMessage(DialogManager.dialogueDB[this.transform.gameObject.name + "_" + "CR"]);
-        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
-        PacoIteration++;
-        Debug.Log(PacoIteration);
-        iterationNumber = 1;
-        lastDialogue = false;
-        if (gameObject.name == "Paco")
-            endDialogue = false;
-        selectedAnswer = "C";
+    void DialogFunctionC()
+    {
+        //Debug.Log("Button C");
+        DialogManager.modalPanel.DisplayPhrase(dictionary["R_C"]);
+        if (gameObject.name == "Jaime")
+        {
+            index -= 4;
+            jaimeC = true;
+            if (gameObject.name == "Jaime" && jaimeA && jaimeB && jaimeC) index += 4;
+
+        }
+        index++; wait = false; res = 'C';
+
     }
+
 
 
 }
+
+
+
+
+//for (int index = 0; index<dictionary.Count; index++) {
+//  var item = dictionary.ElementAt(index);
+//var itemKey = item.Key;
+//var itemValue = item.Value;
+//}
+
+    /*
+     while(quedan frases)
+     int indice;
+        if(empieza por B)
+            sacar los botones (tantos como haya)
+            apuntar a las respuestas: indice=indice(mapa(R_A))
+        if(empieza por R)
+            sacar la respuesta (en función de letra)
+            apuntar a siguiente frase (si la hay): for(indice++) if(no empieza por R) salir;
+        else
+        sacar texto
+     
+     */

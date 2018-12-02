@@ -32,6 +32,7 @@ public class InteractItem : Interactable {
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
             StartCoroutine("DestroyObject");
+            PlayerController.playerControllerInstance.hasFood = true;
         }
         else if (transform.tag == "MakeUp")
         {
@@ -69,7 +70,7 @@ public class InteractItem : Interactable {
                 this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 StartCoroutine("DestroyObject");
             } else {
-                DisplayManager.displayManagerInstance.DisplayMessage("Tengo que ver como llego hasta ahí arriba.");
+                DisplayManager.displayManagerInstance.DisplayMessage("Tengo que ver como llego hasta ahí arriba.", 2.5f);
             }
         }
         else if (transform.tag == "DiaryPage")

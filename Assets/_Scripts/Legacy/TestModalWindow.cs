@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TestModalWindow : MonoBehaviour {
 
-    private DialogManager modalPanel;
+    /*private DialogManager modalPanel;
     private DisplayManager displayManager;
 
     private UnityAction myYesAction;
@@ -24,7 +24,7 @@ public class TestModalWindow : MonoBehaviour {
     }
 
     public void TestYNC() {
-        modalPanel.Choice("Would you like a poke in the eye?\nHow about with a sharp stick?", myYesAction, myNoAction, myCancelAction, false, "falta una string", 3);
+        //modalPanel.Choice("Would you like a poke in the eye?\nHow about with a sharp stick?", myYesAction, myNoAction, myCancelAction, false, "falta una string", 3);
     }
 
     //Send to the Modal Panel to set up the Buttons and Functions to call
@@ -40,6 +40,6 @@ public class TestModalWindow : MonoBehaviour {
 
     void TestCancelFunction() {
         displayManager.DisplayMessage("I give up!");
-    }
+    }*/
 
 }

@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
 public class DisplayManager : MonoBehaviour {
 
     public Text displayText;
     [HideInInspector] public GameObject interactText;
-    public GameObject DisplayTextPanel;
+    public GameObject displayTextPanel;
 
 
     public float displayTime;
@@ -27,13 +26,6 @@ public class DisplayManager : MonoBehaviour {
         else Debug.LogError("Tried to create a second DisplayManager");
     }
 
-    private void Update() {
-        if (Input.GetKeyDown("escape")) {
-            Application.Quit();
-        }
-        ChangeScene();
-    }
-
 
     /*public static DisplayManager Instance() {
         if (!displayManagerInstance) {
@@ -45,8 +37,9 @@ public class DisplayManager : MonoBehaviour {
         return displayManagerInstance;
     }*/
 
-    public void DisplayMessage(string message) {
-        DisplayTextPanel.SetActive(true);
+    public void DisplayMessage(string message, float time) {
+        displayTextPanel.SetActive(true);
+        displayTime = time;
         displayText.text = message;
         SetAlpha();
     }
@@ -60,24 +53,28 @@ public class DisplayManager : MonoBehaviour {
     }
 
     IEnumerator FadeAlpha() {
-        Color resetColor = displayText.color;
-        resetColor.a = 1;
-        displayText.color = resetColor;
+        Color resetTextColor = displayText.color;
+        Color resetPanelColor = displayTextPanel.GetComponent<Image>().color;
+        resetTextColor.a = 1;
+        resetPanelColor.a = 0.67f;
+        displayText.color = resetTextColor;
+        displayTextPanel.GetComponent<Image>().color = resetPanelColor;
 
         yield return new WaitForSeconds(displayTime);
-        DisplayTextPanel.SetActive(false);
 
         while (displayText.color.a > 0) {
-            Color displayColor = displayText.color;
-            displayColor.a -= Time.deltaTime / fadeTime;
-            displayText.color = displayColor;
+            Color textColor = displayText.color;
+            Color panelColor = displayTextPanel.GetComponent<Image>().color;
+            textColor.a -= Time.deltaTime / fadeTime;
+            panelColor.a -= Time.deltaTime / fadeTime;
+
+            displayText.color = textColor;
+            displayTextPanel.GetComponent<Image>().color = panelColor;
             yield return null;
         }
+        displayTextPanel.SetActive(false);
         yield return null;
     }
 
-    void ChangeScene() {
-        if (Input.GetKeyDown(KeyCode.RightArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-    }
+ 
 }

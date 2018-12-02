@@ -18,6 +18,7 @@ TagManager:
   - Wine
   - Ladder
   - Avatar
+  - Closed
   layers:
   - Default
   - TransparentFX

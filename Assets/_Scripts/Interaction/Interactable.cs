@@ -12,14 +12,14 @@ public class Interactable : MonoBehaviour {
     private GameObject interactText;
 
     // Use this for initialization
-    void Start () {
+    public virtual void Start () {
         player = GameObject.Find(Names.player).transform;
         interactText = DisplayManager.displayManagerInstance.interactText;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (this.transform.tag == "Zombie") return;
+       // if (this.transform.tag == "Zombie") return; //?????????
         }
 
     public virtual void Interact() {

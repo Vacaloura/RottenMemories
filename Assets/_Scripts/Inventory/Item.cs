@@ -46,7 +46,7 @@ public class Item
         if (itemType == ItemType.MakeUp)
         {
             PlayerController.playerControllerInstance.isMadeUp = true;
-            DisplayManager.displayManagerInstance.DisplayMessage("Ya estoy guapo, al lío.");
+            DisplayManager.displayManagerInstance.DisplayMessage("Ya estoy guapo, al lío.", 2.0f);
             return true;
         }
         return false; }

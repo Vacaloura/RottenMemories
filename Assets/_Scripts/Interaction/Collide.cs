@@ -13,7 +13,7 @@ public class Collide : MonoBehaviour {
     void OnTriggerEnter(Collider col) {
         if (transform.tag == "Head" || transform.tag == "Body") {
             if (col.gameObject.tag == "Arrow") {
-                //this.transform.parent.GetComponent<ZombieHordeAgent>().zombieBeingAttacked = true; TODO
+                this.transform.parent.GetComponent<ZombieController>().zombieBeingAttacked = true;
                 try
                 {
                     source = col.gameObject.GetComponent<AudioSource>();
@@ -29,25 +29,25 @@ public class Collide : MonoBehaviour {
                 Transform parent = this.transform.parent;
                 col.gameObject.transform.parent = parent;
                 if (transform.tag == "Head") {
-                    parent.gameObject.GetComponent<InteractPerson>().life = 0;
+                    parent.gameObject.GetComponent<ZombieController>().life = 0;
                 } else {
-                    parent.gameObject.GetComponent<InteractPerson>().life -= 25;
+                    parent.gameObject.GetComponent<ZombieController>().life -= 25;
                 }
-                if (parent.gameObject.GetComponent<InteractPerson>().life == 0) {
+                if (parent.gameObject.GetComponent<ZombieController>().life == 0) {
                     foreach (Transform child in parent) {
                         if (child.tag == "Head" || child.tag == "Body" || child.tag == "Avatar") {
                             Destroy(child.gameObject);
                         } else {
                             Debug.Log(child.name);
                             child.GetComponent<Rigidbody>().isKinematic = false;
-                        }
+                       }
                     }
-                    parent.DetachChildren();
-                    DisplayManager.displayManagerInstance.interactText.SetActive(false);
+                   parent.DetachChildren();
+                    //DisplayManager.displayManagerInstance.interactText.SetActive(false);
                     Destroy(parent.gameObject);
                 }
-                Debug.Log("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
-                DisplayManager.displayManagerInstance.DisplayMessage("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<InteractPerson>().life);
+                Debug.Log("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<ZombieController>().life);
+                //DisplayManager.displayManagerInstance.DisplayMessage("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<ZombieController>().life);
             }
         }
     }

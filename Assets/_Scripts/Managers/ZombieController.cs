@@ -7,17 +7,21 @@ public class ZombieController : MonoBehaviour {
 
     public Transform target;
     public float maxAttackDistance = 50f;
-    public float minAttackDistance = 1.5f;
+    public float minAttackDistance = 0.8f;
+    public int life = 100;
+    public bool zombieBeingAttacked = false;
+    public bool isMoving = false;
 
-    [HideInInspector] public bool firstAttackFlag=false;
+    [HideInInspector] public bool firstAttackFlag = false;
+    [HideInInspector] public bool playerBeingAttacked = false;
     public int zombieAttackValue = 10;
     public int zombieAttackTime = 3;
 
-    private NavMeshAgent myNavAgent;
+    //private NavMeshAgent myNavAgent;
 
     // Use this for initialization
     void Start () {
-        myNavAgent = transform.GetComponent<NavMeshAgent>();
+        //myNavAgent = transform.GetComponent<NavMeshAgent>();
     }
 	
 	// Update is called once per frame
@@ -27,22 +31,20 @@ public class ZombieController : MonoBehaviour {
             {
                 if (Vector3.Distance(GameObject.Find(Names.player).transform.position, this.transform.position) > minAttackDistance)
                 {
-                    myNavAgent.isStopped = false;
-                    myNavAgent.destination = target.position;
-                }
-                else
+                    //myNavAgent.isStopped = false;
+                    //myNavAgent.destination = target.position;
+                    playerBeingAttacked = false;
+                } else
                 {
-                    myNavAgent.isStopped = true;
+                    //myNavAgent.isStopped = true;
+                    playerBeingAttacked = true;
                 }
             }
             else
             {
                 firstAttackFlag = false;
-                myNavAgent.isStopped = true;
+                //myNavAgent.isStopped = true;
             }
         }
-
-
-
     }
 }
