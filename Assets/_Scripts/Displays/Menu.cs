@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 
-
 public class Menu : MonoBehaviour {
 
     public EventSystem eventSystem;
@@ -40,7 +39,7 @@ public class Menu : MonoBehaviour {
     }
 
     public void LoadNewByIndex() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void LoadOldByIndex(string fileName)

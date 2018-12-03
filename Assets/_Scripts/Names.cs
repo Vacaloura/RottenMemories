@@ -21,7 +21,8 @@ public class Names : MonoBehaviour {
     public const string canvas = "Canvas";
     public const string displayText = "DisplayText";
     public const string interactText = "InteractTextPanel";
-
+    public const string musicSlider = "MusicSlider";
+    public const string fxSlider = "FXSlider";
 
     //OBJETOS
     public const string harpoonPrefab = "Harpoon";

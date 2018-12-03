@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 
 public class GameController : MonoBehaviour {
     public GameData currentGameData = new GameData();
+    public AudioMixer mixer;
     [HideInInspector] public static GameController gameControllerInstance;
 
     private void Awake()
@@ -20,10 +23,13 @@ public class GameController : MonoBehaviour {
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        currentGameData.posx = -14.437f;
-        currentGameData.posy = 5.742f;
-        currentGameData.posz = -36.241f;
-        currentGameData.playerMadness = 20;
+        currentGameData.playerMadness = 0;
+        currentGameData.playerPosX = -14.437f;
+        currentGameData.playerPosY = 5.742f;
+        currentGameData.playerPosZ = -36.241f;
+        currentGameData.musicVolume = 0.5f;
+        currentGameData.fxVolume = 0.5f;
+
         //if (SceneManager.GetActiveScene().name != "MainMenus")
         //    LoadPlayerData();
     }
@@ -128,17 +134,48 @@ public class GameController : MonoBehaviour {
     void SavePlayerData()
     {
         currentGameData.playerMadness = PlayerController.playerControllerInstance.madness;
-        currentGameData.posx = PlayerController.playerControllerInstance.transform.position.x;
-        currentGameData.posy = PlayerController.playerControllerInstance.transform.position.y;
-        currentGameData.posz = PlayerController.playerControllerInstance.transform.position.z;
+        currentGameData.playerPosX = PlayerController.playerControllerInstance.transform.position.x;
+        currentGameData.playerPosY = PlayerController.playerControllerInstance.transform.position.y;
+        currentGameData.playerPosZ = PlayerController.playerControllerInstance.transform.position.z;
+
+        currentGameData.foodTaken = PlayerController.playerControllerInstance.foodTaken;
+        currentGameData.diaryPageTaken = PlayerController.playerControllerInstance.diaryPageTaken;
+        currentGameData.makeUpTaken = PlayerController.playerControllerInstance.isMadeUp;
+        currentGameData.ladderTaken = PlayerController.playerControllerInstance.hasLadder;
+        currentGameData.wineTaken = PlayerController.playerControllerInstance.hasWine;
+        currentGameData.luculoTaken = PlayerController.playerControllerInstance.hasCat;
+
         currentGameData.SceneID = SceneManager.GetActiveScene().buildIndex;
     }
     public void LoadPlayerData()
     {
         //SceneManager.LoadScene(currentGameData.SceneID+1);
         PlayerController.playerControllerInstance.madness = currentGameData.playerMadness;
-        PlayerController.playerControllerInstance.transform.position = new Vector3(currentGameData.posx, currentGameData.posy, currentGameData.posz);
+        PlayerController.playerControllerInstance.transform.position = new Vector3(currentGameData.playerPosX, currentGameData.playerPosY, currentGameData.playerPosZ);
 
+        GameObject.Find("Food000").SetActive(!currentGameData.foodTaken[0]);
+        GameObject.Find("Food001").SetActive(!currentGameData.foodTaken[1]);
+        GameObject.Find("Food002").SetActive(!currentGameData.foodTaken[2]);
+        GameObject.Find("Food003").SetActive(!currentGameData.foodTaken[3]);
+        GameObject.Find("Food004").SetActive(!currentGameData.foodTaken[4]);
+        GameObject.Find("Food005").SetActive(!currentGameData.foodTaken[5]);
+        GameObject.Find("DiaryPage1").SetActive(!currentGameData.diaryPageTaken[0]);
+        GameObject.Find("DiaryPage2").SetActive(!currentGameData.diaryPageTaken[1]);
+        GameObject.Find("DiaryPage3").SetActive(!currentGameData.diaryPageTaken[2]);
+        GameObject.Find("DiaryPage4").SetActive(!currentGameData.diaryPageTaken[3]);
+        PlayerController.playerControllerInstance.isMadeUp = currentGameData.makeUpTaken;
+        PlayerController.playerControllerInstance.hasLadder = currentGameData.ladderTaken;
+        PlayerController.playerControllerInstance.hasWine = currentGameData.wineTaken;
+        PlayerController.playerControllerInstance.hasCat = currentGameData.luculoTaken;
+        PlayerController.playerControllerInstance.hasFood = currentGameData.foodTaken[0];
+    }
+
+    public void ChangeVolume(int index) {
+        if (index == 1) {
+            mixer.SetFloat("AmbientVolume", GameObject.Find(Names.musicSlider).GetComponent<Slider>().value);
+        } else if (index == 2) {
+            mixer.SetFloat("FXVolume", GameObject.Find(Names.fxSlider).GetComponent<Slider>().value);
+        }
     }
 
 

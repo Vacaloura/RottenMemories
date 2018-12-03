@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour {
     public int timeIncrease=20;
     /*[HideInInspector]*/
     public bool playerControl = true, allowInteract = true, isTalking = false, isMadeUp = false, hasWine = false, hasLadder = false, hasCat = false, hasFood = false;
+    public bool[] foodTaken = new bool[6] { false, false, false, false, false, false };
+    public bool[] diaryPageTaken = new bool[4] { false, false, false, false };
 
     private DisplayManager displayManager;
 

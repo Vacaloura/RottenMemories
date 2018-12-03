@@ -33,6 +33,9 @@ public class InteractItem : Interactable {
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
             StartCoroutine("DestroyObject");
             PlayerController.playerControllerInstance.hasFood = true;
+
+            int foodNum = (int)char.GetNumericValue(gameObject.name[6]);
+            GameObject.Find("Player").GetComponent<PlayerController>().foodTaken[foodNum] = true;
         }
         else if (transform.tag == "MakeUp")
         {
@@ -80,6 +83,9 @@ public class InteractItem : Interactable {
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
             StartCoroutine("DestroyObject");
+
+            int pageNum = (int)char.GetNumericValue(gameObject.name[6]);
+            GameObject.Find("Player").GetComponent<PlayerController>().diaryPageTaken[pageNum] = true;
         }
         else if (transform.tag == "Furniture")
         {
