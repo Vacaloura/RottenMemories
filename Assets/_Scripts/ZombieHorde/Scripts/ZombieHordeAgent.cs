@@ -6,23 +6,18 @@ using MLAgents;
 
 public class ZombieHordeAgent : Agent {
 
-    public float speed = 5f;
-    public float visionRange = 30f; //el rango de percepción del zombie, si el humano está dentro del rango lo perseguirá
-
-    public float maxCoordinate = 100f; //la mayor coordenada x o z del mapa
+    public float speed = 5;
+    public float visionRange = 30; //el rango de percepción del zombie, si el humano está dentro del rango lo perseguirá
+    public float maxCoordinate = 10; //la mayor coordenada x o z del mapa
     public Transform human; //el humano al que perseguir
-    [HideInInspector] public Vector3 originalPosition;
+    public Vector3 originalPosition;
     //private float lastDist2Human;
     private GameObject[] zombies;
 
     private NavMeshAgent myNavAgent;
     private Vector3 goal;
     private int walkStep = 0;
-    public float walk = 3f;
-
-    public float maxAtackRange = 5f;
-    public float minAtackRange = 1f;
-
+    public float walk = 3;
 
     public void Start()
     {
@@ -41,8 +36,6 @@ public class ZombieHordeAgent : Agent {
         float zNorm = myPosition.z / maxCoordinate;
         AddVectorObs(xNorm);
         AddVectorObs(zNorm);
-
-        //Debug.Log("my pos " + xNorm + " " + zNorm);
         
         //Human relative position
         Vector3 humanRelativePosition = human.position - transform.position;
@@ -50,10 +43,6 @@ public class ZombieHordeAgent : Agent {
         zNorm = humanRelativePosition.z / maxCoordinate;
         AddVectorObs(xNorm);
         AddVectorObs(zNorm);
-
-       // Debug.Log("hpos" + xNorm + " " + zNorm);
-        //Debug.Log("human pos " + human.position.x + " " + human.position.z);
-       // Debug.Log("zombie pos " + transform.position.x + " " + transform.position.z);
 
         //The direction im facing
         Vector3 forwardNorm = Vector3.Normalize(transform.forward);
@@ -138,68 +127,42 @@ public class ZombieHordeAgent : Agent {
         {
             //paramos el nav agent
             myNavAgent.isStopped = true;
-            //gameObject.GetComponent<ZombieController>().firstAttackFlag = false;
             walkStep = 0;
 
-            //Debug.Log("Dist2Human " + dist2Human);
-            //Debug.Log("human pos " + human.position.x + " " + human.position.z);
-            //Debug.Log("zombie pos " + transform.position.x + " " + transform.position.z);
-            //Debug.Log("Visible");
-            foreach(float action in vectorAction)
+            //set direction
+            //we need a zero to not act
+            switch (direction)
             {
-                //Debug.Log(" " + action);
+                case 1:
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                    break;
+                case 2:
+                    transform.rotation = Quaternion.Euler(0, 45, 0);
+                    break;
+                case 3:
+                    transform.rotation = Quaternion.Euler(0, 90, 0);
+                    break;
+                case 4:
+                    transform.rotation = Quaternion.Euler(0, 135, 0);
+                    break;
+                case 5:
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                    break;
+                case 6:
+                    transform.rotation = Quaternion.Euler(0, 225, 0);
+                    break;
+                case 7:
+                    transform.rotation = Quaternion.Euler(0, 270, 0);
+                    break;
+                case 8:
+                    transform.rotation = Quaternion.Euler(0, 315, 0);
+                    break;
             }
 
-            if (Vector3.Distance(human.position, this.transform.position) < maxAtackRange)
+            //advance
+            if (advance == 1)
             {
-                if (Vector3.Distance(human.position, this.transform.position) > minAtackRange)
-                {
-                    myNavAgent.isStopped = false;
-                    myNavAgent.destination = human.position;
-                    //Debug.Log("Aproaching " + this);
-                }
-                else
-                {
-                    myNavAgent.isStopped = true;
-                }
-            }
-            else
-            {
-                //set direction
-                //we need a zero to not act
-                switch (direction)
-                {
-                    case 1:
-                        transform.rotation = Quaternion.Euler(0, 0, 0);
-                        break;
-                    case 2:
-                        transform.rotation = Quaternion.Euler(0, 45, 0);
-                        break;
-                    case 3:
-                        transform.rotation = Quaternion.Euler(0, 90, 0);
-                        break;
-                    case 4:
-                        transform.rotation = Quaternion.Euler(0, 135, 0);
-                        break;
-                    case 5:
-                        transform.rotation = Quaternion.Euler(0, 180, 0);
-                        break;
-                    case 6:
-                        transform.rotation = Quaternion.Euler(0, 225, 0);
-                        break;
-                    case 7:
-                        transform.rotation = Quaternion.Euler(0, 270, 0);
-                        break;
-                    case 8:
-                        transform.rotation = Quaternion.Euler(0, 315, 0);
-                        break;
-                }
-
-                //advance
-                if (advance == 1)
-                {
-                    transform.position += transform.forward * Time.deltaTime * speed;
-                }
+                transform.position += transform.forward * Time.deltaTime * speed;
             }
         } 
         else

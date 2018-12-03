@@ -178,6 +178,33 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public void SetDifficulty(int mode) {
+        Debug.Log("setting difficulty");
+        switch (mode) {
+            case 0:
+                currentGameData.difficulty = GameData.Difficulties.easy;
+                currentGameData.zombieSpeed = 3.5f;
+                currentGameData.zombieMaxAtackRange = 5f;
+                currentGameData.zombieVisionRange = 20f;
+                Debug.Log("Difficulty set to easy");
+                break;
+            case 1:
+                currentGameData.difficulty = GameData.Difficulties.medium;
+                currentGameData.zombieSpeed = 5f;
+                currentGameData.zombieMaxAtackRange = 7.5f;
+                currentGameData.zombieVisionRange = 30f;
+                Debug.Log("Difficulty set to medium");
+                break;
+            case 2:
+                currentGameData.difficulty = GameData.Difficulties.hard;
+                currentGameData.zombieSpeed = 7f;
+                currentGameData.zombieMaxAtackRange = 10f;
+                currentGameData.zombieVisionRange = 45f;
+                Debug.Log("Difficulty set to hard");
+                break;
+        }
+    }
+
 
     /*void ChangeScene() {
      if (Input.GetKeyDown(KeyCode.RightArrow)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

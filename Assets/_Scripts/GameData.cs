@@ -22,4 +22,11 @@ public class GameData
     public bool luculoTaken = false;
 
     public int SceneID;
+
+    //Opciones de dificultad
+    public enum Difficulties { easy, medium, hard };
+    public Difficulties difficulty = Difficulties.easy;
+    public float zombieSpeed = 3.5f;
+    public float zombieMaxAtackRange = 5f;
+    public float zombieVisionRange = 20f;
 }

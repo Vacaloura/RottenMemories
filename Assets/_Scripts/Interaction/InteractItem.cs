@@ -84,8 +84,8 @@ public class InteractItem : Interactable {
             this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
             StartCoroutine("DestroyObject");
 
-            int pageNum = (int)char.GetNumericValue(gameObject.name[6]);
-            GameObject.Find("Player").GetComponent<PlayerController>().diaryPageTaken[pageNum] = true;
+            int pageNum = (int)char.GetNumericValue(gameObject.name[9]);
+            GameObject.Find("Player").GetComponent<PlayerController>().diaryPageTaken[pageNum - 1] = true;
         }
         else if (transform.tag == "Furniture")
         {
