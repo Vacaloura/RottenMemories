@@ -377,10 +377,10 @@ RectTransform:
   m_Father: {fileID: 698242056}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -239}
+  m_SizeDelta: {x: 440, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &50565661
 MonoBehaviour:
@@ -590,7 +590,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 698242060}
-        m_MethodName: LoadOldByIndex
+        m_MethodName: LoadOld
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -920,10 +920,10 @@ RectTransform:
   m_Father: {fileID: 698242056}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -185}
+  m_SizeDelta: {x: 440, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &151072170
 MonoBehaviour:
@@ -2559,10 +2559,10 @@ RectTransform:
   m_Father: {fileID: 698242056}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -131}
+  m_SizeDelta: {x: 440, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &734338727
 MonoBehaviour:
@@ -3098,7 +3098,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 698242060}
-        m_MethodName: LoadNewByIndex
+        m_MethodName: LoadNew
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3294,16 +3294,19 @@ MonoBehaviour:
     fxVolume: 0.5
     foodTaken: 000000000000
     diaryPageTaken: 00000000
+    npcInteracted: 00000000
     makeUpTaken: 0
     ladderTaken: 0
     wineTaken: 0
     luculoTaken: 0
+    itemList: []
     SceneID: 0
     difficulty: 0
     zombieSpeed: 3.5
     zombieMaxAtackRange: 5
     zombieVisionRange: 20
   mixer: {fileID: 24100000, guid: 88aa9e09e43cef5428ce153bd142f298, type: 2}
+  loadData: 0
 --- !u!1 &860866457
 GameObject:
   m_ObjectHideFlags: 0
@@ -5947,10 +5950,10 @@ RectTransform:
   m_Father: {fileID: 698242056}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -293}
+  m_SizeDelta: {x: 440, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1790803869
 MonoBehaviour:
@@ -6434,10 +6437,10 @@ RectTransform:
   m_Father: {fileID: 698242056}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -77}
+  m_SizeDelta: {x: 440, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2065586041
 MonoBehaviour:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Harpoon : Item {
  
     public int arrows = 7;
@@ -14,7 +15,6 @@ public class Harpoon : Item {
 
     private bool Shoot()
     {
-        //TODO apply physichs and return succes or not
         arrows--;
         return false;
     }

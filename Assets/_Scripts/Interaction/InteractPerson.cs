@@ -16,7 +16,8 @@ public class InteractPerson : Interactable
     private List<string> options = new List<string>();
     private int index = 0, nOptions=0;
     private bool wait = false, button=false, pacoFlag=true;
-    private bool alreadyInteracted = false, alreadyAnswered = false, firstR = true, SRFirstTime = true;
+    public bool alreadyInteracted = false;
+    private bool alreadyAnswered = false, firstR = true, SRFirstTime = true;
     private char res = 'A';
 
     public override void Start()

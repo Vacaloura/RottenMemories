@@ -11,8 +11,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GameController : MonoBehaviour {
     public GameData currentGameData = new GameData();
     public AudioMixer mixer;
+    public bool loadData = false;
     [HideInInspector] public static GameController gameControllerInstance;
 
+    private Transform quiver;
+    private Transform horde;
     private void Awake()
     {
         if (gameControllerInstance == null)
@@ -57,19 +60,24 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            //LoadPlayerDataFromDisk();
+            LoadPlayerDataFromDisk("myGameData.txt");
+            Debug.Log("Loaded myGameData.txt");
         }
         if (Input.GetKeyDown(KeyCode.F3))
         {
             SavePlayerDataToDisk();
+            Debug.Log("Saved myGameData.txt");
+
         }
         if (Input.GetKeyDown(KeyCode.F5))
         {
             LoadPlayerData(); //Carga de la memoria de juego (GameData)
+            Debug.Log("Loaded");
         }
         if (Input.GetKeyDown(KeyCode.F6))
         {
             SavePlayerData();//Guarda a la memoria de juego (GameData)
+            Debug.Log("Saved");
         }
         if (Input.GetKeyDown(KeyCode.F8))
         {    // for testing
@@ -95,6 +103,7 @@ public class GameController : MonoBehaviour {
         // 2) Binary formatter
         BinaryFormatter myFormatter = new BinaryFormatter();
         // 3) Create file
+        if (File.Exists("myGameFolder/myGameData.txt")) File.Delete("myGameFolder/myGameData.txt");
         FileStream myFile = File.Create("myGameFolder/myGameData.txt");
         // 4) Reference to data being saved
         //GameStatistics localData = GameData.g_GameDataInstance.savedGameData;
@@ -102,7 +111,6 @@ public class GameController : MonoBehaviour {
         myFormatter.Serialize(myFile, currentGameData);
         // 6) Close file!!!!! EXTREMELY IMPORTANT
         myFile.Close();
-        Debug.Log("Saved!");
     }
 
     public void LoadPlayerDataFromDisk(string fileName)
@@ -145,7 +153,31 @@ public class GameController : MonoBehaviour {
         currentGameData.wineTaken = PlayerController.playerControllerInstance.hasWine;
         currentGameData.luculoTaken = PlayerController.playerControllerInstance.hasCat;
 
-        currentGameData.SceneID = SceneManager.GetActiveScene().buildIndex;
+        currentGameData.npcInteracted[0] = GameObject.Find("Carlos").GetComponent<InteractPerson>().alreadyInteracted;
+        currentGameData.npcInteracted[1] = GameObject.Find("SeñoraRamos").GetComponent<InteractPerson>().alreadyInteracted;
+        currentGameData.npcInteracted[2] = GameObject.Find("Jaime").GetComponent<InteractPerson>().alreadyInteracted;
+        currentGameData.npcInteracted[3] = GameObject.Find("Paco").GetComponent<InteractPerson>().alreadyInteracted;
+
+        currentGameData.itemList = new List<Item>(Inventory.inventoryInstance.itemList);
+
+        currentGameData.arrowList.Clear();
+        quiver = GameObject.Find(Names.quiverObject).transform;
+        horde = GameObject.Find("Zombies").transform;
+        string parent;
+        foreach (GameObject arrow in GameObject.FindGameObjectsWithTag("Arrow"))
+        {
+            if (arrow.transform.parent == null) parent = null;
+            else parent = arrow.transform.parent.name;
+            currentGameData.arrowList.Add(new Arrow(new float[3] { arrow.transform.position.x, arrow.transform.position.y, arrow.transform.position.z }, parent, arrow.activeSelf, arrow.GetComponent<Rigidbody>().isKinematic));    
+        }
+        foreach(Transform arrow in quiver)
+        {
+            currentGameData.arrowList.Add(new Arrow(new float[3] { arrow.position.x, arrow.position.y, arrow.transform.position.z }, arrow.parent.name, arrow.gameObject.activeSelf, arrow.GetComponent<Rigidbody>().isKinematic));
+        }
+
+
+        //currentGameData.SceneID = SceneManager.GetActiveScene().buildIndex;
+
     }
     public void LoadPlayerData()
     {
@@ -163,11 +195,33 @@ public class GameController : MonoBehaviour {
         GameObject.Find("DiaryPage2").SetActive(!currentGameData.diaryPageTaken[1]);
         GameObject.Find("DiaryPage3").SetActive(!currentGameData.diaryPageTaken[2]);
         GameObject.Find("DiaryPage4").SetActive(!currentGameData.diaryPageTaken[3]);
+
         PlayerController.playerControllerInstance.isMadeUp = currentGameData.makeUpTaken;
         PlayerController.playerControllerInstance.hasLadder = currentGameData.ladderTaken;
         PlayerController.playerControllerInstance.hasWine = currentGameData.wineTaken;
         PlayerController.playerControllerInstance.hasCat = currentGameData.luculoTaken;
         PlayerController.playerControllerInstance.hasFood = currentGameData.foodTaken[0];
+
+        GameObject.Find("Carlos").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[0];
+        GameObject.Find("SeñoraRamos").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[1];
+        GameObject.Find("Jaime").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[2];
+        GameObject.Find("Paco").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[3];
+
+        Inventory.inventoryInstance.itemList = new List<Item>(currentGameData.itemList);
+        Inventory.inventoryInstance.UpdateSlots();
+
+        quiver = GameObject.Find(Names.quiverObject).transform;
+        int i = 0; 
+        foreach (Transform arrow in quiver)
+        {
+            if (currentGameData.arrowList[i].parentName == null) arrow.parent = null;
+            else arrow.parent = GameObject.Find(currentGameData.arrowList[i].parentName).transform;
+            arrow.position = currentGameData.arrowList[i].getPos();
+            arrow.gameObject.SetActive(currentGameData.arrowList[i].isActive);
+            arrow.GetComponent<Rigidbody>().isKinematic = currentGameData.arrowList[i].isKinematic;
+            i++;
+        }
+
     }
 
     public void ChangeVolume(int index) {

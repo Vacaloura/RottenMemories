@@ -91,16 +91,7 @@ public class Inventory : MonoBehaviour
     public void AddItem(Item item)
     {
         bool alreadyInvented=false;
-        if (itemList.Count == 0)
-        {
-            GameObject slot = slots[lastSlotIndex];
-            slot.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSprite;
-            slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
-            lastSlotIndex++;
-            itemList.Add(item);
-
-        }
-        else {
+        if (itemList.Count != 0)
             foreach (Item it in itemList)
             {
                 if (item.itemType == it.itemType)
@@ -110,15 +101,15 @@ public class Inventory : MonoBehaviour
                     break;
                 }
             }
-            if(!alreadyInvented)
-                {
-                    GameObject slot = slots[lastSlotIndex];
-                    slot.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSprite;
-                    slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
-                    lastSlotIndex++;
-                    itemList.Add(item);
-                }
-            }
+        if(!alreadyInvented)
+        {
+            GameObject slot = slots[lastSlotIndex];
+            slot.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load(item.itemSpriteName) as Sprite;
+            slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
+            lastSlotIndex++;
+            itemList.Add(item);
+        }
+        
         //if (OnItemChangedEvent != null) OnItemChangedEvent();
         //else Debug.Log("No method subscribed to the event");
         UpdateSlots();
@@ -210,6 +201,7 @@ public class Inventory : MonoBehaviour
                 secondClickTime = Time.time; 
                 if ((secondClickTime - firstClickTime) < doubleClickDelta)
                 {
+                    Debug.Log(secondClickTime - firstClickTime);
                     PointerEventData pointerData = new PointerEventData(EventSystem.current);
                     List<RaycastResult> results = new List<RaycastResult>();
 
@@ -240,12 +232,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void UpdateSlots() {
+    public void UpdateSlots() {
         int itemNum = 0;
         foreach (GameObject slot in slots) {
             if(itemNum < itemList.Count) {
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = itemList[itemNum].itemSprite;
-                slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + itemList[itemNum].itemAmount + ")";
+                slot.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load(itemList[itemNum].itemSpriteName) as Sprite;
+                if (itemList[itemNum].itemType == Item.ItemType.Harpoon) slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + ((Harpoon)itemList[itemNum]).arrows + ")";
+                else slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + itemList[itemNum].itemAmount + ")";
             } else {
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
                 slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
@@ -282,11 +275,20 @@ public class Inventory : MonoBehaviour
 
     public void ReadNextPage()
     {
-        if(((Diary)itemList[1]).hasNext(diaryPage)) diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(++diaryPage);
+        if (((Diary)itemList[1]).hasNext(diaryPage)) {
+            ScrollRect scrollRect = diaryPanel.GetComponentInChildren<ScrollRect>();
+            scrollRect.verticalScrollbar.value = 1;
+            diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(++diaryPage);
+        }
     }
 
     public void ReadPreviousPage()
     {
-        if (((Diary)itemList[1]).hasPrevious(diaryPage)) diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(--diaryPage);
+        if (((Diary)itemList[1]).hasPrevious(diaryPage))
+        {
+            ScrollRect scrollRect = diaryPanel.GetComponentInChildren<ScrollRect>();
+            scrollRect.verticalScrollbar.value = 1;
+            diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(--diaryPage);
+        }
     }
 }

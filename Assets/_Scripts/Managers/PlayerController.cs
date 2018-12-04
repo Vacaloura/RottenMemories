@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
     public AudioClip DamageDealt;
     public AudioClip MovingSound;
     public AudioClip AmbientSound;
+    public AudioClip EatingSound;
+
 
     private AudioSource source = null;
     [HideInInspector] public bool moving = false;
@@ -73,7 +75,11 @@ public class PlayerController : MonoBehaviour {
         catch (UnityException e) { Debug.Log("No hay AudioSource: " + e.ToString()); }
 
         madnessBar = GameObject.FindGameObjectWithTag("MadnessBar").GetComponent<Image>();
-        GameController.gameControllerInstance.LoadPlayerData();
+        if (GameController.gameControllerInstance.loadData)
+        {
+            //GameController.gameControllerInstance.LoadPlayerData();
+            Inventory.inventoryInstance.UpdateSlots();
+        }
     }
 	
     public void PlayerDeath(String message)
@@ -197,12 +203,14 @@ public class PlayerController : MonoBehaviour {
             else {
                 displayManager.DisplayMessage("¡Te has quedado sin virotes!", 2.0f);
             }
+            Inventory.inventoryInstance.slots[0].transform.GetChild(1).GetComponent<Text>().text = harpoon.itemName + " (" + harpoon.arrows + ")";
         }
     }
 
 
     public void Eat(int value)
     {
+        source.PlayOneShot(EatingSound);
         madness -= value;
         if (madness < 0) madness = 0;
         Debug.Log("Player madness1: " + madness);

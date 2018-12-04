@@ -6,7 +6,7 @@ using UnityEngine;
 public class Item
 {
     public string itemName = "NewItem";
-    public Sprite itemSprite = null;
+    public string itemSpriteName = null;
     public string itemDescription = "Description of the item";
     public ItemType itemType = ItemType.NotDefined;
     public enum ItemType
@@ -22,10 +22,10 @@ public class Item
 
     public int itemAmount = 1;
 
-    public Item(string name, Sprite icon, string desc, ItemType type)
+    public Item(string name, string iconName, string desc, ItemType type)
     {
         this.itemName = name;
-        this.itemSprite = icon;
+        this.itemSpriteName = iconName;
         this.itemDescription = desc;
         this.itemType = type;
     }

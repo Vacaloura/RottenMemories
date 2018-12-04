@@ -16,10 +16,15 @@ public class GameData
 
     public bool[] foodTaken = new bool[6] { false, false, false, false, false, false };
     public bool[] diaryPageTaken = new bool[4] { false, false, false, false };
+    public bool[] npcInteracted = new bool[4] { false, false, false, false };
+
     public bool makeUpTaken = false;
     public bool ladderTaken = false;
     public bool wineTaken = false;
     public bool luculoTaken = false;
+
+    public List<Item> itemList;// = new List<Item>();
+    public List<Arrow> arrowList = new List<Arrow>();
 
     public int SceneID;
 
