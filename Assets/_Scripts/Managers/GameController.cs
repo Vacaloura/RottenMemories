@@ -141,40 +141,54 @@ public class GameController : MonoBehaviour {
 
     void SavePlayerData()
     {
+        //Player position and madness
         currentGameData.playerMadness = PlayerController.playerControllerInstance.madness;
         currentGameData.playerPosX = PlayerController.playerControllerInstance.transform.position.x;
         currentGameData.playerPosY = PlayerController.playerControllerInstance.transform.position.y;
         currentGameData.playerPosZ = PlayerController.playerControllerInstance.transform.position.z;
 
+        //Urbanization objects
         currentGameData.foodTaken = PlayerController.playerControllerInstance.foodTaken;
         currentGameData.diaryPageTaken = PlayerController.playerControllerInstance.diaryPageTaken;
+
+        //Player flags
         currentGameData.makeUpTaken = PlayerController.playerControllerInstance.isMadeUp;
         currentGameData.ladderTaken = PlayerController.playerControllerInstance.hasLadder;
         currentGameData.wineTaken = PlayerController.playerControllerInstance.hasWine;
         currentGameData.luculoTaken = PlayerController.playerControllerInstance.hasCat;
 
+        //NPCs condition
         currentGameData.npcInteracted[0] = GameObject.Find("Carlos").GetComponent<InteractPerson>().alreadyInteracted;
         currentGameData.npcInteracted[1] = GameObject.Find("SeñoraRamos").GetComponent<InteractPerson>().alreadyInteracted;
         currentGameData.npcInteracted[2] = GameObject.Find("Jaime").GetComponent<InteractPerson>().alreadyInteracted;
         currentGameData.npcInteracted[3] = GameObject.Find("Paco").GetComponent<InteractPerson>().alreadyInteracted;
 
+        //Inventory
         currentGameData.itemList = new List<Item>(Inventory.inventoryInstance.itemList);
 
+        //Arrows
         currentGameData.arrowList.Clear();
         quiver = GameObject.Find(Names.quiverObject).transform;
-        horde = GameObject.Find("Zombies").transform;
         string parent;
         foreach (GameObject arrow in GameObject.FindGameObjectsWithTag("Arrow"))
         {
             if (arrow.transform.parent == null) parent = null;
             else parent = arrow.transform.parent.name;
-            currentGameData.arrowList.Add(new Arrow(new float[3] { arrow.transform.position.x, arrow.transform.position.y, arrow.transform.position.z }, parent, arrow.activeSelf, arrow.GetComponent<Rigidbody>().isKinematic));    
+            currentGameData.arrowList.Add(new ArrowData(new float[3] { arrow.transform.position.x, arrow.transform.position.y, arrow.transform.position.z }, parent, arrow.activeSelf, arrow.GetComponent<Rigidbody>().isKinematic));    
         }
         foreach(Transform arrow in quiver)
         {
-            currentGameData.arrowList.Add(new Arrow(new float[3] { arrow.position.x, arrow.position.y, arrow.transform.position.z }, arrow.parent.name, arrow.gameObject.activeSelf, arrow.GetComponent<Rigidbody>().isKinematic));
+            currentGameData.arrowList.Add(new ArrowData(new float[3] { arrow.position.x, arrow.position.y, arrow.transform.position.z }, arrow.parent.name, arrow.gameObject.activeSelf, arrow.GetComponent<Rigidbody>().isKinematic));
         }
 
+        //Zombies condition
+        currentGameData.zombieList.Clear();
+        horde = GameObject.Find("Zombies").transform;
+        foreach (Transform zombie in horde)
+        {
+            ZombieController zc = zombie.gameObject.GetComponent<ZombieController>();
+            currentGameData.zombieList.Add(new ZombieData(new float[3] { zombie.position.x, zombie.position.y, zombie.transform.position.z }, zc.life, zombie.gameObject.activeSelf, zc.firstAttackFlag));
+        }
 
         //currentGameData.SceneID = SceneManager.GetActiveScene().buildIndex;
 
@@ -182,9 +196,12 @@ public class GameController : MonoBehaviour {
     public void LoadPlayerData()
     {
         //SceneManager.LoadScene(currentGameData.SceneID+1);
+        
+        //Player position and madness
         PlayerController.playerControllerInstance.madness = currentGameData.playerMadness;
         PlayerController.playerControllerInstance.transform.position = new Vector3(currentGameData.playerPosX, currentGameData.playerPosY, currentGameData.playerPosZ);
-
+       
+        //Urbanization objects
         GameObject.Find("Food000").SetActive(!currentGameData.foodTaken[0]);
         GameObject.Find("Food001").SetActive(!currentGameData.foodTaken[1]);
         GameObject.Find("Food002").SetActive(!currentGameData.foodTaken[2]);
@@ -196,20 +213,24 @@ public class GameController : MonoBehaviour {
         GameObject.Find("DiaryPage3").SetActive(!currentGameData.diaryPageTaken[2]);
         GameObject.Find("DiaryPage4").SetActive(!currentGameData.diaryPageTaken[3]);
 
+        //Player flags
         PlayerController.playerControllerInstance.isMadeUp = currentGameData.makeUpTaken;
         PlayerController.playerControllerInstance.hasLadder = currentGameData.ladderTaken;
         PlayerController.playerControllerInstance.hasWine = currentGameData.wineTaken;
         PlayerController.playerControllerInstance.hasCat = currentGameData.luculoTaken;
         PlayerController.playerControllerInstance.hasFood = currentGameData.foodTaken[0];
 
+        //NPCs condition
         GameObject.Find("Carlos").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[0];
         GameObject.Find("SeñoraRamos").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[1];
         GameObject.Find("Jaime").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[2];
         GameObject.Find("Paco").GetComponent<InteractPerson>().alreadyInteracted = currentGameData.npcInteracted[3];
 
+        //Inventory
         Inventory.inventoryInstance.itemList = new List<Item>(currentGameData.itemList);
         Inventory.inventoryInstance.UpdateSlots();
 
+        //Arrows
         quiver = GameObject.Find(Names.quiverObject).transform;
         int i = 0; 
         foreach (Transform arrow in quiver)
@@ -219,6 +240,20 @@ public class GameController : MonoBehaviour {
             arrow.position = currentGameData.arrowList[i].getPos();
             arrow.gameObject.SetActive(currentGameData.arrowList[i].isActive);
             arrow.GetComponent<Rigidbody>().isKinematic = currentGameData.arrowList[i].isKinematic;
+            i++;
+        }
+
+        //Zombies condition
+        horde = GameObject.Find("Zombies").transform;
+        i = 0;
+        foreach (Transform zombie in horde)
+        {
+            ZombieController zc = zombie.gameObject.GetComponent<ZombieController>();
+            currentGameData.zombieList.Add(new ZombieData(new float[3] { zombie.position.x, zombie.position.y, zombie.transform.position.z }, zc.life, zombie.gameObject.activeSelf, zc.firstAttackFlag));
+            zombie.position = currentGameData.zombieList[i].getPos();
+            zc.life = currentGameData.zombieList[i].life;
+            zombie.gameObject.SetActive(currentGameData.zombieList[i].isActive);
+            zc.firstAttackFlag = currentGameData.zombieList[i].firstAttackFlag;
             i++;
         }
 

@@ -63,12 +63,10 @@
     <Compile Include="Assets\_Scripts\Displays\DialogManager.cs" />
     <Compile Include="Assets\_Scripts\Displays\DisplayManager.cs" />
     <Compile Include="Assets\_Scripts\Displays\Menu.cs" />
-    <Compile Include="Assets\_Scripts\GameData.cs" />
     <Compile Include="Assets\_Scripts\Interaction\Collide.cs" />
     <Compile Include="Assets\_Scripts\Interaction\Interactable.cs" />
     <Compile Include="Assets\_Scripts\Interaction\InteractItem.cs" />
     <Compile Include="Assets\_Scripts\Interaction\InteractPerson.cs" />
-    <Compile Include="Assets\_Scripts\Inventory\Arrow.cs" />
     <Compile Include="Assets\_Scripts\Inventory\Diary.cs" />
     <Compile Include="Assets\_Scripts\Inventory\Food.cs" />
     <Compile Include="Assets\_Scripts\Inventory\Harpoon.cs" />
@@ -87,6 +85,9 @@
     <Compile Include="Assets\_Scripts\Managers\GameController.cs" />
     <Compile Include="Assets\_Scripts\Managers\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\Managers\ZombieController.cs" />
+    <Compile Include="Assets\_Scripts\Memory\ArrowData.cs" />
+    <Compile Include="Assets\_Scripts\Memory\GameData.cs" />
+    <Compile Include="Assets\_Scripts\Memory\ZombieData.cs" />
     <Compile Include="Assets\_Scripts\Names.cs" />
     <Compile Include="Assets\_Scripts\ZombieHorde\Scripts\EscapingHuman.cs" />
     <Compile Include="Assets\_Scripts\ZombieHorde\Scripts\surface.cs" />

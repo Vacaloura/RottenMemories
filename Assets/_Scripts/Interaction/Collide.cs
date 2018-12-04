@@ -44,7 +44,8 @@ public class Collide : MonoBehaviour {
                     }
                    parent.DetachChildren();
                     //DisplayManager.displayManagerInstance.interactText.SetActive(false);
-                    Destroy(parent.gameObject);
+                    //Destroy(parent.gameObject);
+                    parent.gameObject.SetActive(false);
                 }
                 Debug.Log("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<ZombieController>().life);
                 //DisplayManager.displayManagerInstance.DisplayMessage("Vida de " + parent.gameObject.name + ": " + parent.gameObject.GetComponent<ZombieController>().life);
