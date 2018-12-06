@@ -80,6 +80,8 @@ public class PlayerController : MonoBehaviour {
             GameController.gameControllerInstance.LoadPlayerData();
             Inventory.inventoryInstance.UpdateSlots();
         }
+
+        Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
     }
 	
     public void PlayerDeath(String message)

@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
     public Slider musicSlider;
     public Slider fxSlider;
     public bool loadData = false;
+    public bool gameWindowed = false;
     [HideInInspector] public static GameController gameControllerInstance;
 
     private Transform quiver;
@@ -44,6 +45,8 @@ public class GameController : MonoBehaviour {
         if (changedAttenuation) musicSlider.value = audioBusValue;
         changedAttenuation = resonanceMixer.GetFloat("FXVolume", out audioBusValue);
         if (changedAttenuation) fxSlider.value = audioBusValue;
+
+        gameWindowed = Screen.fullScreen;
 
         //if (SceneManager.GetActiveScene().name != "MainMenus")
         //    LoadPlayerData();
