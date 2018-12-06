@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
         madnessBar = GameObject.FindGameObjectWithTag("MadnessBar").GetComponent<Image>();
         if (GameController.gameControllerInstance.loadData)
         {
-            //GameController.gameControllerInstance.LoadPlayerData();
+            GameController.gameControllerInstance.LoadPlayerData();
             Inventory.inventoryInstance.UpdateSlots();
         }
     }

@@ -47,9 +47,9 @@ public class DemoPlayerController : MonoBehaviour {
 #if UNITY_EDITOR
     if (Input.GetMouseButtonDown(0)) {
       SetCursorLock(true);
-    } else if (Input.GetKeyDown(KeyCode.Escape)) {
+    } /*else if (Input.GetKeyDown(KeyCode.Escape)) {
       SetCursorLock(false);
-    }
+    }*/
 #endif  // UNITY_EDITOR
     // Update the rotation.
     float mouseX = Input.GetAxis("Mouse X");

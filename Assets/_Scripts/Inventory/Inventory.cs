@@ -148,7 +148,6 @@ public class Inventory : MonoBehaviour
             diaryPanel.SetActive(false);
 
         }
-
     }
 
     void SelectItem()
@@ -201,7 +200,7 @@ public class Inventory : MonoBehaviour
                 secondClickTime = Time.time; 
                 if ((secondClickTime - firstClickTime) < doubleClickDelta)
                 {
-                    Debug.Log(secondClickTime - firstClickTime);
+                    //Debug.Log(secondClickTime - firstClickTime);
                     PointerEventData pointerData = new PointerEventData(EventSystem.current);
                     List<RaycastResult> results = new List<RaycastResult>();
 

@@ -28,9 +28,9 @@ public class ResonanceAudioDemoManager : MonoBehaviour {
 
   void Update() {
 #if !UNITY_EDITOR
-    if (Input.GetKeyDown(KeyCode.Escape)) {
+    /*if (Input.GetKeyDown(KeyCode.Escape)) {
       Application.Quit();
-    }
+    }*/
 #endif  // !UNITY_EDITOR
     // Raycast against the cube.
     Ray ray = mainCamera.ViewportPointToRay(0.5f * Vector2.one);

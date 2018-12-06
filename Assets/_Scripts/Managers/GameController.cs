@@ -10,7 +10,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameController : MonoBehaviour {
     public GameData currentGameData = new GameData();
-    public AudioMixer mixer;
+    public AudioMixer myMixer;
+    public AudioMixer resonanceMixer;
+    public Slider musicSlider;
+    public Slider fxSlider;
     public bool loadData = false;
     [HideInInspector] public static GameController gameControllerInstance;
 
@@ -30,8 +33,17 @@ public class GameController : MonoBehaviour {
         currentGameData.playerPosX = -14.437f;
         currentGameData.playerPosY = 5.742f;
         currentGameData.playerPosZ = -36.241f;
-        currentGameData.musicVolume = 0.5f;
-        currentGameData.fxVolume = 0.5f;
+        currentGameData.musicVolume = 0.0f;
+        currentGameData.fxVolume = 0.0f;
+
+        float audioBusValue;
+        bool changedAttenuation;
+        changedAttenuation = myMixer.GetFloat("AmbientVolume", out audioBusValue);
+        Debug.Log("audioBusValue: " + audioBusValue);
+        Debug.Log("changedAttenuation: " + changedAttenuation);
+        if (changedAttenuation) musicSlider.value = audioBusValue;
+        changedAttenuation = resonanceMixer.GetFloat("FXVolume", out audioBusValue);
+        if (changedAttenuation) fxSlider.value = audioBusValue;
 
         //if (SceneManager.GetActiveScene().name != "MainMenus")
         //    LoadPlayerData();
@@ -41,11 +53,11 @@ public class GameController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (Input.GetKeyDown("escape"))
+        /*if (Input.GetKeyDown("escape"))
         {
             PlayerController.playerControllerInstance.playerControl = false;
             Application.Quit();
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -65,7 +77,7 @@ public class GameController : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            SavePlayerDataToDisk();
+            SavePlayerDataToDisk("myGameData.txt");
             Debug.Log("Saved myGameData.txt");
 
         }
@@ -79,21 +91,9 @@ public class GameController : MonoBehaviour {
             SavePlayerData();//Guarda a la memoria de juego (GameData)
             Debug.Log("Saved");
         }
-        if (Input.GetKeyDown(KeyCode.F8))
-        {    // for testing
-            currentGameData.playerMadness += 30;
-        }
-        if (Input.GetKeyDown(KeyCode.F9))
-        {    // for testing
-           // currentGameData.playerStress -= 25;
-        }
-        if (Input.GetKeyDown(KeyCode.F10))
-        {
-            DebugPlayerData();
-        }
     }
 
-    private void SavePlayerDataToDisk()
+    public void SavePlayerDataToDisk(string fileName)
     {
         // Update local data with current game data
         SavePlayerData(); //optional
@@ -103,8 +103,8 @@ public class GameController : MonoBehaviour {
         // 2) Binary formatter
         BinaryFormatter myFormatter = new BinaryFormatter();
         // 3) Create file
-        if (File.Exists("myGameFolder/myGameData.txt")) File.Delete("myGameFolder/myGameData.txt");
-        FileStream myFile = File.Create("myGameFolder/myGameData.txt");
+        if (File.Exists("myGameFolder/" + fileName)) File.Delete("myGameFolder/" + fileName);
+        FileStream myFile = File.Create("myGameFolder/" + fileName);
         // 4) Reference to data being saved
         //GameStatistics localData = GameData.g_GameDataInstance.savedGameData;
         // 5) Writing data in binary form
@@ -129,14 +129,6 @@ public class GameController : MonoBehaviour {
         myFile.Close();
         // 4) Decide what to do with the loaded data
         //LoadPlayerData();
-    }
-
-    private void DebugPlayerData()
-    {
-        Debug.Log("Object.name:" + this.name);
-        Debug.Log("    Health:" + currentGameData.playerMadness);
-        //Debug.Log("    Stress:" + currentGameData.playerStress);
-
     }
 
     void SavePlayerData()
@@ -261,9 +253,13 @@ public class GameController : MonoBehaviour {
 
     public void ChangeVolume(int index) {
         if (index == 1) {
-            mixer.SetFloat("AmbientVolume", GameObject.Find(Names.musicSlider).GetComponent<Slider>().value);
+            myMixer.SetFloat("AmbientVolume", musicSlider.value);
         } else if (index == 2) {
-            mixer.SetFloat("FXVolume", GameObject.Find(Names.fxSlider).GetComponent<Slider>().value);
+            resonanceMixer.SetFloat("FXVolume", fxSlider.value);
+        } else if (index == 3) {
+            myMixer.SetFloat("AmbientVolume", PauseMenuManager.pauseMenuManagerInstance.musicSlider.value);
+        } else if (index == 4) {
+            resonanceMixer.SetFloat("FXVolume", PauseMenuManager.pauseMenuManagerInstance.fxSlider.value);
         }
     }
 

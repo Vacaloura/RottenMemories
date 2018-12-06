@@ -11,8 +11,8 @@ public class GameData
     public float playerPosY = 5.742f;
     public float playerPosZ = -36.241f;
 
-    public float musicVolume = 0.5f;
-    public float fxVolume = 0.5f;
+    public float musicVolume = 0.0f;
+    public float fxVolume = 0.0f;
 
     public bool[] foodTaken = new bool[6] { false, false, false, false, false, false };
     public bool[] diaryPageTaken = new bool[4] { false, false, false, false };
