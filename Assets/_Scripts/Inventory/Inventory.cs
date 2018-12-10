@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
     private static int lastSlotIndex, actualSlot;
     private static int diaryPage = 0;
 
-    private GameObject infoPanel, diaryPanel, inventoryPanel, player;
+    [HideInInspector] public GameObject infoPanel, diaryPanel, inventoryPanel, player;
     private Button delete;
     GraphicRaycaster raycaster;
 
@@ -96,9 +96,21 @@ public class Inventory : MonoBehaviour
             {
                 if (item.itemType == it.itemType)
                 {
-                    it.Increase();
-                    alreadyInvented = true;
-                    break;
+                    if (item.itemType == Item.ItemType.Food)
+                    {
+                        if (((Food)item).foodType == ((Food)it).foodType)
+                        {
+                            it.Increase();
+                            alreadyInvented = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        it.Increase();
+                        alreadyInvented = true;
+                        break;
+                    }
                 }
             }
         if(!alreadyInvented)
@@ -140,9 +152,14 @@ public class Inventory : MonoBehaviour
             if (!inventoryPreviousState)
             {
                 DisplayManager.displayManagerInstance.interactText.SetActive(false);
-                Cursor.lockState = CursorLockMode.None; //Debería ser confined pero no funciona
+                Cursor.lockState = CursorLockMode.Confined; //Debería ser confined pero no funciona
+                Cursor.visible = true;
             }
-            else Cursor.lockState = CursorLockMode.Locked;
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
 
             infoPanel.SetActive(false);
             diaryPanel.SetActive(false);
@@ -252,7 +269,9 @@ public class Inventory : MonoBehaviour
         Debug.Log("ActualSlot: " + actualSlot);
         Debug.Log("Name: " + itemList[number].itemName);
 
-        if (itemList[number].itemType != Item.ItemType.Harpoon)
+        if (itemList[number].itemType == Item.ItemType.Harpoon || (itemList[number].itemType==Item.ItemType.Food && ((Food)itemList[number]).foodType == Food.FoodType.Cat))
+            DisplayManager.displayManagerInstance.DisplayMessage("Creo que no debería tirar esto.", 2.0f);
+        else 
         {
             GameObject slot = slots[number];
             if (itemList[number].itemAmount <= 1) {
@@ -267,8 +286,6 @@ public class Inventory : MonoBehaviour
 
             UpdateSlots();
         }
-        else DisplayManager.displayManagerInstance.DisplayMessage("Creo que no debería tirar esto.", 2.0f);
-
 
     }
 

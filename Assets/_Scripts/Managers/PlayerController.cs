@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector] public bool moving = false;
 
     private Image madnessBar;
+    public Image avatar;
 
     /*Vector2 mouseLook;
     Vector2 smoothV;
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour {
     private Transform weapon;
     private Transform quiver;
     private GameObject endCamera;
+    public GameObject myLight;
+    public float lightChange;
 
     private void Awake()
     {
@@ -66,6 +69,7 @@ public class PlayerController : MonoBehaviour {
         movementController = gameObject.GetComponent<CharacterController>();
         weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         StartCoroutine("IncreaseByTime");
         playerHead.GetComponent<AudioSource>().PlayOneShot(AmbientSound);
         try
@@ -81,15 +85,19 @@ public class PlayerController : MonoBehaviour {
             Inventory.inventoryInstance.UpdateSlots();
         }
 
+        if(isMadeUp) avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_normal");
+        else avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_locura");
+
         Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
     }
 	
     public void PlayerDeath(String message)
     {
-        Debug.Log("GAME OVER:\n" + message + "\nPulse ESC para salir o R para reintentar");
-        displayManager.DisplayMessage("GAME OVER:\n" + message + "\nPulse ESC para salir o R para reintentar", 7.0f);
+        Debug.Log("GAME OVER:\n" + message + "\nPulse ESC para salir o R para volver al último checkpoint.");
+        displayManager.DisplayMessage("GAME OVER:\n" + message + "\nPulse ESC para salir o para volver al último checkpoint.", 7.0f);
         endCamera.SetActive(true);
         source.Stop();
+        Time.timeScale = 0;
         Destroy(playerHead.parent.parent.gameObject);
     }
 	// Update is called once per frame
@@ -110,6 +118,8 @@ public class PlayerController : MonoBehaviour {
         {
             PlayerInteract();
         }
+        myLight.GetComponent<Light>().intensity -= lightChange * Time.deltaTime;
+        if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1) lightChange = -1 * lightChange;
 
         //Para evitar problemas con el collider de player
         /*Vector3 temp;
@@ -219,6 +229,16 @@ public class PlayerController : MonoBehaviour {
         //displayManager.DisplayMessage("Player madness: " + madness);
     }
 
+    public void PlayerWin(string message)
+    {
+        Debug.Log("YOU WIN!: "+ message + " Pulse ESC para salir o R para volver al último checkpoint.");
+        displayManager.DisplayMessage("YOU WIN!: " + message + " \nPulse ESC para salir o R para volver al último checkpoint.", 7.0f);
+        player_camera.gameObject.SetActive(false);
+        playerControl = false; allowInteract = false; source.Stop();
+        endCamera.SetActive(true);
+        Time.timeScale = 0;
+    }
+
     void OnTriggerEnter(Collider col)
      {
         if (col.transform.tag == "Closed") {
@@ -226,12 +246,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (col.gameObject.tag == "Goal" && hasCat)
         {
-            Debug.Log("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir o R para volver a empezar");
-            displayManager.DisplayMessage("YOU WIN!: Has encontrado a Lúculo y lo has llevado a casa a salvo. Pulse ESC para salir o R para volver a empezar", 7.0f);
-            player_camera.gameObject.SetActive(false);
-            playerControl = false; allowInteract = false; source.Stop();
-
-            endCamera.SetActive(true);
+            PlayerWin("Has encontrado a Lúculo y lo has llevado a casa a salvo.");
         }
     }
 

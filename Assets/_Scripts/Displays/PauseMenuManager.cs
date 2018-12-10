@@ -52,10 +52,10 @@ public class PauseMenuManager : MonoBehaviour {
         savePanel.SetActive(false);
         if (!pausePanelState) {
             Cursor.lockState = CursorLockMode.None; //Debería ser confined pero no funciona
-            Debug.Log("Cursor liberado");
+            Cursor.visible = true;
         } else {
             Cursor.lockState = CursorLockMode.Locked;
-            Debug.Log("Cursor bloqueado");
+            Cursor.visible = false;
         }
         pausePanelState = !pausePanelState;
     }

@@ -46,6 +46,7 @@ public class Item
         if (itemType == ItemType.MakeUp)
         {
             PlayerController.playerControllerInstance.isMadeUp = true;
+            PlayerController.playerControllerInstance.avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_normal");
             DisplayManager.displayManagerInstance.DisplayMessage("Ya estoy guapo, al lío.", 2.0f);
             return true;
         }

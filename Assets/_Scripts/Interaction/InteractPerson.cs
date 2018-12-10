@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using UnityEngine.UI;
 
 
 public class InteractPerson : Interactable
 {
+    public Sprite example;
 
     private UnityAction DialogActionA;
     private UnityAction DialogActionB;
@@ -72,12 +74,12 @@ public class InteractPerson : Interactable
         }
         else {
 
-        PlayerController.playerControllerInstance.isTalking = true;
-        DialogActionA = new UnityAction(DialogFunctionA);
-        DialogActionB = new UnityAction(DialogFunctionB);
-        DialogActionC = new UnityAction(DialogFunctionC);
-        GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
-        StartCoroutine("DialogCor");
+            PlayerController.playerControllerInstance.isTalking = true;
+            DialogActionA = new UnityAction(DialogFunctionA);
+            DialogActionB = new UnityAction(DialogFunctionB);
+            DialogActionC = new UnityAction(DialogFunctionC);
+            GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = false;
+            StartCoroutine("DialogCor");
         }
         
         
@@ -113,7 +115,15 @@ public class InteractPerson : Interactable
 
                 case 'P':
                     //Debug.Log("P: " + dictionary.ElementAt(index).Value);
-                    DialogManager.modalPanel.DisplayPhrase(dictionary.ElementAt(index).Value);
+                    DialogManager.modalPanel.DisplayPhrase(dictionary.ElementAt(index).Value, "sprite_Anxo_normal");
+                    index++;
+                    wait = true; button = false;
+                    if (dictionary.ElementAt(index).Key[0] == 'B') wait = false;
+                    break;
+
+                case 'N':
+                    //Debug.Log("P: " + dictionary.ElementAt(index).Value);
+                    DialogManager.modalPanel.DisplayPhrase(dictionary.ElementAt(index).Value, "sprite_" + gameObject.name);
                     index++;
                     wait = true; button = false;
                     if (dictionary.ElementAt(index).Key[0] == 'B') wait = false;
@@ -126,7 +136,7 @@ public class InteractPerson : Interactable
                         alreadyAnswered = true; wait = true;
                         if (dictionary.ContainsKey("A_" + res))
                         {
-                            DialogManager.modalPanel.DisplayPhrase(dictionary["A_" + res]);
+                            DialogManager.modalPanel.DisplayPhrase(dictionary["A_" + res], "sprite_Anxo_normal");
                         }
                         else wait = false;
                     }
@@ -173,7 +183,7 @@ public class InteractPerson : Interactable
     bool jaimeA=false, jaimeB=false, jaimeC=false;
     void DialogFunctionA()
     {
-        DialogManager.modalPanel.DisplayPhrase(dictionary["R_A"]);
+        DialogManager.modalPanel.DisplayPhrase(dictionary["R_A"], "sprite_" + gameObject.name);
         if(gameObject.name == "Jaime")
         {
             index -= 4;
@@ -187,7 +197,7 @@ public class InteractPerson : Interactable
     void DialogFunctionB()
     {
         //Debug.Log("Button B");
-        DialogManager.modalPanel.DisplayPhrase(dictionary["R_B"]);
+        DialogManager.modalPanel.DisplayPhrase(dictionary["R_B"], "sprite_" + gameObject.name);
         if (gameObject.name == "Jaime")
         {
             index -= 4;
@@ -202,7 +212,7 @@ public class InteractPerson : Interactable
     void DialogFunctionC()
     {
         //Debug.Log("Button C");
-        DialogManager.modalPanel.DisplayPhrase(dictionary["R_C"]);
+        DialogManager.modalPanel.DisplayPhrase(dictionary["R_C"], "sprite_" + gameObject.name);
         if (gameObject.name == "Jaime")
         {
             index -= 4;

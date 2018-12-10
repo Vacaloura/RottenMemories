@@ -27,8 +27,15 @@ public class Names : MonoBehaviour {
     //OBJETOS
     public const string harpoonPrefab = "Harpoon";
     public const string quiverObject = "Quiver";
-    public const string arrowPrefab = "Arrow";
     public const string arrowtag = "Arrow";
     public const string slotTag = "Slot";
+    public const string makeup = "Maquillaje";
+    public const string wine = "Vino";
+    public const string ladder = "Escalera";
+    public const string cat = "Lúculo";
+
+
+
+
 
 }

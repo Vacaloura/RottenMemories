@@ -24,8 +24,12 @@ public class GameController : MonoBehaviour {
     {
         if (gameControllerInstance == null)
             gameControllerInstance = this;
-        else Debug.LogError("Tried to create a second GameController");
-    }
+        else
+        {
+            Debug.LogError("Tried to create a second GameController");
+            Destroy(gameObject);
+        }
+        }
     // Use this for initialization
     void Start()
     {
@@ -190,23 +194,30 @@ public class GameController : MonoBehaviour {
     }
     public void LoadPlayerData()
     {
+        int i = 0;
         //SceneManager.LoadScene(currentGameData.SceneID+1);
         
         //Player position and madness
         PlayerController.playerControllerInstance.madness = currentGameData.playerMadness;
         PlayerController.playerControllerInstance.transform.position = new Vector3(currentGameData.playerPosX, currentGameData.playerPosY, currentGameData.playerPosZ);
-       
+
         //Urbanization objects
-        GameObject.Find("Food000").SetActive(!currentGameData.foodTaken[0]);
-        GameObject.Find("Food001").SetActive(!currentGameData.foodTaken[1]);
-        GameObject.Find("Food002").SetActive(!currentGameData.foodTaken[2]);
-        GameObject.Find("Food003").SetActive(!currentGameData.foodTaken[3]);
-        GameObject.Find("Food004").SetActive(!currentGameData.foodTaken[4]);
-        GameObject.Find("Food005").SetActive(!currentGameData.foodTaken[5]);
+        i = 0;
+        GameObject.Find("Tupper0").SetActive(!currentGameData.foodTaken[0]);
+        GameObject.Find("Tupper1").SetActive(!currentGameData.foodTaken[1]);
+        GameObject.Find("Tupper2").SetActive(!currentGameData.foodTaken[2]);
+        GameObject.Find("Tupper3").SetActive(!currentGameData.foodTaken[3]);
+        GameObject.Find("Tupper4").SetActive(!currentGameData.foodTaken[4]);
+        GameObject.Find("Tupper5").SetActive(!currentGameData.foodTaken[5]);
         GameObject.Find("DiaryPage1").SetActive(!currentGameData.diaryPageTaken[0]);
         GameObject.Find("DiaryPage2").SetActive(!currentGameData.diaryPageTaken[1]);
         GameObject.Find("DiaryPage3").SetActive(!currentGameData.diaryPageTaken[2]);
         GameObject.Find("DiaryPage4").SetActive(!currentGameData.diaryPageTaken[3]);
+
+        GameObject.Find(Names.makeup).SetActive(!currentGameData.makeUpTaken);
+        GameObject.Find(Names.wine).SetActive(!currentGameData.ladderTaken);
+        GameObject.Find(Names.ladder).SetActive(!currentGameData.wineTaken);
+        GameObject.Find(Names.cat).SetActive(!currentGameData.luculoTaken);
 
         //Player flags
         PlayerController.playerControllerInstance.isMadeUp = currentGameData.makeUpTaken;
@@ -227,7 +238,7 @@ public class GameController : MonoBehaviour {
 
         //Arrows
         quiver = GameObject.Find(Names.quiverObject).transform;
-        int i = 0; 
+        i = 0;
         foreach (Transform arrow in quiver)
         {
             if (currentGameData.arrowList[i].parentName == null) arrow.parent = null;

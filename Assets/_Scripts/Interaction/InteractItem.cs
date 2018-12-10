@@ -27,14 +27,14 @@ public class InteractItem : Interactable {
         }
         else if(transform.tag == "Food")
         {
-            Inventory.inventoryInstance.AddItem(new Food(transform.name, "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.PreCooked)); //TODO tipo de comida dinámico
+            Inventory.inventoryInstance.AddItem(new Food(transform.name.Substring(0,(transform.name.Length-1)), "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.PreCooked)); //TODO tipo de comida dinámico
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
             StartCoroutine("DestroyObject");
             PlayerController.playerControllerInstance.hasFood = true;
 
-            int foodNum = (int)char.GetNumericValue(gameObject.name[6]);
+            int foodNum = (int)char.GetNumericValue(gameObject.name[transform.name.Length]);
             GameObject.Find("Player").GetComponent<PlayerController>().foodTaken[foodNum] = true;
         }
         else if (transform.tag == "MakeUp")

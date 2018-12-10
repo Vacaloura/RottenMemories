@@ -7,7 +7,7 @@ public class DisplayManager : MonoBehaviour {
     public Text displayText;
     [HideInInspector] public GameObject interactText;
     public GameObject displayTextPanel;
-
+    public Image dialogSprite;
 
     public float displayTime;
     public float fadeTime;
