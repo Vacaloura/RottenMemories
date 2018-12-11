@@ -9,7 +9,7 @@ public class Diary : Item {
     private List<string> diaryPages = new List<string>();
     private List<int> pagesInProperty = new List<int>();
 
-    public Diary() : base("Diario", null, "Diario personal de Anxo. En el relata su día a día incluyendo los últimos acontecimientos", ItemType.Diary)
+    public Diary() : base("Diario", null, "Diario personal de Anxo. En él relata su día a día incluyendo los últimos acontecimientos", ItemType.Diary)
     {
         InitializeDiary();
         pagesInProperty.Add(0);
@@ -39,8 +39,16 @@ public class Diary : Item {
     }
 
     public void InitializeDiary()
-    {
-        diaryPages.Add("Diario de Anxo");
+     {
+        diaryPages.Add("Nota0");
+        diaryPages.Add("Nota1");
+        diaryPages.Add("Nota2");
+        diaryPages.Add("Nota3");
+        diaryPages.Add("Nota4");
+
+
+
+        /*diaryPages.Add("Diario de Anxo");
         diaryPages.Add("Qué dolor de cabeza... En mi vida me he encontrado tan mal, ni cuando cogí el sarampión a los quince años y mira que casi me muero.\n" +
             "Pero... ¿Por qué estoy así? No recuerdo nada ¿Me golpeé la cabeza? Se me fue la mano con el whisky ?\n" +
             "Me arde el costado, tengo una herida muy fea, parece un mordisco.\n" +
@@ -69,9 +77,6 @@ public class Diary : Item {
             "Ha huído. En cuanto me ha olido no se lo ha pensado dos veces. Pequeño traidor, no puedo juzgarle, yo tampoco me quedaría.\n" +
             "Así que por eso no estaba en casa esta mañana. Pobrecito, que miedo habrá pasado.");
 
-
-
-
-        diaryPages.Add("Voy a salir a explorar el bosque con Lúculo. Espero que se porte bien. \n");
+        diaryPages.Add("Voy a salir a explorar el bosque con Lúculo. Espero que se porte bien. \n");*/
     }
 }

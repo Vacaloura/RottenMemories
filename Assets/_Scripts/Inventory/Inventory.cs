@@ -116,8 +116,11 @@ public class Inventory : MonoBehaviour
         if(!alreadyInvented)
         {
             GameObject slot = slots[lastSlotIndex];
-            slot.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load(item.itemSpriteName) as Sprite;
-            slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
+            Image icon = slot.transform.GetChild(0).GetComponent<Image>();
+            Color tempColor = icon.color; tempColor.a = 1.0f;
+            icon.color = tempColor;
+            icon.sprite = Resources.Load<Sprite>(item.itemSpriteName);
+            //slot.transform.GetChild(1).GetComponent<Text>().text = item.itemName + " (" + item.itemAmount + ")";
             lastSlotIndex++;
             itemList.Add(item);
         }
@@ -185,18 +188,26 @@ public class Inventory : MonoBehaviour
                     {
                         source.PlayOneShot(SelectedSound);
                         actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
-                        if (itemList[actualSlot].itemType == Item.ItemType.Diary)
+                        if (actualSlot < itemList.Count)
                         {
-                            infoPanel.SetActive(false);
-                            diaryPanel.SetActive(true);
-                            diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[actualSlot]).ReadPage(diaryPage);
+                            if (itemList[actualSlot].itemType == Item.ItemType.Diary)
+                            {
+                                infoPanel.SetActive(true);
+                                diaryPanel.SetActive(true);
+                                //diaryPanel.transform.GetChild(0).GetComponent<Text>().text = ((Diary)itemList[actualSlot]).ReadPage(diaryPage);
+                                diaryPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(((Diary)itemList[actualSlot]).ReadPage(diaryPage));
+                                infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemName + "\n" +  itemList[actualSlot].itemDescription;
+                            }
+                            else
+                            {
+                                diaryPanel.SetActive(false);
+                                infoPanel.SetActive(true);
+                                if (itemList[actualSlot].itemType == Item.ItemType.Harpoon) infoPanel.transform.GetChild(0).GetComponent<Text>().text =
+                                        itemList[actualSlot].itemName + " (" + ((Harpoon)itemList[actualSlot]).arrows + " virotes)\n" + itemList[actualSlot].itemDescription;
+                                else infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemName + " (" + itemList[actualSlot].itemAmount + " unidades)\n" + itemList[actualSlot].itemDescription;
+                            }
                         }
-                        else
-                        {
-                            diaryPanel.SetActive(false);
-                            infoPanel.SetActive(true);
-                            infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemDescription;
-                        }
+                        else Debug.Log("Empty slot");
                     }
                 }
             }
@@ -252,12 +263,12 @@ public class Inventory : MonoBehaviour
         int itemNum = 0;
         foreach (GameObject slot in slots) {
             if(itemNum < itemList.Count) {
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load(itemList[itemNum].itemSpriteName) as Sprite;
-                if (itemList[itemNum].itemType == Item.ItemType.Harpoon) slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + ((Harpoon)itemList[itemNum]).arrows + ")";
-                else slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + itemList[itemNum].itemAmount + ")";
+                slot.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(itemList[itemNum].itemSpriteName);
+                //if (itemList[itemNum].itemType == Item.ItemType.Harpoon) slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + ((Harpoon)itemList[itemNum]).arrows + ")";
+                //else slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + itemList[itemNum].itemAmount + ")";
             } else {
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
-                slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+                //slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
             }
             itemNum++;
         }
@@ -277,8 +288,10 @@ public class Inventory : MonoBehaviour
             if (itemList[number].itemAmount <= 1) {
                 itemList.RemoveAt(number);
                 lastSlotIndex--;
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
-                slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+                Image icon = slot.transform.GetChild(0).GetComponent<Image>();
+                Color tempColor = icon.color; tempColor.a = 0.0f;
+                icon.color = tempColor;
+                icon.sprite = null;                //slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
                 infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
             } else {
                 itemList[number].itemAmount--;
@@ -292,9 +305,9 @@ public class Inventory : MonoBehaviour
     public void ReadNextPage()
     {
         if (((Diary)itemList[1]).hasNext(diaryPage)) {
-            ScrollRect scrollRect = diaryPanel.GetComponentInChildren<ScrollRect>();
-            scrollRect.verticalScrollbar.value = 1;
-            diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(++diaryPage);
+            //ScrollRect scrollRect = diaryPanel.GetComponentInChildren<ScrollRect>();
+            //scrollRect.verticalScrollbar.value = 1;
+            diaryPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(((Diary)itemList[1]).ReadPage(++diaryPage));
         }
     }
 
@@ -302,9 +315,9 @@ public class Inventory : MonoBehaviour
     {
         if (((Diary)itemList[1]).hasPrevious(diaryPage))
         {
-            ScrollRect scrollRect = diaryPanel.GetComponentInChildren<ScrollRect>();
-            scrollRect.verticalScrollbar.value = 1;
-            diaryPanel.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((Diary)itemList[1]).ReadPage(--diaryPage);
+            //ScrollRect scrollRect = diaryPanel.GetComponentInChildren<ScrollRect>();
+            //scrollRect.verticalScrollbar.value = 1;
+            diaryPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(((Diary)itemList[1]).ReadPage(--diaryPage));
         }
     }
 }

@@ -39,7 +39,7 @@ public class InteractItem : Interactable {
         }
         else if (transform.tag == "MakeUp")
         {
-            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Maquillaje que algún vecino dejó abandonado en la huída.", Item.ItemType.MakeUp)); 
+            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Icono_Maquillaje", "Maquillaje que algún vecino dejó abandonado en la huída.", Item.ItemType.MakeUp)); 
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -56,7 +56,7 @@ public class InteractItem : Interactable {
         }
         else if (transform.tag == "Ladder")
         {
-            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Una escalera. Es útil para alcanzar sitios elevados.", Item.ItemType.Ladder)); 
+            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Icono_Escalera", "Una escalera. Es útil para alcanzar sitios elevados.", Item.ItemType.Ladder)); 
             source.PlayOneShot(InteractSound);
             PlayerController.playerControllerInstance.hasLadder = true;
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
