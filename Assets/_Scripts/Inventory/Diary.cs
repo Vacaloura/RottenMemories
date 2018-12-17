@@ -9,7 +9,7 @@ public class Diary : Item {
     private List<string> diaryPages = new List<string>();
     private List<int> pagesInProperty = new List<int>();
 
-    public Diary() : base("Diario", null, "Diario personal de Anxo. En él relata su día a día incluyendo los últimos acontecimientos", ItemType.Diary)
+    public Diary() : base(GameStrings.gameStringsInstance.GetString("DiaryName", null), null, GameStrings.gameStringsInstance.GetString("DiaryDescription", null), ItemType.Diary)
     {
         InitializeDiary();
         pagesInProperty.Add(0);
@@ -40,11 +40,25 @@ public class Diary : Item {
 
     public void InitializeDiary()
      {
-        diaryPages.Add("Nota0");
-        diaryPages.Add("Nota1");
-        diaryPages.Add("Nota2");
-        diaryPages.Add("Nota3");
-        diaryPages.Add("Nota4");
+        switch (GameStrings.gameStringsInstance.selectedLanguage)
+        {
+            default:
+
+            case "Español":
+                diaryPages.Add("Nota0");
+                diaryPages.Add("Nota1");
+                diaryPages.Add("Nota2");
+                diaryPages.Add("Nota3");
+                diaryPages.Add("Nota4");
+                break;
+            case "English":
+                diaryPages.Add("Note0");
+                diaryPages.Add("Note1");
+                diaryPages.Add("Note2");
+                diaryPages.Add("Note3");
+                diaryPages.Add("Note4");
+                break;
+        }
 
 
 

@@ -149,6 +149,8 @@ public class Inventory : MonoBehaviour
 
         if (Input.GetKeyDown("tab") && !PlayerController.playerControllerInstance.isTalking)
         {
+            PlayerController.playerControllerInstance.source.loop = false;
+            PlayerController.playerControllerInstance.source.Stop();
             PlayerController.playerControllerInstance.playerControl = PlayerController.playerControllerInstance.allowInteract = inventoryPreviousState;
 ; 
             inventoryPanel.SetActive(!inventoryPreviousState);
@@ -203,8 +205,8 @@ public class Inventory : MonoBehaviour
                                 diaryPanel.SetActive(false);
                                 infoPanel.SetActive(true);
                                 if (itemList[actualSlot].itemType == Item.ItemType.Harpoon) infoPanel.transform.GetChild(0).GetComponent<Text>().text =
-                                        itemList[actualSlot].itemName + " (" + ((Harpoon)itemList[actualSlot]).arrows + " virotes)\n" + itemList[actualSlot].itemDescription;
-                                else infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemName + " (" + itemList[actualSlot].itemAmount + " unidades)\n" + itemList[actualSlot].itemDescription;
+                                        itemList[actualSlot].itemName + " (" + ((Harpoon)itemList[actualSlot]).arrows + GameStrings.gameStringsInstance.GetString("Virotes", null) + itemList[actualSlot].itemDescription;
+                                else infoPanel.transform.GetChild(0).GetComponent<Text>().text = itemList[actualSlot].itemName + " (" + itemList[actualSlot].itemAmount + GameStrings.gameStringsInstance.GetString("Unidades", null) + itemList[actualSlot].itemDescription;
                             }
                         }
                         else Debug.Log("Empty slot");
@@ -263,11 +265,17 @@ public class Inventory : MonoBehaviour
         int itemNum = 0;
         foreach (GameObject slot in slots) {
             if(itemNum < itemList.Count) {
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(itemList[itemNum].itemSpriteName);
+                Image icon = slot.transform.GetChild(0).GetComponent<Image>();
+                Color tempColor = icon.color; tempColor.a = 1.0f;
+                icon.color = tempColor;
+                icon.sprite = Resources.Load<Sprite>(itemList[itemNum].itemSpriteName);
                 //if (itemList[itemNum].itemType == Item.ItemType.Harpoon) slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + ((Harpoon)itemList[itemNum]).arrows + ")";
                 //else slot.transform.GetChild(1).GetComponent<Text>().text = itemList[itemNum].itemName + " (" + itemList[itemNum].itemAmount + ")";
             } else {
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = null;
+                Image icon = slot.transform.GetChild(0).GetComponent<Image>();
+                Color tempColor = icon.color; tempColor.a = 0.0f;
+                icon.color = tempColor;
+                icon.sprite = null;                
                 //slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
             }
             itemNum++;
@@ -280,8 +288,8 @@ public class Inventory : MonoBehaviour
         Debug.Log("ActualSlot: " + actualSlot);
         Debug.Log("Name: " + itemList[number].itemName);
 
-        if (itemList[number].itemType == Item.ItemType.Harpoon || (itemList[number].itemType==Item.ItemType.Food && ((Food)itemList[number]).foodType == Food.FoodType.Cat))
-            DisplayManager.displayManagerInstance.DisplayMessage("Creo que no debería tirar esto.", 2.0f);
+        if (itemList[number].itemType == Item.ItemType.Harpoon || (itemList[number].itemType==Item.ItemType.Food && ((Food)itemList[number]).foodType == Food.FoodType.Cat) || itemList[number].itemType == Item.ItemType.Diary)
+            DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("NonRemovable", null), 2.0f);
         else 
         {
             GameObject slot = slots[number];
@@ -291,7 +299,8 @@ public class Inventory : MonoBehaviour
                 Image icon = slot.transform.GetChild(0).GetComponent<Image>();
                 Color tempColor = icon.color; tempColor.a = 0.0f;
                 icon.color = tempColor;
-                icon.sprite = null;                //slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
+                icon.sprite = null;                
+                //slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
                 infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
             } else {
                 itemList[number].itemAmount--;

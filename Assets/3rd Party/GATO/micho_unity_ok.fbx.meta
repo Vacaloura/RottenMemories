@@ -1,0 +1,419 @@
+fileFormatVersion: 2
+guid: 9b70df119a1f3cf4cb29cf73c9d6960e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: GatoMistico_plain:cabeza
+    100002: GatoMistico_plain:caderaD
+    100004: GatoMistico_plain:caderaI
+    100006: GatoMistico_plain:carpoD
+    100008: GatoMistico_plain:carpoI
+    100010: GatoMistico_plain:cola01
+    100012: GatoMistico_plain:cola02
+    100014: GatoMistico_plain:cola03
+    100016: GatoMistico_plain:cola04
+    100018: GatoMistico_plain:cola05
+    100020: GatoMistico_plain:cola06
+    100022: GatoMistico_plain:cola07
+    100024: GatoMistico_plain:cola08
+    100026: GatoMistico_plain:cola09
+    100028: GatoMistico_plain:cola10
+    100030: GatoMistico_plain:columna01
+    100032: GatoMistico_plain:columna2
+    100034: GatoMistico_plain:columna3
+    100036: GatoMistico_plain:columna4
+    100038: GatoMistico_plain:cuello
+    100040: GatoMistico_plain:FemurD
+    100042: GatoMistico_plain:femurD
+    100044: GatoMistico_plain:femurI
+    100046: GatoMistico_plain:femurI 1
+    100048: GatoMistico_plain:hombroD
+    100050: GatoMistico_plain:hombroI
+    100052: GatoMistico_plain:MEtacarpoD
+    100054: GatoMistico_plain:metacarpoI
+    100056: GatoMistico_plain:metartarsoI
+    100058: GatoMistico_plain:MetatarsoI
+    100060: GatoMistico_plain:MIsticNINO
+    100062: GatoMistico_plain:orejaD1
+    100064: GatoMistico_plain:orejaD2
+    100066: GatoMistico_plain:orejaD3
+    100068: GatoMistico_plain:orejaI1
+    100070: GatoMistico_plain:orejaI2
+    100072: GatoMistico_plain:orejaI3
+    100074: GatoMistico_plain:pelvis
+    100076: GatoMistico_plain:radioD
+    100078: GatoMistico_plain:radioI
+    100080: GatoMistico_plain:TarsoI
+    100082: GatoMistico_plain:TarsoI 1
+    100084: GatoMistico_plain:tibiaD
+    100086: GatoMistico_plain:tibiaI
+    100088: //RootNode
+    400000: GatoMistico_plain:cabeza
+    400002: GatoMistico_plain:caderaD
+    400004: GatoMistico_plain:caderaI
+    400006: GatoMistico_plain:carpoD
+    400008: GatoMistico_plain:carpoI
+    400010: GatoMistico_plain:cola01
+    400012: GatoMistico_plain:cola02
+    400014: GatoMistico_plain:cola03
+    400016: GatoMistico_plain:cola04
+    400018: GatoMistico_plain:cola05
+    400020: GatoMistico_plain:cola06
+    400022: GatoMistico_plain:cola07
+    400024: GatoMistico_plain:cola08
+    400026: GatoMistico_plain:cola09
+    400028: GatoMistico_plain:cola10
+    400030: GatoMistico_plain:columna01
+    400032: GatoMistico_plain:columna2
+    400034: GatoMistico_plain:columna3
+    400036: GatoMistico_plain:columna4
+    400038: GatoMistico_plain:cuello
+    400040: GatoMistico_plain:FemurD
+    400042: GatoMistico_plain:femurD
+    400044: GatoMistico_plain:femurI
+    400046: GatoMistico_plain:femurI 1
+    400048: GatoMistico_plain:hombroD
+    400050: GatoMistico_plain:hombroI
+    400052: GatoMistico_plain:MEtacarpoD
+    400054: GatoMistico_plain:metacarpoI
+    400056: GatoMistico_plain:metartarsoI
+    400058: GatoMistico_plain:MetatarsoI
+    400060: GatoMistico_plain:MIsticNINO
+    400062: GatoMistico_plain:orejaD1
+    400064: GatoMistico_plain:orejaD2
+    400066: GatoMistico_plain:orejaD3
+    400068: GatoMistico_plain:orejaI1
+    400070: GatoMistico_plain:orejaI2
+    400072: GatoMistico_plain:orejaI3
+    400074: GatoMistico_plain:pelvis
+    400076: GatoMistico_plain:radioD
+    400078: GatoMistico_plain:radioI
+    400080: GatoMistico_plain:TarsoI
+    400082: GatoMistico_plain:TarsoI 1
+    400084: GatoMistico_plain:tibiaD
+    400086: GatoMistico_plain:tibiaI
+    400088: //RootNode
+    2100000: Material__29
+    4300000: GatoMistico_plain:MIsticNINO
+    7400000: GatoMistico_BAKED_cleaned
+    7400002: GATO_sienta
+    7400004: GATO_levanta
+    7400006: GATO_abajo
+    7400008: GATO_arriba
+    7400010: GATO_anda
+    7400012: GATO_corre
+    7400014: GATO_idle
+    9500000: //RootNode
+    13700000: GatoMistico_plain:MIsticNINO
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material__29
+    second: {fileID: 2100000, guid: c0ac390f6b62e2e4da55298a7c4ed66b, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: GatoMistico_BAKED_cleaned
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 1
+      lastFrame: 800
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GATO_sienta
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 1
+      lastFrame: 41
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GATO_levanta
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 48
+      lastFrame: 116
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GATO_abajo
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 112
+      lastFrame: 184
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GATO_arriba
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 183
+      lastFrame: 264
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GATO_anda
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 287
+      lastFrame: 328
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GATO_corre
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 359
+      lastFrame: 403
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GATO_idle
+      takeName: GatoMistico_BAKED_cleaned
+      firstFrame: 580
+      lastFrame: 760
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.0254
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

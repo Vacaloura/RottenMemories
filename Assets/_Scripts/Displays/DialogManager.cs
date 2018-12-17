@@ -19,6 +19,10 @@ public class DialogManager : MonoBehaviour {
     [HideInInspector] public static Dictionary<string, string> Paco_2 = new Dictionary<string, string>();
     [HideInInspector] public static Dictionary<string, string> Jaime = new Dictionary<string, string>();
 
+    public float pause = 0.025f;
+    string message;
+    [HideInInspector] public Text dialogShowed;
+    [HideInInspector] public bool textRetard;
 
 
 
@@ -30,10 +34,23 @@ public class DialogManager : MonoBehaviour {
             modalPanel = this;
         else Debug.LogError("Tried to create a second modalPanel");
     }
+
     private void Start() {
         InitializeDialog();
     }
 
+    IEnumerator TypeLetters() {
+        // Iterate over each letter
+        textRetard = true;
+        yield return new WaitForSeconds(0.1f);
+        foreach (char letter in message.ToCharArray()) {
+            dialogShowed.text += letter; // Add a single character to the GUI text
+            if (!Input.GetKey(KeyCode.E)) {
+                yield return new WaitForSeconds(pause);
+            }
+        }
+        textRetard = false;
+    }
 
     public void DisplayPhrase(string phrase, string iconName)
     {
@@ -42,9 +59,13 @@ public class DialogManager : MonoBehaviour {
         cButton.gameObject.SetActive(false);
         DisplayManager.displayManagerInstance.dialogSprite.sprite = Resources.Load<Sprite>(iconName);
         modalPanelObject.SetActive(true);
+        dialogShowed = GameObject.Find("DialogScrollView").transform.GetChild(0).GetComponent<Text>();
+        message = phrase;
+        dialogShowed.text = ""; // Clear the GUI text
+        StartCoroutine(TypeLetters());
         Cursor.lockState = CursorLockMode.None;
         modalPanelObject.transform.SetAsLastSibling();
-        this.question.text = phrase;
+        //this.question.text = phrase;
     }
 
     public void DisplayButtons(int nOptions, UnityAction DialogEventA, UnityAction DialogEventB, UnityAction DialogEventC, string[] options)
@@ -85,90 +106,75 @@ public class DialogManager : MonoBehaviour {
     }
 
     public void InitializeDialog() {
+        SeñoraRamos.Clear();
+        Carlos.Clear();
+        Paco.Clear();
+        Paco_2.Clear();
+        Jaime.Clear();
 
-        SeñoraRamos.Add("P_1", "Buenas, señora Ramos ¿Qué tal el día? ¿No habrá visto a Lúculo?");
-        SeñoraRamos.Add("N_2", "No habrás visto tú a mi marido... Desde que se fue ayer contigo no lo he vuelto a ver...");
-        SeñoraRamos.Add("B_A", "¿Qué marido?");
-        SeñoraRamos.Add("B_B", "Ayer... No recuerdo nada de lo de ayer");
-        SeñoraRamos.Add("B_C", "Me dijo que volvería a casa... Yo es que me fui antes");
-        SeñoraRamos.Add("R_A", "¿Qué gato?");
-        SeñoraRamos.Add("R_B", "Ya...");
-        SeñoraRamos.Add("R_C", "Bueno, le preguntaré al resto a ver si alguien sabe algo");
-        SeñoraRamos.Add("I_1", "Yo de ti cogería algo de comida antes de salir...");
-        SeñoraRamos.Add("I_2", "Cariño... cariño...");
+        SeñoraRamos.Add("P_1", GameStrings.gameStringsInstance.GetString("RamosP_1", null));
+        SeñoraRamos.Add("N_2", GameStrings.gameStringsInstance.GetString("RamosN_2", null));
+        SeñoraRamos.Add("B_A", GameStrings.gameStringsInstance.GetString("RamosB_A", null));
+        SeñoraRamos.Add("B_B", GameStrings.gameStringsInstance.GetString("RamosB_B", null));
+        SeñoraRamos.Add("B_C", GameStrings.gameStringsInstance.GetString("RamosB_C", null));
+        SeñoraRamos.Add("R_A", GameStrings.gameStringsInstance.GetString("RamosR_A", null));
+        SeñoraRamos.Add("R_B", GameStrings.gameStringsInstance.GetString("RamosR_B", null));
+        SeñoraRamos.Add("R_C", GameStrings.gameStringsInstance.GetString("RamosR_C", null));
+        SeñoraRamos.Add("I_1", GameStrings.gameStringsInstance.GetString("RamosI_1", null));
+        SeñoraRamos.Add("I_2", GameStrings.gameStringsInstance.GetString("RamosI_2", null));
 
-        Carlos.Add("P_1", "Carlos... ¡Carlos!");
-        Carlos.Add("N_2", "¿Qué pasa? Tío, ¿te encuentras bien?");
-        Carlos.Add("B_A", "Si, como en mi vida");
-        Carlos.Add("B_B", "La verdad es que...");
-        Carlos.Add("B_C", "Sinceramente no");
-        Carlos.Add("R_A", "¿Al final el zombie no te hizo nada? Me pareció ver... Da igual...");
-        Carlos.Add("R_B", "Lo sabía, te mordió.");
-        Carlos.Add("R_C", "¿Estás herido?");
-        Carlos.Add("A_B", "Que va, simplemente tengo mal cuerpo, Lo de ayer fue muy intenso");
-        Carlos.Add("A_C", "Me torcí el tobillo y me arde horrores");
-        Carlos.Add("N_3", "Has visto a Jaime?");
-        Carlos.Add("P_4", "Todavía no me he cruzado con él");
-        Carlos.Add("I_1", "Qué tranquilo está todo hoy");
-        Carlos.Add("I_2", "Uy... Espero que no llueva");
+        Carlos.Add("P_1", GameStrings.gameStringsInstance.GetString("CarlosP_1", null));
+        Carlos.Add("N_2", GameStrings.gameStringsInstance.GetString("CarlosN_2", null));
+        Carlos.Add("B_A", GameStrings.gameStringsInstance.GetString("CarlosB_A", null));
+        Carlos.Add("B_B", GameStrings.gameStringsInstance.GetString("CarlosB_B", null));
+        Carlos.Add("B_C", GameStrings.gameStringsInstance.GetString("CarlosB_C", null));
+        Carlos.Add("R_A", GameStrings.gameStringsInstance.GetString("CarlosR_A", null));
+        Carlos.Add("R_B", GameStrings.gameStringsInstance.GetString("CarlosR_B", null));
+        Carlos.Add("R_C", GameStrings.gameStringsInstance.GetString("CarlosR_C", null));
+        Carlos.Add("A_B", GameStrings.gameStringsInstance.GetString("CarlosA_B", null));
+        Carlos.Add("A_C", GameStrings.gameStringsInstance.GetString("CarlosA_C", null));
+        Carlos.Add("N_3", GameStrings.gameStringsInstance.GetString("CarlosN_3", null));
+        Carlos.Add("P_4", GameStrings.gameStringsInstance.GetString("CarlosP_4", null));
+        Carlos.Add("I_1", GameStrings.gameStringsInstance.GetString("CarlosI_1", null));
+        Carlos.Add("I_2", GameStrings.gameStringsInstance.GetString("CarlosI_2", null));
 
-        Paco.Add("P_1", "Hola Paco");
-        Paco.Add("N_2", "Hombre Anxo, menos mal, que bien te veo. Pensé que no la contabas.");
-        Paco.Add("B_A", "¿Recuerdas qué pasó ayer?");
-        Paco.Add("B_B", "No habrás visto a Lúculo...");
-        Paco.Add("R_A", "Sí tío, nos rodearon... Una pena lo de Ramos ¿No te acuerdas?");
-        Paco.Add("R_B", "Me suena verlo cerca de... Espera, compra la información, ya sabes cómo funciona.");
-        Paco.Add("P_3", "Tengo prisa, Paco.");
-        Paco.Add("N_4", "Y yo sed, Anxo.");
-        Paco.Add("P_5", "¿Qué será esta vez?");
-        Paco.Add("N_6", "Un buen vino, Ribeiro estaría bien...");
-        Paco.Add("I_1", "Tengo mucha sed.");
-        Paco.Add("I_2", "No veo aquí mi vino");
+        Paco.Add("P_1", GameStrings.gameStringsInstance.GetString("PacoP_1", null));
+        Paco.Add("N_2", GameStrings.gameStringsInstance.GetString("PacoN_2", null));
+        Paco.Add("B_A", GameStrings.gameStringsInstance.GetString("PacoB_A", null));
+        Paco.Add("B_B", GameStrings.gameStringsInstance.GetString("PacoB_B", null));
+        Paco.Add("R_A", GameStrings.gameStringsInstance.GetString("PacoR_A", null));
+        Paco.Add("R_B", GameStrings.gameStringsInstance.GetString("PacoR_B", null));
+        Paco.Add("P_3", GameStrings.gameStringsInstance.GetString("PacoP_3", null));
+        Paco.Add("N_4", GameStrings.gameStringsInstance.GetString("PacoN_4", null));
+        Paco.Add("P_5", GameStrings.gameStringsInstance.GetString("PacoP_5", null));
+        Paco.Add("N_6", GameStrings.gameStringsInstance.GetString("PacoN_6", null));
+        Paco.Add("I_1", GameStrings.gameStringsInstance.GetString("PacoI_1", null));
+        Paco.Add("I_2", GameStrings.gameStringsInstance.GetString("PacoI_2", null));
 
-        Paco_2.Add("P_1", "Aquí tienes tu vino, Paco. Ahora cuéntame, ¿has visto a mí gato?");
-        Paco_2.Add("N_2", "Paco: Me pareció verlo cerca de los cubos de basura, poniéndolo todo hecho un asco, como siempre");
-        Paco_2.Add("I_1", "Glu glu glu...");
-        Paco_2.Add("I_2", "Que buena cosecha...");
+        Paco_2.Add("P_1", GameStrings.gameStringsInstance.GetString("Paco_2P_1", null));
+        Paco_2.Add("N_2", GameStrings.gameStringsInstance.GetString("Paco_2N_2", null));
+        Paco_2.Add("I_1", GameStrings.gameStringsInstance.GetString("Paco_2I_1", null));
+        Paco_2.Add("I_2", GameStrings.gameStringsInstance.GetString("Paco_2I_2", null));
 
-        Jaime.Add("N_1", "¡Anxo! Dichosos los ojos...");
-        Jaime.Add("P_2", "Canalla... ¡Nos abandonaste!");
-        Jaime.Add("N_3", "No me juzgues, era un sálvese quien pueda. De todas formas no me fui muy lejos por si necesitábais ayuda");
-        Jaime.Add("P_4", "¿Como la que necesitó el pobre Señor Ramos?");
-        Jaime.Add("N_5", "¿Qué querías, que hiciera como tú y me interpusiera? Podríamos haber muerto los dos. De hecho, es un milagro que tú sigas con vida");
-        Jaime.Add("B_A", "¿Yo me interpuse?");
-        Jaime.Add("B_B", "¿Viste la pelea?");
-        Jaime.Add("B_C", "¿Alguien más estuvo presente?");
-        Jaime.Add("R_A", "Qué pasa, ¿no te acuerdas o quieres que cuente tu hazaña como una epopeya, payaso? " +
-            "El móvil del viejo empezó a sonar y un zombie corrió hacia él. Nunca los había visto así, la verdad. Tú corriste también y te pusiste entre el zombie y el viejo.");
-        Jaime.Add("R_B", "A ver, estaba alejado y detrás de unos árboles. Vi a grandes rasgos como te liaste a golpes con el pobre desgraciado... aunque él también repartía que daba gusto");
-        Jaime.Add("R_C", "Tsk... Que mucho hablas de mí pero el resto huyeron como ratas... Que yo sepa no había nadie más ¿Quieres que lo vaya contando por ahí?");
-        Jaime.Add("N_6", "Así que fue eso...");
-        Jaime.Add("N_7", "Sí, y no espereis que vuelva a una expedición con vosotros. Yo paso");
-        Jaime.Add("P_8", "Tranquilo, yo también. Bueno...");
-        Jaime.Add("N_9", "Por cierto, el gato ese regalado y obeso es tuyo, ¿verdad?");
-        Jaime.Add("P_10", "¡Lúculo! Mi gato no está gordo, tiene mucho pelo ¿Lo has visto?");
-        Jaime.Add("N_11", "Ya... Sí, lo vi hace no mucho cazando mariposas en la linde con el bosque. Encuéntralo antes que los zombies...");
-        Jaime.Add("P_12", "¡Gracias!");
-        Jaime.Add("I_1", "Prefiero que me dejes tranquilo");
-        Jaime.Add("I_2", "No tengo nada más que hablar contigo");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        Jaime.Add("N_1", GameStrings.gameStringsInstance.GetString("JaimeN_1", null));
+        Jaime.Add("P_2", GameStrings.gameStringsInstance.GetString("JaimeP_2", null));
+        Jaime.Add("N_3", GameStrings.gameStringsInstance.GetString("JaimeN_3", null));
+        Jaime.Add("P_4", GameStrings.gameStringsInstance.GetString("JaimeP_4", null));
+        Jaime.Add("N_5", GameStrings.gameStringsInstance.GetString("JaimeN_5", null));
+        Jaime.Add("B_A", GameStrings.gameStringsInstance.GetString("JaimeB_A", null));
+        Jaime.Add("B_B", GameStrings.gameStringsInstance.GetString("JaimeB_B", null));
+        Jaime.Add("B_C", GameStrings.gameStringsInstance.GetString("JaimeB_C", null));
+        Jaime.Add("R_A", GameStrings.gameStringsInstance.GetString("JaimeR_A", null));
+        Jaime.Add("R_B", GameStrings.gameStringsInstance.GetString("JaimeR_B", null));
+        Jaime.Add("R_C", GameStrings.gameStringsInstance.GetString("JaimeR_C", null));
+        Jaime.Add("N_6", GameStrings.gameStringsInstance.GetString("JaimeN_6", null));
+        Jaime.Add("N_7", GameStrings.gameStringsInstance.GetString("JaimeN_7", null));
+        Jaime.Add("P_8", GameStrings.gameStringsInstance.GetString("JaimeP_8", null));
+        Jaime.Add("N_9", GameStrings.gameStringsInstance.GetString("JaimeN_9", null));
+        Jaime.Add("P_10", GameStrings.gameStringsInstance.GetString("JaimeP_10", null));
+        Jaime.Add("N_11", GameStrings.gameStringsInstance.GetString("JaimeN_11", null));
+        Jaime.Add("P_12", GameStrings.gameStringsInstance.GetString("JaimeP_12", null));
+        Jaime.Add("I_1", GameStrings.gameStringsInstance.GetString("JaimeI_1", null));
+        Jaime.Add("I_2", GameStrings.gameStringsInstance.GetString("JaimeI_2", null));
     }
 }

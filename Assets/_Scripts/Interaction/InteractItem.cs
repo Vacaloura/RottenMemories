@@ -27,7 +27,7 @@ public class InteractItem : Interactable {
         }
         else if(transform.tag == "Food")
         {
-            Inventory.inventoryInstance.AddItem(new Food(transform.name.Substring(0,(transform.name.Length-1)), "Comida que te ayudará a mantenerte cuerdo.", Item.ItemType.Food, Food.FoodType.PreCooked)); //TODO tipo de comida dinámico
+            Inventory.inventoryInstance.AddItem(new Food(GameStrings.gameStringsInstance.GetString("FoodName",null), GameStrings.gameStringsInstance.GetString("FoodDescription", null), Item.ItemType.Food, Food.FoodType.PreCooked)); //TODO tipo de comida dinámico
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
@@ -39,7 +39,7 @@ public class InteractItem : Interactable {
         }
         else if (transform.tag == "MakeUp")
         {
-            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Icono_Maquillaje", "Maquillaje que algún vecino dejó abandonado en la huída.", Item.ItemType.MakeUp)); 
+            Inventory.inventoryInstance.AddItem(new Item(GameStrings.gameStringsInstance.GetString("MakeUpName", null), "Icono_Maquillaje", GameStrings.gameStringsInstance.GetString("MakeUpDescription", null), Item.ItemType.MakeUp)); 
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -47,7 +47,7 @@ public class InteractItem : Interactable {
         }
         else if (transform.tag == "Wine")
         {
-            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Botella de vino que alguien perdió mientras escapaba. CASUALMENTE es un Ribeira.", Item.ItemType.WineBottle)); 
+            Inventory.inventoryInstance.AddItem(new Item(GameStrings.gameStringsInstance.GetString("WineName", null), GameStrings.gameStringsInstance.GetString("WineDescription", null), Item.ItemType.WineBottle)); 
             source.PlayOneShot(InteractSound);
             PlayerController.playerControllerInstance.hasWine = true;
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -56,7 +56,7 @@ public class InteractItem : Interactable {
         }
         else if (transform.tag == "Ladder")
         {
-            Inventory.inventoryInstance.AddItem(new Item(transform.name, "Icono_Escalera", "Una escalera. Es útil para alcanzar sitios elevados.", Item.ItemType.Ladder)); 
+            Inventory.inventoryInstance.AddItem(new Item(GameStrings.gameStringsInstance.GetString("LadderName", null), "Icono_Escalera", GameStrings.gameStringsInstance.GetString("LadderDescription", null), Item.ItemType.Ladder)); 
             source.PlayOneShot(InteractSound);
             PlayerController.playerControllerInstance.hasLadder = true;
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -66,14 +66,14 @@ public class InteractItem : Interactable {
         else if (transform.tag == "Cat")
         {
             if (PlayerController.playerControllerInstance.hasLadder) {
-                Inventory.inventoryInstance.AddItem(new Food(transform.name, "Tu única compañía desde que murió tu esposa.", Item.ItemType.Food, Food.FoodType.Cat));
+                Inventory.inventoryInstance.AddItem(new Food(GameStrings.gameStringsInstance.GetString("CatName", null), GameStrings.gameStringsInstance.GetString("CatDescription", null), Item.ItemType.Food, Food.FoodType.Cat));
                 PlayerController.playerControllerInstance.hasCat = true;
                 source.PlayOneShot(InteractSound);
                 this.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().enabled = false;
                 this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 StartCoroutine("DestroyObject");
             } else {
-                DisplayManager.displayManagerInstance.DisplayMessage("Tengo que ver como llego hasta ahí arriba.", 2.5f);
+                DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("CantPick", null), 2.5f);
             }
         }
         else if (transform.tag == "DiaryPage")
@@ -102,7 +102,7 @@ public class InteractItem : Interactable {
 
     IEnumerator DestroyObject()
     {
-       
+        Destroy(this.gameObject.transform.GetChild(0).gameObject);
         yield return new WaitForSeconds(2);
         Destroy(this.gameObject);
     }

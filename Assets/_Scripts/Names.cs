@@ -10,7 +10,8 @@ public class Names : MonoBehaviour {
     public const string playerCamera = "PlayerCamera";
     public const string harpoon = "Harpoon";
     public const string endCamera = "EndCamera";
-    
+    public const string cinematicCamera = "cam_1";
+
     //CANVAS
     public const string managers = "Managers";
     public const string inventoryPanel = "InventoryPanel";

@@ -7,7 +7,7 @@ public class Harpoon : Item {
  
     public int arrows = 7;
 
-    public Harpoon() : base("Arpón", null, "Arpón usado para cazar pequeños peces en expediciones de submarinismo.", ItemType.Harpoon)
+    public Harpoon() : base(GameStrings.gameStringsInstance.GetString("HarpoonName", null), null, GameStrings.gameStringsInstance.GetString("HarpoonDescription", null), ItemType.Harpoon)
     {
         
     }

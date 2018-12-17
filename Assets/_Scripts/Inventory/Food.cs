@@ -43,7 +43,7 @@ public class Food : Item {
                 PlayerController.playerControllerInstance.Eat(rabbitQuenchValue);
                 return true;
             case FoodType.Cat:
-                PlayerController.playerControllerInstance.PlayerWin("Te has comido a tu gato. Eres un monstruo sin sentimientos.");
+                PlayerController.playerControllerInstance.PlayerWin(GameStrings.gameStringsInstance.GetString("CatEaten", null));
                 Inventory.inventoryInstance.inventoryPanel.SetActive(false);
                 Inventory.inventoryInstance.infoPanel.SetActive(false);
                 PlayerController.playerControllerInstance.madness = 99;

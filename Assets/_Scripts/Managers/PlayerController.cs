@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 
 
@@ -30,13 +31,16 @@ public class PlayerController : MonoBehaviour {
     public AudioClip MovingSound;
     public AudioClip AmbientSound;
     public AudioClip EatingSound;
+    private float audioCrossfade = 2.0f;
 
 
-    private AudioSource source = null;
+    [HideInInspector] public AudioSource source = null;
+    [HideInInspector] public AudioSource sourceAmbient = null;
     [HideInInspector] public bool moving = false;
 
     private Image madnessBar;
     public Image avatar;
+    private PlayableDirector cinematic;
 
     /*Vector2 mouseLook;
     Vector2 smoothV;
@@ -66,12 +70,19 @@ public class PlayerController : MonoBehaviour {
         quiver = GameObject.Find(Names.quiverObject).transform;
         endCamera = GameObject.Find(Names.endCamera);
         endCamera.SetActive(false);
+        cinematic = GameObject.Find(Names.cinematicCamera).GetComponent<PlayableDirector>();
         movementController = gameObject.GetComponent<CharacterController>();
-        weapon.Rotate(Vector3.left * 15);
+        //weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StartCoroutine("IncreaseByTime");
-        playerHead.GetComponent<AudioSource>().PlayOneShot(AmbientSound);
+        try {
+            sourceAmbient = GameObject.Find(Names.playerCamera).GetComponent<AudioSource>();
+            sourceAmbient.clip = AmbientSound;
+            sourceAmbient.Play();
+        } catch (UnityException e) { Debug.Log("No hay AudioSource en PlayerCamera: " + e.ToString()); }
+
+        //playerHead.GetComponent<AudioSource>().PlayOneShot(AmbientSound);
         try
         {
             source = GetComponent<AudioSource>();
@@ -94,7 +105,7 @@ public class PlayerController : MonoBehaviour {
     public void PlayerDeath(String message)
     {
         Debug.Log("GAME OVER:\n" + message + "\nPulse ESC para salir o R para volver al último checkpoint.");
-        displayManager.DisplayMessage("GAME OVER:\n" + message + "\nPulse ESC para salir o para volver al último checkpoint.", 7.0f);
+        displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("PlayerDeath", message) , 7.0f);
         endCamera.SetActive(true);
         source.Stop();
         Time.timeScale = 0;
@@ -105,21 +116,41 @@ public class PlayerController : MonoBehaviour {
         madnessBar.fillAmount = madness/100f;
         if (madness >= 100)
         {
-            PlayerDeath("Tu locura ha aumentado demasiado. Te has transformado en zombie");
+            PlayerDeath(GameStrings.gameStringsInstance.GetString("PlayerDeathMadness", null));
         }
 
-        if (playerControl) {
+        if (cinematic.state != PlayState.Playing || Input.GetKeyDown(KeyCode.E)) {
+            cinematic.gameObject.SetActive(false);
+        }
+
+        if (playerControl && cinematic.state != PlayState.Playing) {
             Movement();
             Shoot();
         } else {
             source.loop = false;
         }
-        if (allowInteract)
+
+        if (allowInteract && cinematic.state != PlayState.Playing)
         {
             PlayerInteract();
         }
+
         myLight.GetComponent<Light>().intensity -= lightChange * Time.deltaTime;
-        if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1) lightChange = -1 * lightChange;
+        if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1)
+            lightChange = -1 * lightChange;
+        if (!sourceAmbient.isPlaying) {
+            audioCrossfade -= Time.deltaTime;
+            if (audioCrossfade < 0) {
+                sourceAmbient.clip = AmbientSound;
+                sourceAmbient.Play();
+            }
+        } else {
+            audioCrossfade = 2.0f;
+        }
+
+        if (false) {
+
+        }
 
         //Para evitar problemas con el collider de player
         /*Vector3 temp;
@@ -132,6 +163,8 @@ public class PlayerController : MonoBehaviour {
 
     void PlayerInteract() {
         if (Input.GetKeyDown(KeyCode.E) && !isTalking) {
+            source.loop = false;
+            source.Stop();
             Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(myRay, out hit, 100)) {
@@ -176,7 +209,12 @@ public class PlayerController : MonoBehaviour {
             } else {
                 moving = false;
                 source.loop = false;
+                source.Stop();
             }
+        } else {
+            moving = false;
+            source.loop = false;
+            source.Stop();
         }
 
         //// Apply gravity
@@ -213,9 +251,9 @@ public class PlayerController : MonoBehaviour {
                 arrow.parent = null;
             }
             else {
-                displayManager.DisplayMessage("¡Te has quedado sin virotes!", 2.0f);
+                displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("EmptyMunition", null), 2.0f);
             }
-            Inventory.inventoryInstance.slots[0].transform.GetChild(1).GetComponent<Text>().text = harpoon.itemName + " (" + harpoon.arrows + ")";
+            //Inventory.inventoryInstance.slots[0].transform.GetChild(1).GetComponent<Text>().text = harpoon.itemName + " (" + harpoon.arrows + ")";
         }
     }
 
@@ -232,7 +270,7 @@ public class PlayerController : MonoBehaviour {
     public void PlayerWin(string message)
     {
         Debug.Log("YOU WIN!: "+ message + " Pulse ESC para salir o R para volver al último checkpoint.");
-        displayManager.DisplayMessage("YOU WIN!: " + message + " \nPulse ESC para salir o R para volver al último checkpoint.", 7.0f);
+        displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("PlayerWin", message), 7.0f);
         player_camera.gameObject.SetActive(false);
         playerControl = false; allowInteract = false; source.Stop();
         endCamera.SetActive(true);
@@ -242,11 +280,11 @@ public class PlayerController : MonoBehaviour {
     void OnTriggerEnter(Collider col)
      {
         if (col.transform.tag == "Closed") {
-            DisplayManager.displayManagerInstance.DisplayMessage("La curiosidad mató al gato... Debo encontrar a Lúculo", 2.0f);
+            DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("LockedDoor", null), 2.0f);
         }
         if (col.gameObject.tag == "Goal" && hasCat)
         {
-            PlayerWin("Has encontrado a Lúculo y lo has llevado a casa a salvo.");
+            PlayerWin(GameStrings.gameStringsInstance.GetString("CatRescued", null));
         }
     }
 

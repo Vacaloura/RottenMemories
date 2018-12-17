@@ -37,6 +37,11 @@ public class DisplayManager : MonoBehaviour {
         return displayManagerInstance;
     }*/
 
+    private void Start()
+    {
+        UpdateMenus();
+    }
+
     public void DisplayMessage(string message, float time) {
         displayTextPanel.SetActive(true);
         displayTime = time;
@@ -76,5 +81,59 @@ public class DisplayManager : MonoBehaviour {
         yield return null;
     }
 
- 
+    public Text removeButton;
+    public Text interText;
+    public Text madness;
+    public Text saveButton;
+    public Text audioButton;
+    public Text backButton;
+    public Text resumeButton;
+    public Text efectLabel;
+    public Text audioBack;
+    public Text audioLabel;
+    public Text musicLabel;
+    public Text saveBack;
+
+    private void UpdateMenus()
+    {
+
+        switch (GameStrings.gameStringsInstance.selectedLanguage)
+        {
+            default:
+
+            case "Español":
+                removeButton.text = "Eliminar";
+                interText.text = "Pulsa 'E' para interactuar";
+                madness.text = "LOCURA";
+                saveButton.text = "Guardar";
+                audioButton.text = "Audio";
+                backButton.text = "Volver al menú principal";
+                resumeButton.text = "Reanudar partida";
+                audioLabel.text = "Ajustes de sonido";
+                musicLabel.text = "Música";
+                efectLabel.text = "Efectos";
+                audioBack.text = "Volver";
+                saveBack.text = "Volver";
+
+                break;
+
+            case "English":
+                removeButton.text = "Remove";
+                interText.text = "Press 'E' to interact";
+                madness.text = "MADNESS";
+                saveButton.text = "Save";
+                audioButton.text = "Audio";
+                backButton.text = "Go Back to Main Menu";
+                resumeButton.text = "Resume Game";
+                audioLabel.text = "Sound settings";
+                musicLabel.text = "Music";
+                efectLabel.text = "FX";
+                audioBack.text = "Go Back";
+                saveBack.text = "Go Back";
+
+                break;
+
+        }
+    }
+
 }

@@ -9,8 +9,6 @@ using UnityEngine.UI;
 
 public class InteractPerson : Interactable
 {
-    public Sprite example;
-
     private UnityAction DialogActionA;
     private UnityAction DialogActionB;
     private UnityAction DialogActionC;
@@ -21,6 +19,7 @@ public class InteractPerson : Interactable
     public bool alreadyInteracted = false;
     private bool alreadyAnswered = false, firstR = true, SRFirstTime = true;
     private char res = 'A';
+    public string hola = "Hola";
 
     public override void Start()
     {
@@ -66,7 +65,8 @@ public class InteractPerson : Interactable
                 if (PlayerController.playerControllerInstance.hasFood)
                     if (SRFirstTime) {
                         this.transform.Translate(1.5f, 0, 0);
-                        DisplayManager.displayManagerInstance.DisplayMessage("Sin comida hay quien se vuelve loco...", 2.0f);
+                        this.transform.Rotate(0, 180, 0);
+                        DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("FoodRamos", null), 2.0f);
                         SRFirstTime = false;
                     } else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_2"], 2.0f);
                 else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_1"], 2.0f);
@@ -86,9 +86,9 @@ public class InteractPerson : Interactable
     }
     private IEnumerator Discovered()
     {
-        DisplayManager.displayManagerInstance.DisplayMessage("Tienes muy mal aspecto... a ti te han mordido!\nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.", 3.0f);
+        DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("BadLooking", null), 3.0f);
         yield return new WaitForSeconds(5);
-        PlayerController.playerControllerInstance.PlayerDeath("Te han descubierto!");
+        PlayerController.playerControllerInstance.PlayerDeath(GameStrings.gameStringsInstance.GetString("PlayerDeathDiscovered", null));
     }
 
     private IEnumerator DialogCor()
@@ -109,6 +109,7 @@ public class InteractPerson : Interactable
                         //Debug.Log(dictionary.ElementAt(index).Key);
                         index++; nOptions++;
                     } while (dictionary.ElementAt(index).Key[0] == 'B');
+
                     DialogManager.modalPanel.DisplayButtons(nOptions, DialogActionA, DialogActionB, DialogActionC, options.ToArray());
                     wait = true; button = true;
                     break;
@@ -126,7 +127,7 @@ public class InteractPerson : Interactable
                     DialogManager.modalPanel.DisplayPhrase(dictionary.ElementAt(index).Value, "sprite_" + gameObject.name);
                     index++;
                     wait = true; button = false;
-                    if (dictionary.ElementAt(index).Key[0] == 'B') wait = false;
+                    if (dictionary.ElementAt(index).Key[0] == 'B' && !DialogManager.modalPanel.textRetard) wait = false;
                     break;
 
                 case 'A':
@@ -168,7 +169,7 @@ public class InteractPerson : Interactable
             while (wait)
             {
                 yield return null;
-                if (!button) wait = !Input.GetKeyDown(KeyCode.E);
+                if (!button) wait = !Input.GetKeyDown(KeyCode.E) || DialogManager.modalPanel.textRetard;
                 //Debug.Log("Esperando " + index);
             }
             //Debug.Log("Continua " + index);

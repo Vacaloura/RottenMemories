@@ -47,7 +47,7 @@ public class Item
         {
             PlayerController.playerControllerInstance.isMadeUp = true;
             PlayerController.playerControllerInstance.avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_normal");
-            DisplayManager.displayManagerInstance.DisplayMessage("Ya estoy guapo, al lío.", 2.0f);
+            DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("MakedUp", null), 2.0f);
             return true;
         }
         return false; }

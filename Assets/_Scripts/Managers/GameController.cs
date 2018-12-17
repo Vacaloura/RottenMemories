@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-
+using System;
 
 public class GameController : MonoBehaviour {
     public GameData currentGameData = new GameData();
@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour {
 
     private Transform quiver;
     private Transform horde;
+
+    public string selectedLanguage = "Español";
+
     private void Awake()
     {
         if (gameControllerInstance == null)
@@ -52,6 +55,7 @@ public class GameController : MonoBehaviour {
 
         gameWindowed = Screen.fullScreen;
 
+        Debug.Log("GameControllerStart");
         //if (SceneManager.GetActiveScene().name != "MainMenus")
         //    LoadPlayerData();
     }
