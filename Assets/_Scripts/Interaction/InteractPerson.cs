@@ -111,6 +111,8 @@ public class InteractPerson : Interactable
                     } while (dictionary.ElementAt(index).Key[0] == 'B');
 
                     DialogManager.modalPanel.DisplayButtons(nOptions, DialogActionA, DialogActionB, DialogActionC, options.ToArray());
+                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = true;
                     wait = true; button = true;
                     break;
 
@@ -193,6 +195,8 @@ public class InteractPerson : Interactable
 
         }
         index++; wait = false; res = 'A'; //alreadyAnswered=true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void DialogFunctionB()
@@ -207,7 +211,8 @@ public class InteractPerson : Interactable
 
         }
         index++; wait = false; res = 'B';
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void DialogFunctionC()
@@ -222,7 +227,8 @@ public class InteractPerson : Interactable
 
         }
         index++; wait = false; res = 'C';
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
 

@@ -87,11 +87,11 @@ public class MenuStrings : MonoBehaviour {
                 //Audio
                 audioLabel.text = "Ajustes de audio";
                 musicLabel.text = "Música";
-                efectLabel.text = "Efectos:";
+                efectLabel.text = "Efectos: ";
                 audioBack.text = "Volver";
                 //Language
                 languageLabel.text = "Idioma";
-                languageText.text = "Selecciona tu idioma:";
+                languageText.text = "Selecciona tu idioma: ";
                 languageBack.text = "Volver";
                 //Game
                 newButton.text = "Nueva partida";
@@ -99,7 +99,7 @@ public class MenuStrings : MonoBehaviour {
                 gameBack.text = "Volver";
                 //Difficulty
                 difficultyLabel.text = "Dificultad";
-                difficultyText.text = "Elige tu nivel de dificultad:";
+                difficultyText.text = "Elige tu nivel de dificultad: ";
                 difficultyBack.text = "Volve";
                 //Load
                 loadBack.text = "Volver";
@@ -120,7 +120,7 @@ public class MenuStrings : MonoBehaviour {
                 audioBack.text = "Go Back";
                 //Language
                 languageLabel.text = "Language";
-                languageText.text = "Choose your language:";
+                languageText.text = "Choose your language: ";
                 languageBack.text = "Go Back";
                 //Game
                 newButton.text = "New Game";
@@ -128,7 +128,7 @@ public class MenuStrings : MonoBehaviour {
                 gameBack.text = "Go Back";
                 //Difficulty
                 difficultyLabel.text = "Difficulty";
-                difficultyText.text = "Choose your difficulty level:";
+                difficultyText.text = "Choose your difficulty level: ";
                 difficultyBack.text = "Go back";
                 //Load
                 loadBack.text = "Go back";

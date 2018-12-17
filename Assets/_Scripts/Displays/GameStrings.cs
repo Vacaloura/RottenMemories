@@ -40,9 +40,9 @@ public class GameStrings : MonoBehaviour {
                     case "PlayerDeath":
                         return "GAME OVER:\n" + additionalMessage + "\nPulse ESC para salir o R para volver al último checkpoint.";
                     case "PlayerDeathByMadness":
-                        return "Tu locura ha aumentado demasiado.Te has transformado en zombie.";
+                        return "Tu locura ha aumentado demasiado. Te has transformado en zombie.";
                     case "PlayerDeathDiscovered":
-                        return "Te han descubierto!";
+                        return "¡Te han descubierto!";
                     case "PlayerWin":
                         return "YOU WIN!: " + additionalMessage + " \nPulse ESC para salir o R para volver al último checkpoint.";
                     case "CatEaten":
@@ -84,25 +84,25 @@ public class GameStrings : MonoBehaviour {
                     case "CarlosR_A":
                         return "¿Al final el zombie no te hizo nada? Me pareció ver... Da igual...";
                     case "CarlosR_B":
-                        return "Lo sabía, te mordió.";
+                        return "Lo sabía, te mordió";
                     case "CarlosR_C":
                         return "¿Estás herido?";
                     case "CarlosA_B":
-                        return "Que va, simplemente tengo mal cuerpo, Lo de ayer fue muy intenso";
+                        return "Que va, simplemente tengo mal cuerpo. Lo de ayer fue muy intenso";
                     case "CarlosA_C":
                         return "Me torcí el tobillo y me arde horrores";
                     case "CarlosN_3":
-                        return "Has visto a Jaime?";
+                        return "¿Has visto a Jaime?";
                     case "CarlosP_4":
                         return "Todavía no me he cruzado con él";
                     case "CarlosI_1":
-                        return "Qué tranquilo está todo hoy";
+                        return "Que tranquilo está todo hoy";
                     case "CarlosI_2":
                         return "Uy... Espero que no llueva";
                     case "PacoP_1":
                         return "Hola Paco";
                     case "PacoN_2":
-                        return "Hombre Anxo, menos mal, que bien te veo. Pensé que no la contabas.";
+                        return "Hombre Anxo, menos mal, qué bien te veo. Pensé que no la contabas";
                     case "PacoB_A":
                         return "¿Recuerdas qué pasó ayer?";
                     case "PacoB_B":
@@ -110,23 +110,23 @@ public class GameStrings : MonoBehaviour {
                     case "PacoR_A":
                         return "Sí tío, nos rodearon... Una pena lo de Ramos ¿No te acuerdas?";
                     case "PacoR_B":
-                        return "Me suena verlo cerca de... Espera, compra la información, ya sabes cómo funciona.";
+                        return "Me suena verlo cerca de... Espera, compra la información, ya sabes cómo funciona";
                     case "PacoP_3":
-                        return "Tengo prisa, Paco.";
+                        return "Tengo prisa, Paco";
                     case "PacoN_4":
-                        return "Y yo sed, Anxo.";
+                        return "Y yo sed, Anxo";
                     case "PacoP_5":
                         return "¿Qué será esta vez?";
                     case "PacoN_6":
                         return "Un buen vino, Ribeiro estaría bien...";
                     case "PacoI_1":
-                        return "Tengo mucha sed.";
+                        return "Tengo mucha sed";
                     case "PacoI_2":
                         return "No veo aquí mi vino";
                     case "Paco_2P_1":
                         return "Aquí tienes tu vino, Paco. Ahora cuéntame, ¿has visto a mi gato?";
                     case "Paco_2N_2":
-                        return "Paco: Me pareció verlo cerca de los cubos de basura, poniéndolo todo hecho un asco, como siempre";
+                        return "Me pareció verlo cerca de los cubos de basura, poniéndolo todo hecho un asco, como siempre";
                     case "Paco_2I_1":
                         return "Glu glu glu...";
                     case "Paco_2I_2":
@@ -149,7 +149,7 @@ public class GameStrings : MonoBehaviour {
                         return "¿Alguien más estuvo presente?";
                     case "JaimeR_A":
                         return "Qué pasa, ¿no te acuerdas o quieres que cuente tu hazaña como una epopeya, payaso? " +
-                        "El móvil del viejo empezó a sonar y un zombie corrió hacia él. Nunca los había visto así, la verdad. Tú corriste también y te pusiste entre el zombie y el viejo.";
+                        "El móvil del viejo empezó a sonar y un zombie corrió hacia él. Nunca los había visto así, la verdad. Tú corriste también y te pusiste entre el zombie y el viejo";
                     case "JaimeR_B":
                         return "A ver, estaba alejado y detrás de unos árboles. Vi a grandes rasgos como te liaste a golpes con el pobre desgraciado... aunque él también repartía que daba gusto";
                     case "JaimeR_C":
@@ -165,7 +165,7 @@ public class GameStrings : MonoBehaviour {
                     case "JaimeP_10":
                         return "¡Lúculo! Mi gato no está gordo, tiene mucho pelo ¿Lo has visto?";
                     case "JaimeN_11":
-                        return "Ya... Sí, lo vi hace no mucho cazando mariposas en la linde con el bosque. Encuéntralo antes que los zombies...";
+                        return "Ya... Sí, lo vi hace no mucho cazando mariposas en la linde por el bosque. Encuéntralo antes que los zombies...";
                     case "JaimeP_12":
                         return "¡Gracias!";
                     case "JaimeI_1":
@@ -177,7 +177,7 @@ public class GameStrings : MonoBehaviour {
                     case "NonRemovable":
                         return "Creo que no debería tirar esto.";
                     case "DiaryDescription":
-                        return "Diario personal de Anxo. En él relata su día a día incluyendo los últimos acontecimientos";
+                        return "Diario personal de Anxo. En él relata su día a día incluyendo los últimos acontecimientos.";
                     case "HarpoonDescription":
                         return "Arpón usado para cazar pequeños peces en expediciones de submarinismo.";
                     case "EmptyMunition":
@@ -197,7 +197,7 @@ public class GameStrings : MonoBehaviour {
                     case "WineName":
                         return "Botella de vino";
                     case "WineDescription":
-                        return "Botella de vino que alguien perdió mientras escapaba. CASUALMENTE es un Ribeira.";
+                        return "Botella de vino que alguien perdió mientras escapaba. Casualmente es un Ribeira.";
                     case "LadderName":
                         return "Escalera";
                     case "LadderDescription":
@@ -214,7 +214,7 @@ public class GameStrings : MonoBehaviour {
 
                     //Otros
                     case "LockedDoor":
-                        return "La curiosidad mató al gato... Debo encontrar a Lúculo";
+                        return "La curiosidad mató al gato... Debo encontrar a Lúculo.";
                     case "MakedUp":
                         return "Ya estoy guapo, al lío.";
                     case "CantPick":
@@ -222,7 +222,7 @@ public class GameStrings : MonoBehaviour {
                     case "FoodRamos":
                         return "Sin comida hay quien se vuelve loco...";
                     case "BadLooking":
-                        return "Tienes muy mal aspecto... a ti te han mordido!\nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.";
+                        return "Tienes muy mal aspecto... ¡A ti te han mordido!\nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.";
                     default:
                         return "NULL";
 

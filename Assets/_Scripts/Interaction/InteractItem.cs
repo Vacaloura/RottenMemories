@@ -47,7 +47,7 @@ public class InteractItem : Interactable {
         }
         else if (transform.tag == "Wine")
         {
-            Inventory.inventoryInstance.AddItem(new Item(GameStrings.gameStringsInstance.GetString("WineName", null), GameStrings.gameStringsInstance.GetString("WineDescription", null), Item.ItemType.WineBottle)); 
+            Inventory.inventoryInstance.AddItem(new Item(GameStrings.gameStringsInstance.GetString("WineName", null), "Icono_Vino", GameStrings.gameStringsInstance.GetString("WineDescription", null), Item.ItemType.WineBottle)); 
             source.PlayOneShot(InteractSound);
             PlayerController.playerControllerInstance.hasWine = true;
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -66,7 +66,7 @@ public class InteractItem : Interactable {
         else if (transform.tag == "Cat")
         {
             if (PlayerController.playerControllerInstance.hasLadder) {
-                Inventory.inventoryInstance.AddItem(new Food(GameStrings.gameStringsInstance.GetString("CatName", null), GameStrings.gameStringsInstance.GetString("CatDescription", null), Item.ItemType.Food, Food.FoodType.Cat));
+                Inventory.inventoryInstance.AddItem(new Food(GameStrings.gameStringsInstance.GetString("CatName", null), "Icono_Luculo", GameStrings.gameStringsInstance.GetString("CatDescription", null), Item.ItemType.Food, Food.FoodType.Cat));
                 PlayerController.playerControllerInstance.hasCat = true;
                 source.PlayOneShot(InteractSound);
                 this.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().enabled = false;
@@ -80,7 +80,7 @@ public class InteractItem : Interactable {
         {
             ((Diary)Inventory.inventoryInstance.itemList[1]).AddPage((int)System.Char.GetNumericValue(this.transform.name[this.transform.name.Length-1]));
             source.PlayOneShot(InteractSound);
-            this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            this.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<BoxCollider>().enabled = false;
             StartCoroutine("DestroyObject");
 

@@ -88,11 +88,15 @@ public class DisplayManager : MonoBehaviour {
     public Text audioButton;
     public Text backButton;
     public Text resumeButton;
+    public Text helpButton;
     public Text efectLabel;
     public Text audioBack;
+    public Text helpBack;
     public Text audioLabel;
     public Text musicLabel;
+    public Text helpLabel;
     public Text saveBack;
+    public Text helpText;
 
     private void UpdateMenus()
     {
@@ -109,11 +113,15 @@ public class DisplayManager : MonoBehaviour {
                 audioButton.text = "Audio";
                 backButton.text = "Volver al menú principal";
                 resumeButton.text = "Reanudar partida";
+                helpButton.text = "Ayuda";
                 audioLabel.text = "Ajustes de sonido";
                 musicLabel.text = "Música";
                 efectLabel.text = "Efectos";
+                helpLabel.text = "Ayuda";
                 audioBack.text = "Volver";
                 saveBack.text = "Volver";
+                helpBack.text = "Volver";
+                helpText.text = "Utiliza las teclas WASD y el ratón para moverte por el mapa. Puedes pulsar la barra espaciadora para saltar y la tecla SHIFT para correr.\nPulsando la tecla TAB podrás acceder a tu inventario. En el podrás ver tus objetos haciendo click izquierdo sobre ellos así como utilizarlos haciendo doble click.\nPara interactuar con objetos o vecinos usa la tecla E mirando hacia ellos.\nCuando te encuentres con un zombie puedes dispararle usando el click derecho. ¡Cuidado!Si te quedas sin virotes pasarás un mal rato. Puedes recogerlos pulsando la tecla E.\nComo ya sabes, al pulsar ESCAPE accedes al menú de pausa. Además, si pulsas R en cualquier momento volverás al último checkpoint.\nPor último, en la parte superior izquierda puedes ver tu icono de jugador y tu barra de locura ¡No dejes que se llene o perderás!";
 
                 break;
 
@@ -125,11 +133,15 @@ public class DisplayManager : MonoBehaviour {
                 audioButton.text = "Audio";
                 backButton.text = "Go Back to Main Menu";
                 resumeButton.text = "Resume Game";
+                helpButton.text = "Help";
                 audioLabel.text = "Sound settings";
                 musicLabel.text = "Music";
                 efectLabel.text = "FX";
+                helpLabel.text = "Help";
                 audioBack.text = "Go Back";
                 saveBack.text = "Go Back";
+                helpBack.text = "Go Back";
+                helpText.text = "Find help playing";
 
                 break;
 

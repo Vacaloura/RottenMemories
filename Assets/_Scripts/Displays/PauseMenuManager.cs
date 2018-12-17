@@ -41,21 +41,31 @@ public class PauseMenuManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) TogglePausePanel();
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            TogglePausePanel();
+            if (pausePanel.activeInHierarchy) {
+                pausePanel.transform.SetAsLastSibling();
+            }
+        }
     }
 
     private bool pausePanelState = false;
+    CursorLockMode previousCursor;
+    bool previousVis;
     void TogglePausePanel() {
         Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         pausePanel.SetActive(!pausePanelState);
         audioPanel.SetActive(false);
         savePanel.SetActive(false);
         if (!pausePanelState) {
+            previousCursor = Cursor.lockState;
+            previousVis = Cursor.visible;
+            Debug.Log(previousVis + "-" + previousCursor);
             Cursor.lockState = CursorLockMode.None; //Debería ser confined pero no funciona
             Cursor.visible = true;
         } else {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Cursor.lockState = previousCursor;
+            Cursor.visible = previousVis;
         }
         pausePanelState = !pausePanelState;
     }

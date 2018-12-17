@@ -9,7 +9,7 @@ public class Diary : Item {
     private List<string> diaryPages = new List<string>();
     private List<int> pagesInProperty = new List<int>();
 
-    public Diary() : base(GameStrings.gameStringsInstance.GetString("DiaryName", null), null, GameStrings.gameStringsInstance.GetString("DiaryDescription", null), ItemType.Diary)
+    public Diary() : base(GameStrings.gameStringsInstance.GetString("DiaryName", null), "Icono_Diario", GameStrings.gameStringsInstance.GetString("DiaryDescription", null), ItemType.Diary)
     {
         InitializeDiary();
         pagesInProperty.Add(0);
