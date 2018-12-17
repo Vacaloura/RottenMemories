@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour {
         if(isMadeUp) avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_normal");
         else avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_locura");
 
-        //Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
+        Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
     }
 	
     public void PlayerDeath(String message)
@@ -150,6 +150,8 @@ public class PlayerController : MonoBehaviour {
 
         if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
             Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         //Para evitar problemas con el collider de player
