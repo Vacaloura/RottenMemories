@@ -14,7 +14,7 @@ public class PauseMenuManager : MonoBehaviour {
     public Button resumeButton;
     public Slider musicSlider;
     public Slider fxSlider;
-    public GameObject pausePanel, audioPanel, savePanel;
+    public GameObject pausePanel, audioPanel, savePanel, helpPanel;
 
     private void Awake() {
         if (pauseMenuManagerInstance == null)
@@ -57,6 +57,7 @@ public class PauseMenuManager : MonoBehaviour {
         pausePanel.SetActive(!pausePanelState);
         audioPanel.SetActive(false);
         savePanel.SetActive(false);
+        helpPanel.SetActive(false);
         if (!pausePanelState) {
             previousCursor = Cursor.lockState;
             previousVis = Cursor.visible;

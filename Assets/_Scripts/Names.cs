@@ -17,6 +17,7 @@ public class Names : MonoBehaviour {
     public const string inventoryPanel = "InventoryPanel";
     public const string infoPanel = "InfoPanel";
     public const string diaryPanel = "DiaryPanel";
+    public const string dialogPanel = "DialogPanel";
     public const string itemText = "ItemText";
     public const string itemImage = "ItemImage";
     public const string canvas = "Canvas";

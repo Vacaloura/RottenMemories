@@ -149,6 +149,7 @@ public class Inventory : MonoBehaviour
 
         if (Input.GetKeyDown("tab") && !PlayerController.playerControllerInstance.isTalking)
         {
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
             PlayerController.playerControllerInstance.source.loop = false;
             PlayerController.playerControllerInstance.source.Stop();
             PlayerController.playerControllerInstance.playerControl = PlayerController.playerControllerInstance.allowInteract = inventoryPreviousState;

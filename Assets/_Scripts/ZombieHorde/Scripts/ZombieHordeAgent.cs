@@ -13,7 +13,7 @@ public class ZombieHordeAgent : Agent
     public Vector3 originalPosition;
     private GameObject[] zombies;
 
-    private NavMeshAgent myNavAgent;
+    [HideInInspector] public NavMeshAgent myNavAgent;
     private Vector3 goal;
     private int walkStep = 0;
     public float walk = 3;

@@ -68,6 +68,7 @@ public class InteractPerson : Interactable
                         this.transform.Rotate(0, 180, 0);
                         DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("FoodRamos", null), 2.0f);
                         SRFirstTime = false;
+                        StartCoroutine(PlayerController.playerControllerInstance.IncreaseByTime());
                     } else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_2"], 2.0f);
                 else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_1"], 2.0f);
             }

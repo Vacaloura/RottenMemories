@@ -32,6 +32,9 @@ public class Interactable : MonoBehaviour {
             if (distance < maxInteractionDistance && !onRange && !Inventory.inventoryInstance.inventoryPreviousState) {
                 interactText.SetActive(true);
                 onRange = true;
+                if (gameObject.name == "SeñoraRamos" && !PlayerController.playerControllerInstance.isMadeUp) {
+                    DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("ShouldNotTalk", null), 2.0f);
+                }
             } else if (distance > maxInteractionDistance && onRange) {
                 interactText.SetActive(false);
                 onRange = false;

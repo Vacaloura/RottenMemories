@@ -223,6 +223,8 @@ public class GameStrings : MonoBehaviour {
                         return "Sin comida hay quien se vuelve loco...";
                     case "BadLooking":
                         return "Tienes muy mal aspecto... ¡A ti te han mordido!\nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.";
+                    case "ShouldNotTalk":
+                        return "No creo que deba hablarle con este aspecto. Necesito pasar desapercibido";
                     default:
                         return "NULL";
 

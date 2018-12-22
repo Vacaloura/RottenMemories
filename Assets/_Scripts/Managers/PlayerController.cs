@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour {
         //weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        StartCoroutine("IncreaseByTime");
+        //StartCoroutine("IncreaseByTime");
         try {
             sourceAmbient = GameObject.Find(Names.playerCamera).GetComponent<AudioSource>();
             sourceAmbient.clip = AmbientSound;
@@ -292,14 +292,16 @@ public class PlayerController : MonoBehaviour {
 
 
 
-        IEnumerator IncreaseByTime()
+        public IEnumerator IncreaseByTime()
     {
         while (true)
         {
             yield return new WaitForSeconds(timeIncrease);
-            madness += timeIncreaseValue;
-            Debug.Log("Player madness2: " + madness);
-            //displayManager.DisplayMessage("Player madness: " + madness);
+            if (!isTalking) {
+                madness += timeIncreaseValue;
+                Debug.Log("Player madness2: " + madness);
+                //displayManager.DisplayMessage("Player madness: " + madness);
+            }
         }
     }
 

@@ -20,7 +20,7 @@ public class Food : Item {
     public int rabbitQuenchValue = 10;
     public int catQuenchValue = 100;
     //public int wineQuenchValue = 0;
-    public int preCookedQuenchValue = 5;
+    public int preCookedQuenchValue = 15;
 
     public Food(string name, string iconName, string desc, ItemType itype, FoodType ftype) : base(name, iconName, desc, itype)
     {

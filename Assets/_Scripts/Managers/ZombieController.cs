@@ -11,6 +11,7 @@ public class ZombieController : MonoBehaviour {
     public int life = 100;
     public bool zombieBeingAttacked = false;
     public bool isMoving = false;
+    public GameObject dialogPanel;
 
     [HideInInspector] public bool firstAttackFlag = false;
     [HideInInspector] public bool playerBeingAttacked = false;
@@ -45,6 +46,11 @@ public class ZombieController : MonoBehaviour {
                 firstAttackFlag = false;
                 //myNavAgent.isStopped = true;
             }
+        }
+        if (PlayerController.playerControllerInstance.isTalking) {
+            gameObject.GetComponent<ZombieHordeAgent>().myNavAgent.isStopped = true;
+        } else {
+            gameObject.GetComponent<ZombieHordeAgent>().myNavAgent.isStopped = false;
         }
     }
 }
