@@ -148,11 +148,11 @@ public class PlayerController : MonoBehaviour {
             audioCrossfade = 2.0f;
         }
 
-        if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
+        /*if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
             Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }
+        }*/
 
         //Para evitar problemas con el collider de player
         /*Vector3 temp;
@@ -227,6 +227,8 @@ public class PlayerController : MonoBehaviour {
 
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime);
         playerHead.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
+        if (playerHead.eulerAngles.x > 85 && playerHead.eulerAngles.x < 200) playerHead.transform.localRotation = Quaternion.Euler(85f, 0f, 0f); 
+        if (playerHead.eulerAngles.x < 275 && playerHead.eulerAngles.x > 200) playerHead.transform.localRotation = Quaternion.Euler(275f, 0f, 0f);
         weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
     }
 

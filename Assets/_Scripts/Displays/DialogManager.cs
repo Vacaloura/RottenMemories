@@ -54,6 +54,7 @@ public class DialogManager : MonoBehaviour {
 
     public void DisplayPhrase(string phrase, string iconName)
     {
+        StopCoroutine("TypeLetters");
         aButton.gameObject.SetActive(false);
         bButton.gameObject.SetActive(false);
         cButton.gameObject.SetActive(false);
@@ -62,8 +63,8 @@ public class DialogManager : MonoBehaviour {
         dialogShowed = GameObject.Find("DialogScrollView").transform.GetChild(0).GetComponent<Text>();
         message = phrase;
         dialogShowed.text = ""; // Clear the GUI text
-        StartCoroutine(TypeLetters());
-        Cursor.lockState = CursorLockMode.None;
+        StartCoroutine("TypeLetters");
+        //Cursor.lockState = CursorLockMode.None;
         modalPanelObject.transform.SetAsLastSibling();
         //this.question.text = phrase;
     }
@@ -71,7 +72,7 @@ public class DialogManager : MonoBehaviour {
     public void DisplayButtons(int nOptions, UnityAction DialogEventA, UnityAction DialogEventB, UnityAction DialogEventC, string[] options)
     {
         modalPanelObject.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
         modalPanelObject.transform.SetAsLastSibling();
 
         if (nOptions >= 1)

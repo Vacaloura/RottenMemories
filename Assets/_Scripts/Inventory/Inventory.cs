@@ -219,44 +219,46 @@ public class Inventory : MonoBehaviour
 
     void UseItem()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (inventoryPreviousState)
         {
-            if (!firstClick)
+            if (Input.GetMouseButtonDown(0))
             {
-                firstClick = true;
-                firstClickTime = Time.time;
-            }
-            else
-            {
-                secondClickTime = Time.time; 
-                if ((secondClickTime - firstClickTime) < doubleClickDelta)
+                if (!firstClick)
                 {
-                    //Debug.Log(secondClickTime - firstClickTime);
-                    PointerEventData pointerData = new PointerEventData(EventSystem.current);
-                    List<RaycastResult> results = new List<RaycastResult>();
-
-                    //Raycast using the Graphics Raycaster and mouse click position
-                    pointerData.position = Input.mousePosition;
-                    raycaster.Raycast(pointerData, results);
-                    foreach (RaycastResult result in results)
-                    {
-                        if (result.gameObject.tag == Names.slotTag)
-                        {
-                            actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
-                            bool flag = itemList[actualSlot].Consume();
-                            if (flag)
-                            {
-                                Debug.Log("Has consumido: " + itemList[actualSlot].itemName);
-                                RemoveItem(actualSlot);
-                                infoPanel.SetActive(false);
-                            }
-                        }
-                    }
-                    firstClick = false;
+                    firstClick = true;
+                    firstClickTime = Time.time;
                 }
                 else
                 {
-                    firstClickTime = secondClickTime;
+                    secondClickTime = Time.time;
+                    if ((secondClickTime - firstClickTime) < doubleClickDelta)
+                    {
+                        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                        List<RaycastResult> results = new List<RaycastResult>();
+
+                        //Raycast using the Graphics Raycaster and mouse click position
+                        pointerData.position = Input.mousePosition;
+                        raycaster.Raycast(pointerData, results);
+                        foreach (RaycastResult result in results)
+                        {
+                            if (result.gameObject.tag == Names.slotTag)
+                            {
+                                actualSlot = (int)Char.GetNumericValue(result.gameObject.name[result.gameObject.name.Length - 1]);
+                                bool flag = itemList[actualSlot].Consume();
+                                if (flag)
+                                {
+                                    Debug.Log("Has consumido: " + itemList[actualSlot].itemName);
+                                    RemoveItem(actualSlot);
+                                    infoPanel.SetActive(false);
+                                }
+                            }
+                        }
+                        firstClick = false;
+                    }
+                    else
+                    {
+                        firstClickTime = secondClickTime;
+                    }
                 }
             }
         }

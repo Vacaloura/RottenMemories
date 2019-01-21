@@ -190,6 +190,7 @@ public class InteractPerson : Interactable
         DialogManager.modalPanel.DisplayPhrase(dictionary["R_A"], "sprite_" + gameObject.name);
         if(gameObject.name == "Jaime")
         {
+
             index -= 4;
             jaimeA = true;
             if (gameObject.name == "Jaime" && jaimeA && jaimeB && jaimeC) index += 4;
@@ -200,12 +201,14 @@ public class InteractPerson : Interactable
         Cursor.visible = false;
     }
 
+ 
     void DialogFunctionB()
     {
         //Debug.Log("Button B");
         DialogManager.modalPanel.DisplayPhrase(dictionary["R_B"], "sprite_" + gameObject.name);
         if (gameObject.name == "Jaime")
         {
+
             index -= 4;
             jaimeB = true;
             if (gameObject.name == "Jaime" && jaimeA && jaimeB && jaimeC) index += 4;
@@ -222,6 +225,7 @@ public class InteractPerson : Interactable
         DialogManager.modalPanel.DisplayPhrase(dictionary["R_C"], "sprite_" + gameObject.name);
         if (gameObject.name == "Jaime")
         {
+
             index -= 4;
             jaimeC = true;
             if (gameObject.name == "Jaime" && jaimeA && jaimeB && jaimeC) index += 4;
@@ -231,7 +235,6 @@ public class InteractPerson : Interactable
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
 
 
 }

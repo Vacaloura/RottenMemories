@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,15 +11,49 @@ public class Interactable : MonoBehaviour {
     [HideInInspector] public bool onRange = false;
 
     private GameObject interactText;
+    private Light objectLight;
+    private float lightFadeTime;
 
     // Use this for initialization
     public virtual void Start () {
+        lightFadeTime = 1.0f;
         player = GameObject.Find(Names.player).transform;
         interactText = DisplayManager.displayManagerInstance.interactText;
+        try
+        {
+            objectLight = transform.Find("ObjectLight1").GetComponent<Light>();
+            StartCoroutine("LightBlink");
+        }catch(Exception)
+        {
+            Debug.Log(transform.name + " doesn't have an object light");
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    IEnumerator LightBlink()
+    {
+        while (true)
+        {
+            Boolean flag = objectLight.intensity > 4.0f;
+            while (objectLight.intensity < 4.0f)
+            {
+                objectLight.intensity += Time.deltaTime / lightFadeTime;
+                yield return null;
+
+            }
+
+            while (objectLight.intensity > 0.3f)
+            {
+                objectLight.intensity -= Time.deltaTime / lightFadeTime;
+                yield return null;
+
+            }
+
+            yield return null;
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
        // if (this.transform.tag == "Zombie") return; //?????????
         }
 
