@@ -38,13 +38,13 @@ public class GameStrings : MonoBehaviour {
                 switch (petition) {
                     //Victoria y derrota
                     case "PlayerDeath":
-                        return "GAME OVER:\n" + additionalMessage + "\nPulse ESC para salir o R para volver al último checkpoint.";
+                        return "GAME OVER:\n" + additionalMessage + "\nPulse ESC para salir o RETROCESO para volver al último checkpoint.";
                     case "PlayerDeathByMadness":
                         return "Tu locura ha aumentado demasiado. Te has transformado en zombie.";
                     case "PlayerDeathDiscovered":
                         return "¡Te han descubierto!";
                     case "PlayerWin":
-                        return "YOU WIN!: " + additionalMessage + " \nPulse ESC para salir o R para volver al último checkpoint.";
+                        return "YOU WIN!: " + additionalMessage + " \nPulse ESC para salir o RETROCESO para volver al último checkpoint.";
                     case "CatEaten":
                         return "Te has comido a tu gato. Eres un monstruo sin sentimientos.";
                     case "CatRescued":
@@ -225,6 +225,10 @@ public class GameStrings : MonoBehaviour {
                         return "Tienes muy mal aspecto... ¡A ti te han mordido!\nLástima. Me caías bien. Cuidaré de tu gato. Ahora muere.";
                     case "ShouldNotTalk":
                         return "No creo que deba hablarle con este aspecto. Necesito pasar desapercibido";
+                    case "Interact":
+                        return "Pulsa E para interactuar";
+                    case "Skip":
+                        return "Pulsa E para saltar";
                     default:
                         return "NULL";
 

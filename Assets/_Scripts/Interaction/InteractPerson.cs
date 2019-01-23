@@ -182,6 +182,20 @@ public class InteractPerson : Interactable
         alreadyInteracted = true; PlayerController.playerControllerInstance.isTalking = false;
         //Debug.Log("Fin de la conversación");
         GameObject.Find(Names.player).GetComponent<PlayerController>().playerControl = true;
+        if (gameObject.name == "SeñoraRamos")
+        {
+            if (PlayerController.playerControllerInstance.hasFood)
+                if (SRFirstTime)
+                {
+                    this.transform.Translate(1.5f, 0, 0);
+                    this.transform.Rotate(0, 180, 0);
+                    DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("FoodRamos", null), 2.0f);
+                    SRFirstTime = false;
+                    StartCoroutine(PlayerController.playerControllerInstance.IncreaseByTime());
+                }
+                else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_2"], 2.0f);
+            else DisplayManager.displayManagerInstance.DisplayMessage(dictionary["I_1"], 2.0f);
+        }
     }
 
     bool jaimeA=false, jaimeB=false, jaimeC=false;

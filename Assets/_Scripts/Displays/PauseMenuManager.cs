@@ -61,7 +61,7 @@ public class PauseMenuManager : MonoBehaviour {
         if (!pausePanelState) {
             previousCursor = Cursor.lockState;
             previousVis = Cursor.visible;
-            Debug.Log(previousVis + "-" + previousCursor);
+            //Debug.Log(previousVis + "-" + previousCursor);
             Cursor.lockState = CursorLockMode.None; //Debería ser confined pero no funciona
             Cursor.visible = true;
         } else {

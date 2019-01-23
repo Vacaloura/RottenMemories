@@ -33,9 +33,8 @@ public class InteractItem : Interactable {
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
             StartCoroutine("DestroyObject");
             PlayerController.playerControllerInstance.hasFood = true;
-
-            int foodNum = (int)char.GetNumericValue(gameObject.name[transform.name.Length]);
-            GameObject.Find("Player").GetComponent<PlayerController>().foodTaken[foodNum] = true;
+            int foodNum = (int)char.GetNumericValue(gameObject.name[transform.name.Length-1]);
+            PlayerController.playerControllerInstance.foodTaken[foodNum] = true;
         }
         else if (transform.tag == "MakeUp")
         {
@@ -102,6 +101,7 @@ public class InteractItem : Interactable {
 
     IEnumerator DestroyObject()
     {
+        this.StopFlashing();
         Destroy(this.gameObject.transform.GetChild(0).gameObject);
         yield return new WaitForSeconds(2);
         Destroy(this.gameObject);

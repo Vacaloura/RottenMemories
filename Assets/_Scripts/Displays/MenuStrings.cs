@@ -68,6 +68,8 @@ public class MenuStrings : MonoBehaviour {
     public Text difficultyText;
     public Text difficultyBack;
     public Text loadBack;
+    public Text loadWarning;
+
 
 
     public void UpdateCanvas(string selectedLanguage)
@@ -103,6 +105,7 @@ public class MenuStrings : MonoBehaviour {
                 difficultyBack.text = "Volve";
                 //Load
                 loadBack.text = "Volver";
+                loadWarning.text = "El slot seleccionado está vacío.";
 
                 break;
 
@@ -132,6 +135,7 @@ public class MenuStrings : MonoBehaviour {
                 difficultyBack.text = "Go back";
                 //Load
                 loadBack.text = "Go back";
+                loadWarning.text = "The selected slot is empty.";
 
                 break;
 

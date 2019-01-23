@@ -4,8 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Playables;
-
-
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -66,6 +65,7 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        DontDestroyOnLoad(this.gameObject);
         displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour {
         //weapon.Rotate(Vector3.left * 15);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        DisplayManager.displayManagerInstance.intext.GetComponent<Text>().text = GameStrings.gameStringsInstance.GetString("Skip", null);
         //StartCoroutine("IncreaseByTime");
         try {
             sourceAmbient = GameObject.Find(Names.playerCamera).GetComponent<AudioSource>();
@@ -119,32 +120,43 @@ public class PlayerController : MonoBehaviour {
         Time.timeScale = 0;
         Destroy(playerHead.parent.parent.gameObject);
     }
+    private bool cinematicOver = false;
 	// Update is called once per frame
 	void Update () {
         madnessBar.fillAmount = madness/100f;
         if (madness >= 100)
         {
-            PlayerDeath(GameStrings.gameStringsInstance.GetString("PlayerDeathMadness", null));
+            PlayerDeath(GameStrings.gameStringsInstance.GetString("PlayerDeathByMadness", null));
         }
 
-        if (cinematic.state != PlayState.Playing || Input.GetKeyDown(KeyCode.E)) {
-            cinematic.gameObject.SetActive(false);
-        }
-
-        if (playerControl && cinematic.state != PlayState.Playing) {
-            Movement();
-            Shoot();
-        } else {
-            source.loop = false;
-        }
-
-        if (allowInteract && cinematic.state != PlayState.Playing)
+        if (!cinematicOver)
         {
-            PlayerInteract();
-        }
+            if (cinematic.state != PlayState.Playing || Input.GetKeyDown(KeyCode.E))
+            {
+                cinematic.gameObject.SetActive(false);
+                cinematicOver = true;
+                DisplayManager.displayManagerInstance.intext.GetComponent<Text>().text = GameStrings.gameStringsInstance.GetString("Interact", null);
+                DisplayManager.displayManagerInstance.interactText.SetActive(false);
+            }
 
-        myLight.GetComponent<Light>().intensity -= lightChange * Time.deltaTime;
-        if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1)
+        }
+            if (playerControl && cinematicOver)
+            {
+                Movement();
+                Shoot();
+            }
+            else
+            {
+                source.loop = false;
+            }
+
+            if (allowInteract && cinematicOver)
+            {
+                PlayerInteract();
+            }
+
+        myLight.GetComponent<Light>().intensity -= Time.deltaTime/lightChange;
+        if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1.33)
             lightChange = -1 * lightChange;
         if (!sourceAmbient.isPlaying) {
             audioCrossfade -= Time.deltaTime;
@@ -156,11 +168,11 @@ public class PlayerController : MonoBehaviour {
             audioCrossfade = 2.0f;
         }
 
-        /*if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
-            Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }*/
+        //if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
+        //    Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    Cursor.visible = false;
+        //}
 
         //Para evitar problemas con el collider de player
         /*Vector3 temp;
@@ -285,10 +297,12 @@ public class PlayerController : MonoBehaviour {
     {
         Debug.Log("YOU WIN!: "+ message + " Pulse ESC para salir o R para volver al último checkpoint.");
         displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("PlayerWin", message), 7.0f);
-        player_camera.gameObject.SetActive(false);
-        playerControl = false; allowInteract = false; source.Stop();
-        endCamera.SetActive(true);
-        Time.timeScale = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        //player_camera.gameObject.SetActive(false);
+        //playerControl = false; allowInteract = false; source.Stop();
+        //endCamera.SetActive(true);
+        //Time.timeScale = 0;
+
     }
 
     void OnTriggerEnter(Collider col)

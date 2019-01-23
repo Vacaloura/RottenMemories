@@ -48,9 +48,12 @@ public class Menu : MonoBehaviour {
 
     public void LoadOld(string fileName)
     {
-        GameController.gameControllerInstance.LoadPlayerDataFromDisk(fileName);
-        GameController.gameControllerInstance.loadData = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        bool isLoaded = GameController.gameControllerInstance.LoadPlayerDataFromDisk(fileName);
+        if (isLoaded)
+        {
+            GameController.gameControllerInstance.loadData = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void ExitGame() {

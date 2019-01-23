@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     public AudioMixer resonanceMixer;
     public Slider musicSlider;
     public Slider fxSlider;
+    public GameObject warningPanel;
     public bool loadData = false;
     public bool gameWindowed = false;
     [HideInInspector] public static GameController gameControllerInstance;
@@ -70,7 +71,7 @@ public class GameController : MonoBehaviour {
             Application.Quit();
         }*/
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
@@ -124,7 +125,7 @@ public class GameController : MonoBehaviour {
         myFile.Close();
     }
 
-    public void LoadPlayerDataFromDisk(string fileName)
+    public bool LoadPlayerDataFromDisk(string fileName)
     {
         // 0) Binary formatter
         BinaryFormatter myFormatter = new BinaryFormatter();
@@ -133,13 +134,18 @@ public class GameController : MonoBehaviour {
         if (File.Exists("myGameFolder/"+fileName))
         {
             myFile = File.Open("myGameFolder/" + fileName, FileMode.Open);
+            // 2) Deserialize to temporal variable
+            currentGameData = (GameData)myFormatter.Deserialize(myFile);
+            // 3) Close file!!!!! EXTREMELY IMPORTANT
+            myFile.Close();
+            return true;
         }
-        // 2) Deserialize to temporal variable
-        currentGameData = (GameData)myFormatter.Deserialize(myFile);
-        // 3) Close file!!!!! EXTREMELY IMPORTANT
-        myFile.Close();
-        // 4) Decide what to do with the loaded data
-        //LoadPlayerData();
+        else
+        {
+            warningPanel.SetActive(true);
+            return false;
+        }
+      
     }
 
     void SavePlayerData()

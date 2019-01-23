@@ -6,6 +6,7 @@ public class DisplayManager : MonoBehaviour {
 
     public Text displayText;
     [HideInInspector] public GameObject interactText;
+    [HideInInspector] public Transform intext;
     public GameObject displayTextPanel;
     public Image dialogSprite;
 
@@ -20,7 +21,8 @@ public class DisplayManager : MonoBehaviour {
     {
 
         interactText = GameObject.Find(Names.interactText);
-        interactText.SetActive(false);
+        intext = interactText.transform.GetChild(0);
+        //interactText.SetActive(false);
         if (displayManagerInstance == null)
             displayManagerInstance = this;
         else Debug.LogError("Tried to create a second DisplayManager");

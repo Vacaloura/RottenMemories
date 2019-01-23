@@ -12,38 +12,41 @@ public class Interactable : MonoBehaviour {
 
     private GameObject interactText;
     private Light objectLight;
-    private float lightFadeTime;
+    private float FadeValue;
 
     // Use this for initialization
     public virtual void Start () {
-        lightFadeTime = 1.0f;
+        FadeValue = 30.0f;
         player = GameObject.Find(Names.player).transform;
         interactText = DisplayManager.displayManagerInstance.interactText;
         try
         {
-            objectLight = transform.Find("ObjectLight1").GetComponent<Light>();
+            objectLight = transform.Find("ObjectLight").GetComponent<Light>();
             StartCoroutine("LightBlink");
         }catch(Exception)
         {
             Debug.Log(transform.name + " doesn't have an object light");
         }
     }
+    public void StopFlashing()
+    {
+        StopCoroutine("LightBlink");
+    }
 
     IEnumerator LightBlink()
     {
         while (true)
         {
-            Boolean flag = objectLight.intensity > 4.0f;
-            while (objectLight.intensity < 4.0f)
+            while (objectLight.intensity < 20.0f)
             {
-                objectLight.intensity += Time.deltaTime / lightFadeTime;
+                objectLight.intensity += Time.deltaTime * FadeValue;
                 yield return null;
 
             }
 
-            while (objectLight.intensity > 0.3f)
+            while (objectLight.intensity > 0.0f)
             {
-                objectLight.intensity -= Time.deltaTime / lightFadeTime;
+                objectLight.intensity -= Time.deltaTime * FadeValue;
                 yield return null;
 
             }
