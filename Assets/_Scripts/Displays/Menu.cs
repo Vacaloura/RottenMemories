@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class Menu : MonoBehaviour {
 
     public EventSystem eventSystem;
     public GameObject selectedObject;
+    public Dropdown difficult;
     private bool buttonSelected;
 
     // Use this for initialization
@@ -41,7 +43,7 @@ public class Menu : MonoBehaviour {
     public void LoadNew() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         GameController.gameControllerInstance.loadData = false;
-
+        GameController.gameControllerInstance.SetDifficulty(difficult.value);
     }
 
     public void LoadOld(string fileName)

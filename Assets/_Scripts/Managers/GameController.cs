@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour {
             Debug.LogError("Tried to create a second GameController");
             Destroy(gameObject);
         }
-        }
+    }
     // Use this for initialization
     void Start()
     {
@@ -193,6 +193,10 @@ public class GameController : MonoBehaviour {
             currentGameData.zombieList.Add(new ZombieData(new float[3] { zombie.position.x, zombie.position.y, zombie.transform.position.z }, zc.life, zombie.gameObject.activeSelf, zc.firstAttackFlag));
         }
 
+        //Difficulty settings
+        currentGameData.timeDamage = PlayerController.playerControllerInstance.timeDamage;
+        currentGameData.timeIncrease = PlayerController.playerControllerInstance.timeIncrease;
+
         //currentGameData.SceneID = SceneManager.GetActiveScene().buildIndex;
 
     }
@@ -267,6 +271,9 @@ public class GameController : MonoBehaviour {
             i++;
         }
 
+        //Difficulty settings
+        PlayerController.playerControllerInstance.timeDamage = currentGameData.timeDamage;
+        PlayerController.playerControllerInstance.timeIncrease = currentGameData.timeIncrease;
     }
 
     public void ChangeVolume(int index) {
@@ -281,14 +288,16 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void SetDifficulty(int mode) {
-        Debug.Log("setting difficulty");
-        switch (mode) {
+    public void SetDifficulty(int difficult) {
+        //Debug.Log("Setting difficulty");
+        switch (difficult) {
             case 0:
                 currentGameData.difficulty = GameData.Difficulties.easy;
                 currentGameData.zombieSpeed = 3.5f;
                 currentGameData.zombieMaxAtackRange = 5f;
                 currentGameData.zombieVisionRange = 20f;
+                currentGameData.timeDamage = 0;
+                currentGameData.timeIncrease = 20;
                 Debug.Log("Difficulty set to easy");
                 break;
             case 1:
@@ -296,6 +305,8 @@ public class GameController : MonoBehaviour {
                 currentGameData.zombieSpeed = 5f;
                 currentGameData.zombieMaxAtackRange = 7.5f;
                 currentGameData.zombieVisionRange = 30f;
+                currentGameData.timeDamage = 5;
+                currentGameData.timeIncrease = 20;
                 Debug.Log("Difficulty set to medium");
                 break;
             case 2:
@@ -303,6 +314,8 @@ public class GameController : MonoBehaviour {
                 currentGameData.zombieSpeed = 7f;
                 currentGameData.zombieMaxAtackRange = 10f;
                 currentGameData.zombieVisionRange = 45f;
+                currentGameData.timeDamage = 10;
+                currentGameData.timeIncrease = 15;
                 Debug.Log("Difficulty set to hard");
                 break;
         }

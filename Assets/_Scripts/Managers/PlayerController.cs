@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour {
     private CharacterController movementController;
 
     [HideInInspector] public int madness;
-    public int timeIncreaseValue=5;
-    public int timeIncrease=20;
+    public int timeDamage = 5;
+    public int timeIncrease = 20;
     /*[HideInInspector]*/
     public bool playerControl = true, allowInteract = true, isTalking = false, isMadeUp = false, hasWine = false, hasLadder = false, hasCat = false, hasFood = false;
     public bool[] foodTaken = new bool[6] { false, false, false, false, false, false };
@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour {
     public float smoothing = 2.0f;*/
     private Transform playerHead;
     private Transform weapon;
+    private float weaponRotX = 0.0f;
+    private float weaponRotY = 0.0f;
+    private float weaponRotZ = 0.0f;
     private Transform quiver;
     private GameObject endCamera;
     public GameObject myLight;
@@ -95,8 +98,13 @@ public class PlayerController : MonoBehaviour {
             GameController.gameControllerInstance.LoadPlayerData();
             Inventory.inventoryInstance.UpdateSlots();
         }
+        timeDamage = GameController.gameControllerInstance.currentGameData.timeDamage;
+        timeIncrease = GameController.gameControllerInstance.currentGameData.timeIncrease;
+        weaponRotX = weapon.localRotation.x;
+        weaponRotY = weapon.localRotation.y;
+        weaponRotZ = weapon.localRotation.z;
 
-        if(isMadeUp) avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_normal");
+        if (isMadeUp) avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_normal");
         else avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_locura");
 
         Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
@@ -227,9 +235,11 @@ public class PlayerController : MonoBehaviour {
 
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime);
         playerHead.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
-        if (playerHead.eulerAngles.x > 85 && playerHead.eulerAngles.x < 200) playerHead.transform.localRotation = Quaternion.Euler(85f, 0f, 0f); 
-        if (playerHead.eulerAngles.x < 275 && playerHead.eulerAngles.x > 200) playerHead.transform.localRotation = Quaternion.Euler(275f, 0f, 0f);
-        weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
+        if (playerHead.eulerAngles.x > 85 && playerHead.eulerAngles.x < 200)
+            playerHead.transform.localRotation = Quaternion.Euler(85f, 0f, 0f);
+        else if (playerHead.eulerAngles.x < 275 && playerHead.eulerAngles.x > 200)
+            playerHead.transform.localRotation = Quaternion.Euler(275f, 0f, 0f);
+        else weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
     }
 
     void Shoot() {
@@ -300,7 +310,7 @@ public class PlayerController : MonoBehaviour {
         {
             yield return new WaitForSeconds(timeIncrease);
             if (!isTalking) {
-                madness += timeIncreaseValue;
+                madness += timeDamage;
                 Debug.Log("Player madness2: " + madness);
                 //displayManager.DisplayMessage("Player madness: " + madness);
             }

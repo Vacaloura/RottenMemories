@@ -17,12 +17,16 @@ public class ZombieController : MonoBehaviour {
     [HideInInspector] public bool playerBeingAttacked = false;
     public int zombieAttackValue = 10;
     public int zombieAttackTime = 3;
+    public bool hardZombie = false;
 
     //private NavMeshAgent myNavAgent;
 
     // Use this for initialization
     void Start () {
         //myNavAgent = transform.GetComponent<NavMeshAgent>();
+        if (hardZombie && (GameController.gameControllerInstance.currentGameData.difficulty != GameData.Difficulties.hard)) {
+            this.gameObject.SetActive(false);
+        }
     }
 	
 	// Update is called once per frame

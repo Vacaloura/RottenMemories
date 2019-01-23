@@ -2712,6 +2712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 1407202895}
   selectedObject: {fileID: 2065586039}
+  difficult: {fileID: 1963973069}
 --- !u!1 &705035737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2957,7 +2958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 320, y: -257.63953}
+  m_AnchoredPosition: {x: 320, y: -257.86145}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &738586725
@@ -3567,6 +3568,8 @@ MonoBehaviour:
     zombieSpeed: 3.5
     zombieMaxAtackRange: 5
     zombieVisionRange: 20
+    timeDamage: 5
+    timeIncrease: 20
   myMixer: {fileID: 24100000, guid: 88aa9e09e43cef5428ce153bd142f298, type: 2}
   resonanceMixer: {fileID: 24100000, guid: 248799cb4acba48f7b3ee842a80f788c, type: 2}
   musicSlider: {fileID: 43059528}
@@ -5329,7 +5332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 320, y: -117.54651}
+  m_AnchoredPosition: {x: 320, y: -117.62048}
   m_SizeDelta: {x: 350, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268373185
@@ -7089,7 +7092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 320, y: -180.09302}
+  m_AnchoredPosition: {x: 320, y: -180.24097}
   m_SizeDelta: {x: 300, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1963973069
@@ -7134,7 +7137,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 476428755}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 1
   m_Options:
     m_Options:
     - m_Text: Easy

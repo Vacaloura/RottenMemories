@@ -32,8 +32,11 @@ public class GameData
 
     //Opciones de dificultad
     public enum Difficulties { easy, medium, hard };
-    public Difficulties difficulty = Difficulties.easy;
+    public Difficulties difficulty = Difficulties.medium;
     public float zombieSpeed = 3.5f;
     public float zombieMaxAtackRange = 5f;
     public float zombieVisionRange = 20f;
+
+    public int timeDamage = 5;
+    public int timeIncrease = 20;
 }
