@@ -14,6 +14,7 @@ public class PauseMenuManager : MonoBehaviour {
     public Button resumeButton;
     public Slider musicSlider;
     public Slider fxSlider;
+    public Slider sensitivitySlider;
     public GameObject pausePanel, audioPanel, savePanel, helpPanel;
 
     private void Awake() {
@@ -32,6 +33,7 @@ public class PauseMenuManager : MonoBehaviour {
 
         musicSlider.onValueChanged.AddListener(delegate { GameController.gameControllerInstance.ChangeVolume(3); });
         fxSlider.onValueChanged.AddListener(delegate { GameController.gameControllerInstance.ChangeVolume(4); });
+        sensitivitySlider.onValueChanged.AddListener(delegate { ChangeSensitivity(); });
         float audioBusValue;
         bool changedAttenuation;
         changedAttenuation = GameController.gameControllerInstance.myMixer.GetFloat("AmbientVolume", out audioBusValue);
@@ -73,5 +75,9 @@ public class PauseMenuManager : MonoBehaviour {
 
     void ReturnToMenu() {
         SceneManager.LoadScene(0);
+    }
+
+    public void ChangeSensitivity() {
+        PlayerController.playerControllerInstance.sensitivity = sensitivitySlider.value;
     }
 }

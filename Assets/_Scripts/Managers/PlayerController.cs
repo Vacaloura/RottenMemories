@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector] public static PlayerController playerControllerInstance;
 
     public float thrust = 20.0f;
+    private float rotX = 0.0f;
+    private float rotY = 0.0f;
 
     private Camera player_camera;
     private CharacterController movementController;
@@ -168,11 +170,11 @@ public class PlayerController : MonoBehaviour {
             audioCrossfade = 2.0f;
         }
 
-        //if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
-        //    Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //    Cursor.visible = false;
-        //}
+        /*if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
+            Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }*/
 
         //Para evitar problemas con el collider de player
         /*Vector3 temp;
@@ -207,7 +209,7 @@ public class PlayerController : MonoBehaviour {
     public float walkSpeed = 7.0f;
     public float runSpeed = 14.0f;
     public float jumpForce = 6.0f;
-    public float sensitivity = 30.0f;
+    public float sensitivity = 50.0f;
     void Movement() {
         if (movementController.isGrounded) {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
@@ -245,13 +247,21 @@ public class PlayerController : MonoBehaviour {
         ////Move the controller
         movementController.Move(moveDirection * Time.deltaTime);
 
-        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime);
+        rotX += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        rotY += Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        rotY = Mathf.Clamp(rotY, -90f, 90f);
+        transform.rotation = Quaternion.Euler(0f, rotX, 0f);
+        playerHead.transform.localRotation = Quaternion.Euler(-rotY, 0f, 0f);
+        weapon.transform.localRotation = Quaternion.Euler(-rotY, 0f, 0f);
+
+        // Old rotation
+        /*transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime);
         playerHead.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
         if (playerHead.eulerAngles.x > 85 && playerHead.eulerAngles.x < 200)
             playerHead.transform.localRotation = Quaternion.Euler(85f, 0f, 0f);
         else if (playerHead.eulerAngles.x < 275 && playerHead.eulerAngles.x > 200)
             playerHead.transform.localRotation = Quaternion.Euler(275f, 0f, 0f);
-        else weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);
+        else weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);*/
     }
 
     void Shoot() {

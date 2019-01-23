@@ -7,6 +7,7 @@ using UnityEngine;
 public class Interactable : MonoBehaviour {
 
     public float maxInteractionDistance = 5f;
+    public bool notForHardMode;
     private Transform player;
     [HideInInspector] public bool onRange = false;
 
@@ -19,13 +20,14 @@ public class Interactable : MonoBehaviour {
         FadeValue = 30.0f;
         player = GameObject.Find(Names.player).transform;
         interactText = DisplayManager.displayManagerInstance.interactText;
-        try
-        {
+        try {
             objectLight = transform.Find("ObjectLight").GetComponent<Light>();
             StartCoroutine("LightBlink");
-        }catch(Exception)
-        {
+        } catch(Exception) {
             Debug.Log(transform.name + " doesn't have an object light");
+        }
+        if (notForHardMode && (GameController.gameControllerInstance.currentGameData.difficulty == GameData.Difficulties.hard)) {
+            this.gameObject.SetActive(false);
         }
     }
     public void StopFlashing()

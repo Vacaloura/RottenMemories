@@ -5,7 +5,6 @@ using UnityEngine;
 public class InteractItem : Interactable {
 
     public AudioClip InteractSound;
-
     private AudioSource source = null;
 
     public override void Interact() {
