@@ -318,8 +318,8 @@ public class GameController : MonoBehaviour {
             case 2:
                 currentGameData.difficulty = GameData.Difficulties.hard;
                 currentGameData.zombieSpeed = 7f;
-                currentGameData.zombieMaxAtackRange = 10f;
-                currentGameData.zombieVisionRange = 45f;
+                currentGameData.zombieMaxAtackRange = 7.5f;
+                currentGameData.zombieVisionRange = 30f;
                 currentGameData.timeDamage = 10;
                 currentGameData.timeIncrease = 15;
                 Debug.Log("Difficulty set to hard");
