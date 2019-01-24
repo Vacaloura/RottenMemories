@@ -18,8 +18,6 @@ public class CameraController : MonoBehaviour
     {
         playerHead = GameObject.Find(Names.playerHead).transform;
         offsetPosition = this.transform.position - playerHead.position + Vector3.forward / 7;
-
-
     }
 
 
@@ -38,5 +36,4 @@ public class CameraController : MonoBehaviour
         Quaternion idealRotation = Quaternion.LookRotation(playerHead.forward, playerHead.up);
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, idealRotation, Time.deltaTime * smoothRotationFactor); //Con interpolación
     }
-
 }

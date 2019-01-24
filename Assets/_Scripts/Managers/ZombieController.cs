@@ -52,6 +52,7 @@ public class ZombieController : MonoBehaviour {
             }
         }
         if (PlayerController.playerControllerInstance.isTalking) {
+            //Debug.Log("PARA");
             gameObject.GetComponent<ZombieHordeAgent>().myNavAgent.isStopped = true;
         } else {
             gameObject.GetComponent<ZombieHordeAgent>().myNavAgent.isStopped = false;

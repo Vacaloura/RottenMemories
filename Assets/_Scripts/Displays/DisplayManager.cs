@@ -19,9 +19,10 @@ public class DisplayManager : MonoBehaviour {
 
     private void Awake()
     {
-
-        interactText = GameObject.Find(Names.interactText);
-        intext = interactText.transform.GetChild(0);
+        try {
+            interactText = GameObject.Find(Names.interactText);
+            intext = interactText.transform.GetChild(0);
+        } catch (System.Exception) { }
         //interactText.SetActive(false);
         if (displayManagerInstance == null)
             displayManagerInstance = this;
@@ -123,7 +124,7 @@ public class DisplayManager : MonoBehaviour {
                 audioBack.text = "Volver";
                 saveBack.text = "Volver";
                 helpBack.text = "Volver";
-                helpText.text = "Utiliza las teclas WASD y el ratón para moverte por el mapa. Puedes pulsar la barra espaciadora para saltar y la tecla SHIFT para correr.\nPulsando la tecla TAB podrás acceder a tu inventario. En el podrás ver tus objetos haciendo click izquierdo sobre ellos así como utilizarlos haciendo doble click.\nPara interactuar con objetos o vecinos usa la tecla E mirando hacia ellos.\nCuando te encuentres con un zombie puedes dispararle usando el click derecho. ¡Cuidado!Si te quedas sin virotes pasarás un mal rato. Puedes recogerlos pulsando la tecla E.\nComo ya sabes, al pulsar ESCAPE accedes al menú de pausa. Además, si pulsas R en cualquier momento volverás al último checkpoint.\nPor último, en la parte superior izquierda puedes ver tu icono de jugador y tu barra de locura ¡No dejes que se llene o perderás!";
+                helpText.text = "Utiliza las teclas WASD y el ratón para moverte por el mapa. Puedes pulsar la barra espaciadora para saltar y la tecla SHIFT para correr.\nPulsando la tecla TAB podrás acceder a tu inventario. En el podrás ver tus objetos haciendo click izquierdo sobre ellos así como utilizarlos haciendo doble click.\nPara interactuar con objetos o vecinos usa la tecla E mirando hacia ellos.\nCuando te encuentres con un zombie puedes dispararle usando el click derecho. ¡Cuidado!Si te quedas sin virotes pasarás un mal rato. Puedes recogerlos pulsando la tecla E.\nComo ya sabes, al pulsar ESCAPE accedes al menú de pausa. Además, si pulsas DELETE en cualquier momento volverás al último checkpoint.\nPor último, en la parte superior izquierda puedes ver tu icono de jugador y tu barra de locura ¡No dejes que se llene o perderás!";
 
                 break;
 

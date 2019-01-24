@@ -22,11 +22,12 @@ public class InteractItem : Interactable {
             this.transform.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             StartCoroutine("DestroyObject");*/
             transform.parent = GameObject.Find(Names.quiverObject).transform;
+            transform.localRotation = Quaternion.Euler(0f, 0f, 90.0f);
             transform.gameObject.SetActive(false);
         }
         else if(transform.tag == "Food")
         {
-            Inventory.inventoryInstance.AddItem(new Food(GameStrings.gameStringsInstance.GetString("FoodName",null), GameStrings.gameStringsInstance.GetString("FoodDescription", null), Item.ItemType.Food, Food.FoodType.PreCooked)); //TODO tipo de comida dinámico
+            Inventory.inventoryInstance.AddItem(new Food(GameStrings.gameStringsInstance.GetString("FoodName",null), "Icono_Tupper", GameStrings.gameStringsInstance.GetString("FoodDescription", null), Item.ItemType.Food, Food.FoodType.PreCooked)); //TODO tipo de comida dinámico
             source.PlayOneShot(InteractSound);
             this.transform.gameObject.GetComponent<MeshRenderer>().enabled = false;
             this.transform.gameObject.GetComponent<SphereCollider>().enabled = false;
@@ -104,10 +105,5 @@ public class InteractItem : Interactable {
         Destroy(this.gameObject.transform.GetChild(0).gameObject);
         yield return new WaitForSeconds(2);
         Destroy(this.gameObject);
-    }
-
-    public void OnCollisionEnter(Collision col)
-    {
-        Debug.Log(col.collider.gameObject.name);
     }
 }

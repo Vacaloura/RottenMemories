@@ -37,12 +37,14 @@ public class Inventory : MonoBehaviour
         if (inventoryInstance == null)
             inventoryInstance = this;
         else Debug.LogError("Tried to create a second inventory");
-        slots = GameObject.FindGameObjectsWithTag("Slot").OrderBy(go => go.name).ToArray();
-        inventoryPanel = GameObject.Find(Names.inventoryPanel);
-        infoPanel = GameObject.Find(Names.infoPanel);
-        delete = infoPanel.transform.GetChild(1).GetComponent<Button>();
-        diaryPanel = GameObject.Find(Names.diaryPanel);
-        player = GameObject.Find(Names.player);
+        try {
+            slots = GameObject.FindGameObjectsWithTag("Slot").OrderBy(go => go.name).ToArray();
+            inventoryPanel = GameObject.Find(Names.inventoryPanel);
+            infoPanel = GameObject.Find(Names.infoPanel);
+            delete = infoPanel.transform.GetChild(1).GetComponent<Button>();
+            diaryPanel = GameObject.Find(Names.diaryPanel);
+            player = GameObject.Find(Names.player);
+        } catch (System.Exception){ }
         try
         {
             source = player.GetComponent<AudioSource>();
@@ -124,7 +126,10 @@ public class Inventory : MonoBehaviour
             lastSlotIndex++;
             itemList.Add(item);
         }
-        
+
+        inventoryText.text = GameStrings.gameStringsInstance.GetString("Find", item.itemName);
+        StopCoroutine("ShowText");
+        StartCoroutine("ShowText");
         //if (OnItemChangedEvent != null) OnItemChangedEvent();
         //else Debug.Log("No method subscribed to the event");
         UpdateSlots();
@@ -147,7 +152,7 @@ public class Inventory : MonoBehaviour
     void ToggleInventoryPanel()
     { //Desactiviar movimiento de camera?
 
-        if (Input.GetKeyDown("tab") && !PlayerController.playerControllerInstance.isTalking)
+        if ((Input.GetKeyDown("tab") || Input.GetKeyDown(KeyCode.I)) && !PlayerController.playerControllerInstance.isTalking)
         {
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
             PlayerController.playerControllerInstance.source.loop = false;
@@ -217,6 +222,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private bool consumed = false;
     void UseItem()
     {
         if (inventoryPreviousState)
@@ -248,7 +254,12 @@ public class Inventory : MonoBehaviour
                                 if (flag)
                                 {
                                     Debug.Log("Has consumido: " + itemList[actualSlot].itemName);
+                                    inventoryText.text = GameStrings.gameStringsInstance.GetString("Consumed", itemList[actualSlot].itemName);
+                                    StopCoroutine("ShowText");
+                                    StartCoroutine("ShowText");
+                                    consumed = true;
                                     RemoveItem(actualSlot);
+                                    consumed = false;
                                     infoPanel.SetActive(false);
                                 }
                             }
@@ -297,6 +308,11 @@ public class Inventory : MonoBehaviour
         {
             GameObject slot = slots[number];
             if (itemList[number].itemAmount <= 1) {
+                if (!consumed) {
+                    inventoryText.text = GameStrings.gameStringsInstance.GetString("Thrown", itemList[number].itemName);
+                    StopCoroutine("ShowText");
+                    StartCoroutine("ShowText");
+                }
                 itemList.RemoveAt(number);
                 lastSlotIndex--;
                 Image icon = slot.transform.GetChild(0).GetComponent<Image>();
@@ -306,6 +322,11 @@ public class Inventory : MonoBehaviour
                 //slot.transform.GetChild(1).GetComponent<Text>().text = "Empty Slot";
                 infoPanel.transform.GetChild(0).GetComponent<Text>().text = null;
             } else {
+                if (!consumed) {
+                    inventoryText.text = GameStrings.gameStringsInstance.GetString("Thrown", itemList[number].itemName);
+                    StopCoroutine("ShowText");
+                    StartCoroutine("ShowText");
+                }
                 itemList[number].itemAmount--;
             }
 
@@ -331,5 +352,21 @@ public class Inventory : MonoBehaviour
             //scrollRect.verticalScrollbar.value = 1;
             diaryPanel.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(((Diary)itemList[1]).ReadPage(--diaryPage));
         }
+    }
+
+    public Text inventoryText;
+    IEnumerator ShowText() {
+        Color textColor = inventoryText.color;
+        textColor.a = 1;
+        inventoryText.color = textColor;
+
+        yield return new WaitForSeconds(2.0f);
+
+        while (textColor.a > 0) {
+            textColor.a -= Time.deltaTime / 1.0f;
+            inventoryText.color = textColor;
+            yield return null;
+        }
+        yield return null;
     }
 }

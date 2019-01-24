@@ -44,7 +44,7 @@ public class GameStrings : MonoBehaviour {
                     case "PlayerDeathDiscovered":
                         return "¡Te han descubierto!";
                     case "PlayerWin":
-                        return "YOU WIN!: " + additionalMessage + " \nPulse ESC para salir o RETROCESO para volver al último checkpoint.";
+                        return "YOU WIN!: " + additionalMessage + " \nCargando siguiente nivel...";
                     case "CatEaten":
                         return "Te has comido a tu gato. Eres un monstruo sin sentimientos.";
                     case "CatRescued":
@@ -211,6 +211,13 @@ public class GameStrings : MonoBehaviour {
                         return " virotes)\n";
                     case "Unidades":
                         return " unidades)\n";
+
+                    case "Find":
+                        return "¡Has encontrado " + additionalMessage + "!";
+                    case "Thrown":
+                        return "Has tirado " + additionalMessage + " D:";
+                    case "Consumed":
+                        return "Has consumido " + additionalMessage + " :D";
 
                     //Otros
                     case "LockedDoor":

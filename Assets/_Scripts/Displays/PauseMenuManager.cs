@@ -15,7 +15,7 @@ public class PauseMenuManager : MonoBehaviour {
     public Slider musicSlider;
     public Slider fxSlider;
     public Slider sensitivitySlider;
-    public GameObject pausePanel, audioPanel, savePanel, helpPanel;
+    public GameObject pausePanel, audioPanel, savePanel, helpPanel, controlPanel;
 
     private void Awake() {
         if (pauseMenuManagerInstance == null)
@@ -25,26 +25,30 @@ public class PauseMenuManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        slot1.onClick.AddListener(delegate { GameController.gameControllerInstance.SavePlayerDataToDisk("myGameData.txt"); });
-        slot2.onClick.AddListener(delegate { GameController.gameControllerInstance.SavePlayerDataToDisk("myGameData2.txt"); });
-        slot3.onClick.AddListener(delegate { GameController.gameControllerInstance.SavePlayerDataToDisk("myGameData3.txt"); });
-        returnButton.onClick.AddListener(ReturnToMenu);
-        resumeButton.onClick.AddListener(TogglePausePanel);
+        try {
+            slot1.onClick.AddListener(delegate { GameController.gameControllerInstance.SavePlayerDataToDisk("myGameData.txt"); });
+            slot2.onClick.AddListener(delegate { GameController.gameControllerInstance.SavePlayerDataToDisk("myGameData2.txt"); });
+            slot3.onClick.AddListener(delegate { GameController.gameControllerInstance.SavePlayerDataToDisk("myGameData3.txt"); });
+            returnButton.onClick.AddListener(ReturnToMenu);
+            resumeButton.onClick.AddListener(TogglePausePanel);
 
-        musicSlider.onValueChanged.AddListener(delegate { GameController.gameControllerInstance.ChangeVolume(3); });
-        fxSlider.onValueChanged.AddListener(delegate { GameController.gameControllerInstance.ChangeVolume(4); });
-        sensitivitySlider.onValueChanged.AddListener(delegate { ChangeSensitivity(); });
-        float audioBusValue;
-        bool changedAttenuation;
-        changedAttenuation = GameController.gameControllerInstance.myMixer.GetFloat("AmbientVolume", out audioBusValue);
-        if (changedAttenuation) musicSlider.value = audioBusValue;
-        changedAttenuation = GameController.gameControllerInstance.resonanceMixer.GetFloat("FXVolume", out audioBusValue);
-        if (changedAttenuation) fxSlider.value = audioBusValue;
+            musicSlider.onValueChanged.AddListener(delegate { GameController.gameControllerInstance.ChangeVolume(3); });
+            fxSlider.onValueChanged.AddListener(delegate { GameController.gameControllerInstance.ChangeVolume(4); });
+            sensitivitySlider.onValueChanged.AddListener(delegate { ChangeSensitivity(); });
+            float audioBusValue;
+            bool changedAttenuation;
+            changedAttenuation = GameController.gameControllerInstance.myMixer.GetFloat("AmbientVolume", out audioBusValue);
+            if (changedAttenuation) musicSlider.value = audioBusValue;
+            changedAttenuation = GameController.gameControllerInstance.resonanceMixer.GetFloat("FXVolume", out audioBusValue);
+            if (changedAttenuation) fxSlider.value = audioBusValue;
+        } catch (System.Exception) { }
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            TogglePausePanel();
+            try {
+                TogglePausePanel();
+            } catch (System.Exception) { }
             if (pausePanel.activeInHierarchy) {
                 pausePanel.transform.SetAsLastSibling();
             }
@@ -60,6 +64,7 @@ public class PauseMenuManager : MonoBehaviour {
         audioPanel.SetActive(false);
         savePanel.SetActive(false);
         helpPanel.SetActive(false);
+        controlPanel.SetActive(false);
         if (!pausePanelState) {
             previousCursor = Cursor.lockState;
             previousVis = Cursor.visible;

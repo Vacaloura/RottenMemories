@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        DontDestroyOnLoad(this.gameObject);
         displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
@@ -122,6 +121,7 @@ public class PlayerController : MonoBehaviour {
         Time.timeScale = 0;
         Destroy(playerHead.parent.parent.gameObject);
     }
+
     private bool cinematicOver = false;
 	// Update is called once per frame
 	void Update () {
@@ -156,25 +156,25 @@ public class PlayerController : MonoBehaviour {
             {
                 PlayerInteract();
             }
-
-        myLight.GetComponent<Light>().intensity -= Time.deltaTime/lightChange;
-        if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1.33)
-            lightChange = -1 * lightChange;
-        if (!sourceAmbient.isPlaying) {
-            audioCrossfade -= Time.deltaTime;
-            if (audioCrossfade < 0) {
-                sourceAmbient.clip = AmbientSound;
-                sourceAmbient.Play();
+        if (myLight != null) {
+            myLight.GetComponent<Light>().intensity -= Time.deltaTime / lightChange;
+            if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1.33)
+                lightChange = -1 * lightChange;
+            if (!sourceAmbient.isPlaying) {
+                audioCrossfade -= Time.deltaTime;
+                if (audioCrossfade < 0) {
+                    sourceAmbient.clip = AmbientSound;
+                    sourceAmbient.Play();
+                }
+            } else {
+                audioCrossfade = 2.0f;
             }
-        } else {
-            audioCrossfade = 2.0f;
         }
-
-        /*if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
+        if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
             Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }*/
+        }
 
         //Para evitar problemas con el collider de player
         /*Vector3 temp;
@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour {
         rotY = Mathf.Clamp(rotY, -90f, 90f);
         transform.rotation = Quaternion.Euler(0f, rotX, 0f);
         playerHead.transform.localRotation = Quaternion.Euler(-rotY, 0f, 0f);
-        weapon.transform.localRotation = Quaternion.Euler(-rotY, 0f, 0f);
+        weapon.transform.localRotation = Quaternion.Euler(-rotY + 83.329f, 0f, 0f);
 
         // Old rotation
         /*transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime);
@@ -279,6 +279,7 @@ public class PlayerController : MonoBehaviour {
                 arrow.gameObject.SetActive(true);
                 arrow.position = weapon.position;
                 arrow.rotation = weapon.rotation;
+                //Debug.Log("Arrow rotation: " + arrow.rotation);
                 arrow.GetComponent<Rigidbody>().isKinematic = false;
                 arrow.gameObject.GetComponent<Rigidbody>().AddForce(arrow.up*thrust);
                 source.PlayOneShot(ShootSound);
@@ -305,13 +306,20 @@ public class PlayerController : MonoBehaviour {
 
     public void PlayerWin(string message)
     {
-        Debug.Log("YOU WIN!: "+ message + " Pulse ESC para salir o R para volver al último checkpoint.");
+        Debug.Log("YOU WIN!: "+ message + " \nCargando siguiente nivel....");
+        StartCoroutine("LoadLevel");
         displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("PlayerWin", message), 7.0f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        DontDestroyOnLoad(this.gameObject);
         //player_camera.gameObject.SetActive(false);
         //playerControl = false; allowInteract = false; source.Stop();
         //endCamera.SetActive(true);
         //Time.timeScale = 0;
+
+    }
+
+    public IEnumerator LoadLevel() {
+        yield return new WaitForSeconds(8.0f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
 
@@ -328,13 +336,16 @@ public class PlayerController : MonoBehaviour {
 
 
 
-        public IEnumerator IncreaseByTime()
+    public IEnumerator IncreaseByTime()
     {
         while (true)
         {
             yield return new WaitForSeconds(timeIncrease);
             if (!isTalking) {
                 madness += timeDamage;
+                damagePanel.GetComponent<Image>().color = new Color(255, 190, 0);
+                StopCoroutine("RedFlash");
+                StartCoroutine("RedFlash");
                 Debug.Log("Player madness2: " + madness);
                 //displayManager.DisplayMessage("Player madness: " + madness);
             }
@@ -353,24 +364,47 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log("firstAttackFlag: " + other.gameObject.GetComponent<ZombieController>().firstAttackFlag);
                 triggerTime = 0;
                 madness += other.gameObject.GetComponent<ZombieController>().zombieAttackValue;
+                damagePanel.GetComponent<Image>().color = Color.red;
+                StopCoroutine("RedFlash");
+                StartCoroutine("RedFlash");
                 source.PlayOneShot(DamageDealt);
-                Debug.Log("Player madness3: " + madness);
+                //Debug.Log("Player madness3: " + madness);
                 //displayManager.DisplayMessage("Player madness: " + madness);
                 other.gameObject.GetComponent<ZombieController>().firstAttackFlag = true;
             }
             else
            {
                 triggerTime += Time.deltaTime;
-                Debug.Log("triggerTime: " + triggerTime);
+                //Debug.Log("triggerTime: " + triggerTime);
                 if (triggerTime >= other.gameObject.GetComponent<ZombieController>().zombieAttackTime)
                 {
                     triggerTime = 0;
                     madness += other.gameObject.GetComponent<ZombieController>().zombieAttackValue;
+                    damagePanel.GetComponent<Image>().color = Color.red;
+                    StopCoroutine("RedFlash");
+                    StartCoroutine("RedFlash");
                     source.PlayOneShot(DamageDealt);
-                    Debug.Log("Player madness3: " + madness);
+                    //Debug.Log("Player madness3: " + madness);
                     //displayManager.DisplayMessage("Player madness: " + madness);
                 }
             }
         }
+    }
+
+    public GameObject damagePanel;
+    public float flashTime = 0.01f, fadeTime = 0.5f;
+    IEnumerator RedFlash() {
+        Color resetPanelColor = damagePanel.GetComponent<Image>().color;
+        resetPanelColor.a = 0.4f;
+        damagePanel.GetComponent<Image>().color = resetPanelColor;
+
+        yield return new WaitForSeconds(flashTime);
+
+        while (resetPanelColor.a > 0) {
+            resetPanelColor.a -= Time.deltaTime * 0.4f / fadeTime;
+            damagePanel.GetComponent<Image>().color = resetPanelColor;
+            yield return null;
+        }
+        yield return null;
     }
 }

@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1064262056545542}
+  m_IsPrefabAsset: 1
+--- !u!1 &1064262056545542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4142224500611324}
+  - component: {fileID: 114026020269831058}
+  - component: {fileID: 114517525279094208}
+  - component: {fileID: 114162638401039088}
+  - component: {fileID: 114135676771490360}
+  - component: {fileID: 114822862510520860}
+  m_Layer: 0
+  m_Name: Managers 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4142224500611324
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064262056545542}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114026020269831058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064262056545542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3025298bffc08d146857418f07ea256f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  question: {fileID: 0}
+  iconName: 
+  aButton: {fileID: 0}
+  bButton: {fileID: 0}
+  cButton: {fileID: 0}
+  modalPanelObject: {fileID: 0}
+  pause: 0.025
+  dialogShowed: {fileID: 0}
+  textRetard: 0
+--- !u!114 &114135676771490360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064262056545542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943678671b0044943ad4a31238b81a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slot1: {fileID: 0}
+  slot2: {fileID: 0}
+  slot3: {fileID: 0}
+  returnButton: {fileID: 0}
+  resumeButton: {fileID: 0}
+  musicSlider: {fileID: 0}
+  fxSlider: {fileID: 0}
+  sensitivitySlider: {fileID: 0}
+  pausePanel: {fileID: 0}
+  audioPanel: {fileID: 0}
+  savePanel: {fileID: 0}
+  helpPanel: {fileID: 0}
+  controlPanel: {fileID: 0}
+--- !u!114 &114162638401039088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064262056545542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18581330623ff054989c1b9cd9a64be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectedSound: {fileID: 0}
+  slots: []
+  itemList: []
+  inventoryPreviousState: 0
+  doubleClickDelta: 0
+  infoPanel: {fileID: 0}
+  diaryPanel: {fileID: 0}
+  inventoryPanel: {fileID: 0}
+  player: {fileID: 0}
+  indice: 0
+  inventoryText: {fileID: 0}
+--- !u!114 &114517525279094208
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064262056545542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4d62af9ee7c7546949d2aaae3556de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayText: {fileID: 0}
+  interactText: {fileID: 0}
+  intext: {fileID: 0}
+  displayTextPanel: {fileID: 0}
+  dialogSprite: {fileID: 0}
+  displayTime: 2.5
+  fadeTime: 1
+  removeButton: {fileID: 0}
+  interText: {fileID: 0}
+  madness: {fileID: 0}
+  saveButton: {fileID: 0}
+  audioButton: {fileID: 0}
+  backButton: {fileID: 0}
+  resumeButton: {fileID: 0}
+  helpButton: {fileID: 0}
+  efectLabel: {fileID: 0}
+  audioBack: {fileID: 0}
+  helpBack: {fileID: 0}
+  audioLabel: {fileID: 0}
+  musicLabel: {fileID: 0}
+  helpLabel: {fileID: 0}
+  saveBack: {fileID: 0}
+  helpText: {fileID: 0}
+--- !u!114 &114822862510520860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064262056545542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4389eca51214a5f4983c742982341f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedLanguage: "Espa\xF1ol"

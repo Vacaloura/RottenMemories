@@ -30,6 +30,7 @@ public class InteractPerson : Interactable
             dictionary = (Dictionary<string, string>)DialogManager.modalPanel.GetType().GetField(gameObject.name).GetValue(this);
         }catch(Exception e) { Debug.Log(e.ToString()); }
     }
+
     public override void Interact()
     {
         base.Interact();
@@ -252,26 +253,3 @@ public class InteractPerson : Interactable
 
 
 }
-
-
-
-
-//for (int index = 0; index<dictionary.Count; index++) {
-//  var item = dictionary.ElementAt(index);
-//var itemKey = item.Key;
-//var itemValue = item.Value;
-//}
-
-    /*
-     while(quedan frases)
-     int indice;
-        if(empieza por B)
-            sacar los botones (tantos como haya)
-            apuntar a las respuestas: indice=indice(mapa(R_A))
-        if(empieza por R)
-            sacar la respuesta (en función de letra)
-            apuntar a siguiente frase (si la hay): for(indice++) if(no empieza por R) salir;
-        else
-        sacar texto
-     
-     */
