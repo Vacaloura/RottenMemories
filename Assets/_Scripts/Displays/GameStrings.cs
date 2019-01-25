@@ -442,7 +442,7 @@ public class GameStrings : MonoBehaviour {
                     case "Interact":
                         return "Preme E pra interactuar";
                     case "Skip":
-                        return "Preme E prra saltar";
+                        return "Preme E pra saltar";
                     default:
                         return "NULL";
 
