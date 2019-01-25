@@ -58,6 +58,13 @@ public class Diary : Item {
                 diaryPages.Add("Note3");
                 diaryPages.Add("Note4");
                 break;
+            case "Galego":
+                diaryPages.Add("Nota0");
+                diaryPages.Add("Nota1");
+                diaryPages.Add("Nota2");
+                diaryPages.Add("Nota3");
+                diaryPages.Add("Nota4");
+                break;
         }
     }
 }

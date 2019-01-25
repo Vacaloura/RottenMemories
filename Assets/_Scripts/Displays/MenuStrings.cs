@@ -102,7 +102,7 @@ public class MenuStrings : MonoBehaviour {
                 //Difficulty
                 difficultyLabel.text = "Dificultad";
                 difficultyText.text = "Elige tu nivel de dificultad: ";
-                difficultyBack.text = "Volve";
+                difficultyBack.text = "Volver";
                 //Load
                 loadBack.text = "Volver";
                 loadWarning.text = "El slot seleccionado está vacío.";
@@ -139,6 +139,35 @@ public class MenuStrings : MonoBehaviour {
 
                 break;
 
+            case "Galego":
+                //MainMenu
+                startButton.text = "Xogar";
+                languageButton.text = "Idioma";
+                DifficultyButton.text = "Dificultade";
+                AudioButton.text = "Audio";
+                QuitButton.text = "Saír";
+                //Audio
+                audioLabel.text = "Axustes de audio";
+                musicLabel.text = "Música";
+                efectLabel.text = "Efectos: ";
+                audioBack.text = "Volver";
+                //Language
+                languageLabel.text = "Idioma";
+                languageText.text = "Selecciona o idioma: ";
+                languageBack.text = "Volver";
+                //Game
+                newButton.text = "Nova partida";
+                loadButton.text = "Cargar Partida";
+                gameBack.text = "Volver";
+                //Difficulty
+                difficultyLabel.text = "Dificultade";
+                difficultyText.text = "Elixe o nivel de dificultade: ";
+                difficultyBack.text = "Volver";
+                //Load
+                loadBack.text = "Volver";
+                loadWarning.text = "O slot seleccionado está baleiro.";
+
+                break;
         }
     }
 }

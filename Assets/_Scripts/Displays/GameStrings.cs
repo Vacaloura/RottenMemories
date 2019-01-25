@@ -242,8 +242,211 @@ public class GameStrings : MonoBehaviour {
                 }
 
             case "Galego":
-                return "Non dispoñible";
+                switch (petition) {
+                    //Victoria y derrota
+                    case "PlayerDeath":
+                        return "GAME OVER:\n" + additionalMessage + "\nPulse ESC para saír ou RETROCESO pra volver ó último checkpoint.";
+                    case "PlayerDeathByMadness":
+                        return "A túa locura aumentou demasiado. Transformácheste en zombie.";
+                    case "PlayerDeathDiscovered":
+                        return "Descubríronche!";
+                    case "PlayerWin":
+                        return "YOU WIN!: " + additionalMessage + " \nCargando seguinte nivel...";
+                    case "CatEaten":
+                        return "Comícheste ó teu gato. Eres un monstro sen sentimentos.";
+                    case "CatRescued":
+                        return "Atopaches a Lúculo e leváchelo a casa a salvo.";
 
+                    //Dialogos
+                    case "RamosP_1":
+                        return "Boas, señora Ramos. Qué tal o día? Non vería vostede a Lúculo?";
+                    case "RamosN_2":
+                        return "Non verías ti ao meu marido... Dende que se foi onte contigo non o volvín ver...";
+                    case "RamosB_A":
+                        return "Qué marido?";
+                    case "RamosB_B":
+                        return "Onte... Non recordo nada do de onte";
+                    case "RamosB_C":
+                        return "Díxome que volvería a casa... Eu é que funme antes";
+                    case "RamosR_A":
+                        return "Qué gato?";
+                    case "RamosR_B":
+                        return "Xa...";
+                    case "RamosR_C":
+                        return "Bueno, preguntareille ao resto a ver se alguén sabe algo";
+                    case "RamosI_1":
+                        return "Eu de ti collería algo de comida antes de saír...";
+                    case "RamosI_2":
+                        return "Cariño... cariño...";
+                    case "CarlosP_1":
+                        return "Carlos... Carlos!";
+                    case "CarlosN_2":
+                        return "Qué pasa? Tío, atópaste ben?";
+                    case "CarlosB_A":
+                        return "Si, como na miña vida";
+                    case "CarlosB_B":
+                        return "A verdade é que...";
+                    case "CarlosB_C":
+                        return "Sinceramente non";
+                    case "CarlosR_A":
+                        return "Ao final o zombie non che fixo nada? Pareceume ver... Da igual...";
+                    case "CarlosR_B":
+                        return "Sabíao, mordeuche";
+                    case "CarlosR_C":
+                        return "Estás ferido?";
+                    case "CarlosA_B":
+                        return "Que va, simplemente teño mal corpo. O de onte foi moi intenso";
+                    case "CarlosA_C":
+                        return "Torcinme o tobillo e árdeme horrores";
+                    case "CarlosN_3":
+                        return "Viches a Jaime?";
+                    case "CarlosP_4":
+                        return "Todavía non me crucei con él";
+                    case "CarlosI_1":
+                        return "Que tranquilo está todo hoxe";
+                    case "CarlosI_2":
+                        return "Ui... Espero que non chova";
+                    case "PacoP_1":
+                        return "Hola Paco";
+                    case "PacoN_2":
+                        return "Home Anxo, menos mal, qué ben te vexo. Pensei que non a contabas";
+                    case "PacoB_A":
+                        return "Recordas qué pasou onte?";
+                    case "PacoB_B":
+                        return "Non haberás visto a Lúculo...";
+                    case "PacoR_A":
+                        return "Sí tío, rodeáronnos... Unha pena o de Ramos. Non te lembras?";
+                    case "PacoR_B":
+                        return "Sóame velo preto de... Agarda, compra a información, xa sabes cómo furrula";
+                    case "PacoP_3":
+                        return "Teño prisa, Paco";
+                    case "PacoN_4":
+                        return "E eu sede, Anxo";
+                    case "PacoP_5":
+                        return "Qué será desta vez?";
+                    case "PacoN_6":
+                        return "Un bo viño, Ribeiro estaría ben...";
+                    case "PacoI_1":
+                        return "Teño moita sede";
+                    case "PacoI_2":
+                        return "Non vexo aquí o meu viño";
+                    case "Paco_2P_1":
+                        return "Aquí tes o teu viño, Paco. Agora cóntame, viches ao meu gato?";
+                    case "Paco_2N_2":
+                        return "Pareceume velo preto dos cubos de lixo, poñendo todo noxento, coma sempre";
+                    case "Paco_2I_1":
+                        return "Glu glu glu...";
+                    case "Paco_2I_2":
+                        return "Que boa colleita...";
+                    case "JaimeN_1":
+                        return "Anxo! Dichósolos ollos...";
+                    case "JaimeP_2":
+                        return "Canalla... Deixáchesnos!";
+                    case "JaimeN_3":
+                        return "Non me xuzgues, era un sálvese quen poida. De todas formas non me fun moi lonxe por se necesitábais axuda";
+                    case "JaimeP_4":
+                        return "Como a que precisara o pobre Señor Ramos?";
+                    case "JaimeN_5":
+                        return "Que querías, que fixera coma ti e me interpuxera? Poderíamos ter morto os dous. De feito, é unha miragre que ti sigas con vida";
+                    case "JaimeB_A":
+                        return "Eu interpúxenme?";
+                    case "JaimeB_B":
+                        return "¿Viches a pelexa?";
+                    case "JaimeB_C":
+                        return "¿Alguén máis estivo presente?";
+                    case "JaimeR_A":
+                        return "Qué pasa, non te lembras ou queres que conte a túa hazaña coma unha epopeya, paspán? " +
+                        "O móbil do vello comezou a sonar e un zombie correu canda el. Nunca os vira así, a verdade. Ti corriches tamén e puxéraste entre o zombie e o vello";
+                    case "JaimeR_B":
+                        return "A ver, estaba alonxado e detrás dunhas árbores. Vin a grandes rasgos como te liabas a golpes co pobre desgraciado... aída que él tamén repartía que daba gusto";
+                    case "JaimeR_C":
+                        return "Tsk... Que moito falas de min pero o resto liscaron coma ratas... Que eu sepa no había ninguén máis ¿Queres que o vaia contando por aí?";
+                    case "JaimeN_6":
+                        return "Así que foi eso...";
+                    case "JaimeN_7":
+                        return "Si, e non agardedes que volva a una expedición convosco. Eu paso";
+                    case "JaimeP_8":
+                        return "Tranquilo, eu tamén. Bueno...";
+                    case "JaimeN_9":
+                        return "Por certo, o gato ese regalado e obeso é teu, verdade?";
+                    case "JaimeP_10":
+                        return "Lúculo! O gato non está gordo, ten mucho pelo. Víchelo?";
+                    case "JaimeN_11":
+                        return "Xa... Si, vinno fai non moito cazando bolboretas na linde polo bosque. Atópao antes ca os zombies...";
+                    case "JaimeP_12":
+                        return "Grazas!";
+                    case "JaimeI_1":
+                        return "Prefiro que me deixes tranquilo";
+                    case "JaimeI_2":
+                        return "Non teño nada máis que falar contigo";
+
+                    //Inventario
+                    case "NonRemovable":
+                        return "Creo que non debería tirar esto.";
+                    case "DiaryDescription":
+                        return "Diario personal de Anxo. Nel relata o seu día a día incluíndo os últimos acontecemientos.";
+                    case "HarpoonDescription":
+                        return "Arpón usado pra cazar pequenos peces en expedicións de submarinismo.";
+                    case "EmptyMunition":
+                        return "Quedaches sen virotes!";
+                    case "HarpoonName":
+                        return "Arpón";
+                    case "DiaryName":
+                        return "Diario";
+                    case "FoodName":
+                        return "Fiambreira";
+                    case "FoodDescription":
+                        return "Comida que te axudará a mantenerte cuerdo.";
+                    case "MakeUpName":
+                        return "Maquillaxe";
+                    case "MakeUpDescription":
+                        return "Maquillaxe que algún veciño deixou abandonado na fuxida.";
+                    case "WineName":
+                        return "Botella de viño";
+                    case "WineDescription":
+                        return "Botella de viño que alguén perdeu mentres fuxía. Casualmente é un Ribeira.";
+                    case "LadderName":
+                        return "Escaleira";
+                    case "LadderDescription":
+                        return "Unha escaleira. É útil pra alcanzar sitios elevados.";
+                    case "CatName":
+                        return "Lúculo";
+                    case "CatDescription":
+                        return "A túa única compañía dende que morreu a túa muller.";
+
+                    case "Virotes":
+                        return " virotes)\n";
+                    case "Unidades":
+                        return " unidades)\n";
+
+                    case "Find":
+                        return "Atopaches " + additionalMessage + "!";
+                    case "Thrown":
+                        return "Ciscaches " + additionalMessage + " D:";
+                    case "Consumed":
+                        return "Consumiches " + additionalMessage + " :D";
+
+                    //Otros
+                    case "LockedDoor":
+                        return "A curiosidade matou ao gato... Debo atopar a Lúculo.";
+                    case "MakedUp":
+                        return "Xa estou guapo, ao lío.";
+                    case "CantPick":
+                        return "Teño que ver como chego hasta aí arriba.";
+                    case "FoodRamos":
+                        return "Sen comida hai quen se volve tolo...";
+                    case "BadLooking":
+                        return "Tes moi mal aspecto... A ti mordéronche!\nLástima. Caíasme ben. Coidarei do gato. Agora morre.";
+                    case "ShouldNotTalk":
+                        return "Non creo que deba falarlle con este aspecto. Preciso pasar desapercibido";
+                    case "Interact":
+                        return "Preme E pra interactuar";
+                    case "Skip":
+                        return "Preme E prra saltar";
+                    default:
+                        return "NULL";
+
+                }
             case "English":
                 return "Not ready";
         }

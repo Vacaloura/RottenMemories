@@ -124,7 +124,7 @@ public class DisplayManager : MonoBehaviour {
                 audioBack.text = "Volver";
                 saveBack.text = "Volver";
                 helpBack.text = "Volver";
-                helpText.text = "Utiliza las teclas WASD y el ratón para moverte por el mapa. Puedes pulsar la barra espaciadora para saltar y la tecla SHIFT para correr.\nPulsando la tecla TAB podrás acceder a tu inventario. En el podrás ver tus objetos haciendo click izquierdo sobre ellos así como utilizarlos haciendo doble click.\nPara interactuar con objetos o vecinos usa la tecla E mirando hacia ellos.\nCuando te encuentres con un zombie puedes dispararle usando el click derecho. ¡Cuidado!Si te quedas sin virotes pasarás un mal rato. Puedes recogerlos pulsando la tecla E.\nComo ya sabes, al pulsar ESCAPE accedes al menú de pausa. Además, si pulsas DELETE en cualquier momento volverás al último checkpoint.\nPor último, en la parte superior izquierda puedes ver tu icono de jugador y tu barra de locura ¡No dejes que se llene o perderás!";
+                helpText.text = "Utiliza las teclas WASD y el ratón para moverte por el mapa. Puedes pulsar la barra espaciadora para saltar y la tecla SHIFT para correr.\nPulsando la tecla TAB podrás acceder a tu inventario. En el podrás ver tus objetos haciendo click izquierdo sobre ellos así como utilizarlos haciendo doble click.\nPara interactuar con objetos o vecinos usa la tecla E mirando hacia ellos.\nCuando te encuentres con un zombie puedes dispararle usando el click derecho ¡Cuidado! Si te quedas sin virotes pasarás un mal rato. Puedes recogerlos pulsando la tecla E.\nComo ya sabes, al pulsar ESCAPE accedes al menú de pausa. Además, si pulsas DELETE en cualquier momento volverás al último checkpoint.\nPor último, en la parte superior izquierda puedes ver tu icono de jugador y tu barra de locura ¡No dejes que se llene o perderás!";
 
                 break;
 
@@ -148,6 +148,25 @@ public class DisplayManager : MonoBehaviour {
 
                 break;
 
+            case "Galego":
+                removeButton.text = "Eliminar";
+                interText.text = "Pulsa 'E' pra interactuar";
+                madness.text = "TOLURA";
+                saveButton.text = "Gardar";
+                audioButton.text = "Audio";
+                backButton.text = "Volver ao menú principal";
+                resumeButton.text = "Reanudar partida";
+                helpButton.text = "Axuda";
+                audioLabel.text = "Axustes de son";
+                musicLabel.text = "Música";
+                efectLabel.text = "Efectos";
+                helpLabel.text = "Axuda";
+                audioBack.text = "Volver";
+                saveBack.text = "Volver";
+                helpBack.text = "Volver";
+                helpText.text = "Utiliza as teclas WASD e o ratón pra moverte polo mapa. Pdes premer a barra espaciadora pra saltar e a tecla SHIFT pra correr.\nPulsando a tecla TAB poderás acceder ao teu inventario. Nel poderás ver os obxetos facendo click esquerdo sobre eles así como usalos facendo dobre click.\nPra interactuar con obxetos ou veciños usa aa tecla E mirando cara eles.\nCando te atopes cun zombie podes dispararlle usando o click dereito. Coidado! Se te quedas sen virotes pasarás un mal rato. Podes recollelos premendo a tecla E.\nComo xa sabes, ao premer ESCAPE accedes ao menú de pausa. Ademáis, se premes DELETE en calquer momento voltarás ao último checkpoint.\nPor último, na parte superior esquerda podes ver o teu icono de xogador e a túa barra de tolura. Non deixes que se rechée ou perderás!";
+
+                break;
         }
     }
 
