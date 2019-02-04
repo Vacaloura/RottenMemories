@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
-
+public class PlayerController : MonoBehaviour
+{
     [HideInInspector] public static PlayerController playerControllerInstance;
 
     public float thrust = 20.0f;
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour {
     private Image madnessBar;
     public Image avatar;
     private PlayableDirector cinematic;
+    public GameObject aimSight;
 
     /*Vector2 mouseLook;
     Vector2 smoothV;
@@ -66,7 +67,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         displayManager = GameObject.Find(Names.managers).GetComponent<DisplayManager>();
         player_camera = GameObject.Find(Names.playerCamera).GetComponent<Camera>();
         playerHead = GameObject.Find(Names.playerHead).transform;
@@ -81,11 +83,13 @@ public class PlayerController : MonoBehaviour {
         Cursor.visible = false;
         DisplayManager.displayManagerInstance.intext.GetComponent<Text>().text = GameStrings.gameStringsInstance.GetString("Skip", null);
         //StartCoroutine("IncreaseByTime");
-        try {
+        try
+        {
             sourceAmbient = GameObject.Find(Names.playerCamera).GetComponent<AudioSource>();
             sourceAmbient.clip = AmbientSound;
             sourceAmbient.Play();
-        } catch (UnityException e) { Debug.Log("No hay AudioSource en PlayerCamera: " + e.ToString()); }
+        }
+        catch (UnityException e) { Debug.Log("No hay AudioSource en PlayerCamera: " + e.ToString()); }
 
         //playerHead.GetComponent<AudioSource>().PlayOneShot(AmbientSound);
         try
@@ -110,12 +114,16 @@ public class PlayerController : MonoBehaviour {
         else avatar.sprite = Resources.Load<Sprite>("sprite_Anxo_locura");
 
         Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
+        if (!GameController.gameControllerInstance.gameWindowed)
+        {
+            aimSight.GetComponent<RectTransform>().localPosition += Vector3.up * 13;
+        }
     }
-	
+
     public void PlayerDeath(String message)
     {
         Debug.Log("GAME OVER:\n" + message + "\nPulse ESC para salir o R para volver al último checkpoint.");
-        displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("PlayerDeath", message) , 7.0f);
+        displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("PlayerDeath", message), 7.0f);
         endCamera.SetActive(true);
         source.Stop();
         Time.timeScale = 0;
@@ -123,9 +131,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     private bool cinematicOver = false;
-	// Update is called once per frame
-	void Update () {
-        madnessBar.fillAmount = madness/100f;
+    // Update is called once per frame
+    void Update()
+    {
+        madnessBar.fillAmount = madness / 100f;
         if (madness >= 100)
         {
             PlayerDeath(GameStrings.gameStringsInstance.GetString("PlayerDeathByMadness", null));
@@ -142,35 +151,41 @@ public class PlayerController : MonoBehaviour {
             }
 
         }
-            if (playerControl && cinematicOver)
-            {
-                Movement();
-                Shoot();
-            }
-            else
-            {
-                source.loop = false;
-            }
+        if (playerControl && cinematicOver)
+        {
+            Movement();
+            Shoot();
+        }
+        else
+        {
+            source.loop = false;
+        }
 
-            if (allowInteract && cinematicOver)
-            {
-                PlayerInteract();
-            }
-        if (myLight != null) {
+        if (allowInteract && cinematicOver)
+        {
+            PlayerInteract();
+        }
+        if (myLight != null)
+        {
             myLight.GetComponent<Light>().intensity -= Time.deltaTime / lightChange;
             if (myLight.GetComponent<Light>().intensity <= 0 || myLight.GetComponent<Light>().intensity >= 1.33)
                 lightChange = -1 * lightChange;
-            if (!sourceAmbient.isPlaying) {
+            if (!sourceAmbient.isPlaying)
+            {
                 audioCrossfade -= Time.deltaTime;
-                if (audioCrossfade < 0) {
+                if (audioCrossfade < 0)
+                {
                     sourceAmbient.clip = AmbientSound;
                     sourceAmbient.Play();
                 }
-            } else {
+            }
+            else
+            {
                 audioCrossfade = 2.0f;
             }
         }
-        if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed) {
+        if (Screen.fullScreen != GameController.gameControllerInstance.gameWindowed)
+        {
             Screen.fullScreen = GameController.gameControllerInstance.gameWindowed;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -185,18 +200,24 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    void PlayerInteract() {
-        if (Input.GetKeyDown(KeyCode.E) && !isTalking) {
+    void PlayerInteract()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && !isTalking)
+        {
             source.loop = false;
             source.Stop();
             Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(myRay, out hit, 100)) {
+            if (Physics.Raycast(myRay, out hit, 100))
+            {
                 Interactable myInteract;
-                try {
+                try
+                {
                     myInteract = hit.collider.transform.GetComponent<Interactable>();
-                    if(myInteract.onRange)    myInteract.Interact();
-                } catch (Exception e) {
+                    if (myInteract.onRange) myInteract.Interact();
+                }
+                catch (Exception e)
+                {
                     Debug.Log("Error: El objeto no tiene Interactable --> " + e.ToString()); //El objeto no tiene Interactable
                 }
             }
@@ -210,32 +231,44 @@ public class PlayerController : MonoBehaviour {
     public float runSpeed = 14.0f;
     public float jumpForce = 6.0f;
     public float sensitivity = 50.0f;
-    void Movement() {
-        if (movementController.isGrounded) {
+    void Movement()
+    {
+        if (movementController.isGrounded)
+        {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection = moveDirection * speed;
-            if (Input.GetKeyDown("space")) {
+            if (Input.GetKeyDown("space"))
+            {
                 moveDirection.y = jumpForce;
             }
-            if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
                 speed = runSpeed;
-            } else {
+            }
+            else
+            {
                 speed = walkSpeed;
             }
-            if ((moveDirection.x != 0 || moveDirection.z != 0) && movementController.isGrounded) {
-                if (!moving) {
+            if ((moveDirection.x != 0 || moveDirection.z != 0) && movementController.isGrounded)
+            {
+                if (!moving)
+                {
                     moving = true;
                     source.loop = true;
                     source.clip = MovingSound;
                     source.Play();
                 }
-            } else {
+            }
+            else
+            {
                 moving = false;
                 source.loop = false;
                 source.Stop();
             }
-        } else {
+        }
+        else
+        {
             moving = false;
             source.loop = false;
             source.Stop();
@@ -264,16 +297,19 @@ public class PlayerController : MonoBehaviour {
         else weapon.Rotate(-Vector3.right * Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime);*/
     }
 
-    void Shoot() {
+    void Shoot()
+    {
         /*Ray myRay = player_camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         weapon.rotation = playerHead.rotation * Quaternion.Euler(90, 0, 0);
         if (Physics.Raycast(myRay, out hit)) {
             weapon.Rotate(Vector3.right * Mathf.Atan(Vector3.Distance(playerHead.position, weapon.position) / hit.distance));
         }*/
-        if (Input.GetMouseButtonDown(1)) {
-                Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
-            if (harpoon.arrows > 0) {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Harpoon harpoon = (Harpoon)Inventory.inventoryInstance.itemList[0];
+            if (harpoon.arrows > 0)
+            {
                 //GameObject arrow = (GameObject)Instantiate(Resources.Load(Names.arrowPrefab), weapon.position, weapon.rotation);
                 Transform arrow = quiver.GetChild(0);
                 arrow.gameObject.SetActive(true);
@@ -281,13 +317,14 @@ public class PlayerController : MonoBehaviour {
                 arrow.rotation = weapon.rotation;
                 //Debug.Log("Arrow rotation: " + arrow.rotation);
                 arrow.GetComponent<Rigidbody>().isKinematic = false;
-                arrow.gameObject.GetComponent<Rigidbody>().AddForce(arrow.up*thrust);
+                arrow.gameObject.GetComponent<Rigidbody>().AddForce(arrow.up * thrust);
                 source.PlayOneShot(ShootSound);
                 Debug.Log(ShootSound.name + source.name);
                 harpoon.arrows--;
                 arrow.parent = null;
             }
-            else {
+            else
+            {
                 displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("EmptyMunition", null), 2.0f);
             }
             //Inventory.inventoryInstance.slots[0].transform.GetChild(1).GetComponent<Text>().text = harpoon.itemName + " (" + harpoon.arrows + ")";
@@ -306,7 +343,7 @@ public class PlayerController : MonoBehaviour {
 
     public void PlayerWin(string message)
     {
-        Debug.Log("YOU WIN!: "+ message + " \nCargando siguiente nivel....");
+        Debug.Log("YOU WIN!: " + message + " \nCargando siguiente nivel....");
         StartCoroutine("LoadLevel");
         displayManager.DisplayMessage(GameStrings.gameStringsInstance.GetString("PlayerWin", message), 7.0f);
         DontDestroyOnLoad(this.gameObject);
@@ -317,15 +354,18 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    public IEnumerator LoadLevel() {
+    public IEnumerator LoadLevel()
+    {
         yield return new WaitForSeconds(8.0f);
+        Debug.Log("Loading");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
 
     void OnTriggerEnter(Collider col)
-     {
-        if (col.transform.tag == "Closed") {
+    {
+        if (col.transform.tag == "Closed")
+        {
             DisplayManager.displayManagerInstance.DisplayMessage(GameStrings.gameStringsInstance.GetString("LockedDoor", null), 2.0f);
         }
         if (col.gameObject.tag == "Goal" && hasCat)
@@ -341,7 +381,8 @@ public class PlayerController : MonoBehaviour {
         while (true)
         {
             yield return new WaitForSeconds(timeIncrease);
-            if (!isTalking) {
+            if (!isTalking)
+            {
                 madness += timeDamage;
                 damagePanel.GetComponent<Image>().color = new Color(255, 190, 0);
                 StopCoroutine("RedFlash");
@@ -373,7 +414,7 @@ public class PlayerController : MonoBehaviour {
                 other.gameObject.GetComponent<ZombieController>().firstAttackFlag = true;
             }
             else
-           {
+            {
                 triggerTime += Time.deltaTime;
                 //Debug.Log("triggerTime: " + triggerTime);
                 if (triggerTime >= other.gameObject.GetComponent<ZombieController>().zombieAttackTime)
@@ -393,14 +434,16 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject damagePanel;
     public float flashTime = 0.01f, fadeTime = 0.5f;
-    IEnumerator RedFlash() {
+    IEnumerator RedFlash()
+    {
         Color resetPanelColor = damagePanel.GetComponent<Image>().color;
         resetPanelColor.a = 0.4f;
         damagePanel.GetComponent<Image>().color = resetPanelColor;
 
         yield return new WaitForSeconds(flashTime);
 
-        while (resetPanelColor.a > 0) {
+        while (resetPanelColor.a > 0)
+        {
             resetPanelColor.a -= Time.deltaTime * 0.4f / fadeTime;
             damagePanel.GetComponent<Image>().color = resetPanelColor;
             yield return null;
