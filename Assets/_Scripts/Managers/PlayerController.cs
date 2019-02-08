@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 7.0f;
     public float runSpeed = 14.0f;
     public float jumpForce = 6.0f;
-    public float sensitivity = 50.0f;
+    public float sensitivity = 60.0f;
     void Movement()
     {
         if (movementController.isGrounded)

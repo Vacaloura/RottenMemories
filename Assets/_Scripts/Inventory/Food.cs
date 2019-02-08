@@ -46,6 +46,7 @@ public class Food : Item {
                 PlayerController.playerControllerInstance.PlayerWin(GameStrings.gameStringsInstance.GetString("CatEaten", null));
                 Inventory.inventoryInstance.inventoryPanel.SetActive(false);
                 Inventory.inventoryInstance.infoPanel.SetActive(false);
+                Time.timeScale = 1.0f;
                 PlayerController.playerControllerInstance.madness = 99;
                 return false;
             /*case FoodType.Wine:
